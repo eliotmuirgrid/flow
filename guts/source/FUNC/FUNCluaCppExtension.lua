@@ -1,8 +1,10 @@
 require "FILE/FILEwrite"
 require "DATE/DATEhumanPretty"
 require "DATE/DATEcomputerPretty"
+require "CODE/CODEprefixRemainder"
 require "TEMPLATE/TEMPLATEfill"
-
+require "DIR/DIRflowCode"
+require "LIB/LIBregister"
 
 local Header=[[
 #pragma once
@@ -20,7 +22,7 @@ local Header=[[
 
 typedef struct lua_State lua_State;
 
-void @@NAME@@(lua_State* L);
+int @@NAME@@(lua_State* L);
 ]]
 
 local Body=[[
@@ -38,15 +40,20 @@ local Body=[[
 #include <COL/COLtrace.h>
 COL_TRACE_INIT;
 
-void @@NAME@@(lua_State* L){
-   COL_FUNCTION(@@NAME@@)
+int @@NAME@@(lua_State* L){
+   COL_FUNCTION(@@NAME@@);
 
 }
 ]]
 
-function FUNCluaCppExtension(FunctionName, FunctionBody)
+function FUNCluaCppExtension(Args)
+   local Name = Args[3]; 
+   if (not Name) then
+      print("Need a name of the function.");
+      return;
+   end	
    local Tokens={
-      NAME       =FunctionName,
+      NAME       =Name,
       HUMAN_DATE =DATEhumanPretty(),
       HEX_DATE   =DATEcomputerPretty(),
       YEAR       =os.date("%Y"),
@@ -55,6 +62,15 @@ function FUNCluaCppExtension(FunctionName, FunctionBody)
    COL_VAR(Tokens);
    local HContent = TEMPLATEfill(Header,Tokens);
    COL_VAR(HContent);
+   local Prefix, Remainder = CODEprefixRemainder(Name);
+   COL_VAR2(Prefix, Remainder);
+   local HName = DIRflowCode()..Prefix.."/"..Prefix..Remainder..".h" 
+   local BName = DIRflowCode()..Prefix.."/"..Prefix..Remainder..".cpp" 
+
    local BContent = TEMPLATEfill(Body,Tokens);
    COL_VAR(BContent);
+   COL_VAR2(HName, BName);
+   FILEwrite(HName, HContent);
+   FILEwrite(BName, BContent);
+   LIBregister(Name);
 end

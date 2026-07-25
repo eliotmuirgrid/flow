@@ -10,4 +10,4 @@ function COL_VAR2(V1, V2)
 end	
 --function COL_VAR3(V) COLtrace(COLshow(V)..", "..COLshow(V))..", "..COLshow(V))                ; end	
 
-
+function COL_FUNCTION(V) COLtrace("F:"..V); end;

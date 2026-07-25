@@ -5,7 +5,7 @@ require "MUSIC/MUSICplay"
 
 local Commands={
   ["music:play"]=MUSICplay,
-  ["add:clua"]=FUNCluaCppExtension,
+  ["add:lua:extension"]=FUNCluaCppExtension,
   ["code:function:split"]=FUNCsplit
 }
 
