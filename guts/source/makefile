@@ -12,6 +12,7 @@ CXX := $(TOOL_DIR)cosmoc++
 # Find C and C++ source files in immediate subdirectories.
 DIRS    := $(wildcard ./*/)
 SEARCH  := $(foreach dir,$(DIRS),$(dir)*.c $(dir)*.cpp)
+LSEARCH := $(sort $(wildcard */*.lua))
 SOURCES := $(wildcard $(SEARCH))
 
 # Convert:
@@ -32,7 +33,7 @@ PCPPFLAGS := -MMD -MP -I.
 
 all: $(TARGET)
 
-$(TARGET): $(OBJECTS)
+$(TARGET): $(OBJECTS) $(LSEARCH)
 	@mkdir -p $(dir $@)
 	$(CXX) $(OBJECTS) -o $@
 	rm $(TARGET_DIR)*.elf $(TARGET_DIR)*.dbg
@@ -46,14 +47,15 @@ $(BUILD_DIR)/%.o: %.cpp
 	@mkdir -p $(dir $@)
 	$(CXX) $(PCPPFLAGS) -c -o $@ $<
 
-depends:
-	@echo DEPENDS = $(DEPENDS)
+lsearch:
+	@echo LSEARCH = $(LSEARCH)
 
 show:
 	@echo "Making: $(TARGET)"
 	@echo DIRS    = $(DIRS)
 	@echo CC      = $(CC)
 	@echo SEARCH  = $(SEARCH)
+	@echo LSEARCH = $(LSEARCH)
 	@echo SOURCES = $(SOURCES)
 	@echo OBJECTS = $(OBJECTS)
 	@echo DEPENDS = $(DEPENDS)
@@ -62,4 +64,6 @@ clean::
 	$(RM) -r $(BUILD_DIR) 
 
 -include $(DEPENDS)
+
+
 
