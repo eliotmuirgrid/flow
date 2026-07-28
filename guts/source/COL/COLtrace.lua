@@ -1,19 +1,18 @@
 require "COL/COLshow"
 
-function COLtrace(T)
-   print(T);
+function COL_VAR (V) 
+   LUAltrace(COLshow(V)); 
 end	
 
-function COL_VAR (V) COLtrace(COLshow(V))                                                       ; end	
 function COL_VAR2(V1, V2) 
-   COLtrace(COLshow(V1)..", "..COLshow(V2)); 
+   LUAltrace(COLshow(V1)..", "..COLshow(V2)); 
 end	
---function COL_VAR3(V) COLtrace(COLshow(V)..", "..COLshow(V))..", "..COLshow(V))                ; end	
+--function COL_VAR3(V) LUAltrace(COLshow(V)..", "..COLshow(V))..", "..COLshow(V))                ; end	
 
-function COL_FUNCTION(V) COLtrace("F:"..V); end;
+function COL_FUNCTION(V) LUAltrace("F:"..V); end;
 
 
-function COL_TRC(T) COLtrace(T) end
+function COL_TRC(T) LUAltrace(T) end
 
 --TODO get #T and #S to work
 function COLcount(T)

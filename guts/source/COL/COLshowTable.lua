@@ -2,12 +2,12 @@
 
 function COLshowTable(V, Indent)
    local R = ''
-   local Indent = Indent or "";
    Indent = Indent..'  ';
    R = "{\n";
    for k, v in pairs(V) do
       R=R..Indent..tostring(k).." = "..COLshow(v, Indent).."\n";
    end
-   R = R.."}\n";
+   Indent = Indent:sub(1, Indent:len()-2);
+   R = R..Indent.."}";
    return R;
 end

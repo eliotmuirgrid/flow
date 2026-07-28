@@ -2,7 +2,7 @@
 // ---------------------------------------------------------------------------
 // Copyright (C) For Ever Eliot Muir .  All Rights Reserved
 //
-// Module: FILdir
+// Module: FILpath
 //
 // Description:
 //

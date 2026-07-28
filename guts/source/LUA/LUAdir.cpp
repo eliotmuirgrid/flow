@@ -44,6 +44,6 @@ static int l_dir(lua_State *L) {
 
 void LUAloadDir(lua_State* L){
    COL_FUNCTION(LUAloadDir);
-   lua_register(L, "dir", l_dir);
+   lua_register(L, "FILdir", l_dir);
 }
 

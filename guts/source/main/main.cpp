@@ -27,13 +27,13 @@ void APPrun(lua_State* L, const COLarray<COLstring>& Args){
    LIBregister(L);  // TODO wonder if we should do this on demand?
    LUApathSet(L, Args[0]);
    //COLstring FileName =FILdirExe(Args[0])+"guts/source/main/main.lua";
-   COLstring FileName ="/zip/guts/source/main/main.lua";
+   COLstring FileName ="/zip/guts/source/MAIN/MAINmain.lua";
    if (luaL_loadfile(L, FileName.data()) || lua_pcall(L, 0, 0, 0)) {
       fprintf(stderr, "%s\n", lua_tostring(L, -1));
       lua_close(L);
       return;
    }
-   lua_getglobal(L, "main");
+   lua_getglobal(L, "MAINmain");
    LUApushArray(L, Args);
    if (lua_pcall(L, 1, 0, 0)){
       fprintf(stderr, "%s\n", lua_tostring(L, -1));

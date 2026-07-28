@@ -1,0 +1,7 @@
+music:play=MUSICplay
+prefix:move=CODErenamePrefix
+code:function:split=FUNCsplit
+function:lua:c:create=FUNCluaCppExtension
+function:c:create=FUNCcppFunction
+function:lua:c:helper:create=FUNCluaCHelper
+

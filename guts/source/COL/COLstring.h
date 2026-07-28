@@ -48,6 +48,7 @@ public:
    int compare(const COLstring& Lhs) const;
 
    int reverseFind(char Char) const;
+   bool find(const char* SubString) const;
 
    const char& operator[](int i) const{ return data()[i]; }	   
    char& operator[](int i)            { return data()[i]; }	   

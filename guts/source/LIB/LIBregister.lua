@@ -1,4 +1,4 @@
-require "FILE/FILEwrite"
+require "FUNC/FUNCwrite"
 require "FILE/FILEreadLines"
 require "DATE/DATEhumanPretty"
 require "DATE/DATEcomputerPretty"
@@ -30,6 +30,7 @@ void LIBregister(lua_State* L){
 
 function LIBregister(Name)
    COL_FUNCTION("LIBregister");
+   print("Registering the function.");
    local Tokens={
       HUMAN_DATE =DATEhumanPretty(),
       HEX_DATE   =DATEcomputerPretty(),
@@ -39,7 +40,7 @@ function LIBregister(Name)
    local List = FILEreadLines(DIRflowCode().."LIB/LIBlist.config");
    LISTaddUnique(List, Name);
    SORTalpha(List);
-   FILEwrite(DIRflowCode().."LIBlist.config", table.concat(List, "\n"));
+   FUNCwrite(DIRflowCode().."LIB/LIBlist.config", table.concat(List, "\n"));
 
    local IList = '';
    local RList = '';
@@ -51,5 +52,5 @@ function LIBregister(Name)
    Tokens.INCLUDE_LIST  = IList;
    Tokens.REGISTER_LIST = RList;
    local BContent = TEMPLATEfill(Body,Tokens);
-   FILEwrite(DIRflowCode().."LIB/LIBregister.cpp", BContent);
+   FUNCwrite(DIRflowCode().."LIB/LIBregister.cpp", BContent);
 end

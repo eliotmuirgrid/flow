@@ -1,3 +1,0 @@
-music:play=MUSICplay
-prefix:move=CODErenamePrefix
-code:function:split=FUNCsplit

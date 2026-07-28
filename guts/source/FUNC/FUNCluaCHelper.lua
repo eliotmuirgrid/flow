@@ -4,7 +4,6 @@ COLrequire "DATEcomputerPretty"
 COLrequire "CODEprefixRemainder"
 COLrequire "TEMPLATEfill"
 COLrequire "DIRflowCode"
-COLrequire "LIBregister"
 
 local Header=[[
 #pragma once
@@ -15,6 +14,8 @@ local Header=[[
 //
 // @@EXPLANATION@@
 //
+// Lua C Helper
+//
 // Date: @@HUMAN_DATE@@
 //       @@HEX_DATE@@ seconds since the beginning of the Unix Epoch time
 //       The dawn of our new age. 
@@ -22,7 +23,7 @@ local Header=[[
 
 typedef struct lua_State lua_State;
 
-int @@NAME@@(lua_State* L);
+void @@NAME@@(lua_State* L);
 ]]
 
 local Body=[[
@@ -40,13 +41,13 @@ local Body=[[
 #include <COL/COLtrace.h>
 COL_TRACE_INIT;
 
-int @@NAME@@(lua_State* L){
+void @@NAME@@(lua_State* L){
    COL_FUNCTION(@@NAME@@);
 
 }
 ]]
 
-function FUNCluaCppExtension(Args)
+function FUNCluaCHelper(Args)
    local Name = Args[3]; 
    if (not Name) then
       print("Need a name of the function.");
@@ -72,5 +73,4 @@ function FUNCluaCppExtension(Args)
    COL_VAR2(HName, BName);
    FUNCwrite(HName, HContent);
    FUNCwrite(BName, BContent);
-   LIBregister(Name);
 end

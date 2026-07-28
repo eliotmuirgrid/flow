@@ -10,6 +10,7 @@
 #include <COL/COLglob.h>
 #include <LUA/LUAlua.h>
 #include <LUA/LUAtrace.h>
+#include <LUA/LUAtraceEnable.h>
 #include <FIL/FILpathNameNoExt.h>
 
 #include "COL/COLtrace.h"
@@ -43,26 +44,31 @@ void LUAshowArgs(lua_State* L, lua_Debug* ar){
 }
 
 void LUAdebugHook(lua_State* L, lua_Debug* ar){
-   COL_FUNCTION(LUAdebugHook);
    if (!lua_getinfo(L, "nSl", ar)){ return; }
-   COLstring name = ar->name ? ar->name : "<anonymous>";
+   if (!ar->name){
+      return;
+   }
    COLstring source = ar->short_src[0] ? ar->short_src : "?";
 
-   COL_VAR(source);
-   if (source != "[C]"){
-      source = FILpathNameNoExt(source);
-      if (!COLglobMatch(source.data(), s_LUAmatch.data())){ return; }
-      source += ".lua";
-   } else {
-      if (!COLglobMatch(name.data(), s_LUAmatch.data())) { return; }
-      source = "C++";
-   }
+   COL_TRC("Source before COL filtering =" << source);
+   if (source.find("COLshow")){ COL_TRC("Matched COLshow"); return; }
+   if (source.find("COLtrace")){ COL_TRC("Matched COLtrace"); return; }
+
+   COL_HEX("Source:", source.data(), source.size());
+   COL_VAR(source.data()[0]);
+   bool Check =source.data()[0] == '[' || source.data()[0] == '(';
+   COL_VAR(Check);
+   if (Check) { COL_TRC("In C Function or tail call."); return; } // it equals [ HACK [C]
+   source = FILpathNameNoExt(source);
+   COL_TRC("Source after FILpathNameNoExt=" << source);
+   if (!COLglobMatch(source.data(), s_LUAmatch.data())){ LUAtraceEnable(L, ""); return; }
+   COLstring name = source;
+   source += ".lua";
+   LUAtraceEnable(L, source);
    
    switch (ar->event){
-   case LUA_HOOKCALL:                            
-      COLtimeStamp(source.data(), COLlog);COLlog << ">" << name; LUAshowArgs(L, ar); COLlog << newline; COLcallIncrease(); break;
-   case LUA_HOOKRET : 
-      COLcallDecrease(); COLtimeStamp(source.data(), COLlog);COLlog << "<" << name << newline;                             break;
+   case LUA_HOOKCALL: COLtimeStamp(source.data(), COLlog);COLlog << ">" << name; LUAshowArgs(L, ar); COLlog << newline; COLcallIncrease(); break;
+   case LUA_HOOKRET : COLcallDecrease(); COLtimeStamp(source.data(), COLlog);COLlog << "<" << name << newline;                             break;
    }
 }
 

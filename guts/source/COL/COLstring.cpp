@@ -139,6 +139,12 @@ int COLstring::reverseFind(char Char) const{
    return -1;
 }
 
+bool COLstring::find(const char* Needle) const{
+   COL_METHOD(COLstring::find);
+   const char* P = strstr(data(), Needle);
+   return NULL != P;
+}
+
 // TODO boundary checks
 COLstring COLstring::substr(int Start, int Size) const{ return COLstring(data()+Start, Size);         }
 COLstring COLstring::substr(int Start) const          { return COLstring(data()+Start, size()-Start); }
