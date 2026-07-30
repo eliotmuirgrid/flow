@@ -1,5 +1,7 @@
 # Flow
 
+**NEWS FLASH - music:play now works on Windows**
+
 ## Installation
 
 Open the command console on Windows—or Terminal on macOS X, if you’re over 50 and still remember these things exist.
