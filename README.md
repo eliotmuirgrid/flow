@@ -2,6 +2,10 @@
 
 **NEWS FLASH - music:play now works on Windows**
 
+No just kidding.  Even more engineering required to figure out obscure path differences.
+
+I will do it later - bleach.
+
 ## Installation
 
 Open the command console on Windows—or Terminal on macOS X, if you’re over 50 and still remember these things exist.
