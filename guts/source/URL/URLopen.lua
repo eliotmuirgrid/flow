@@ -1,6 +1,6 @@
 function URLopen(Url)
    COL_VAR(Url)
-   local Windows = 'start "'..Url..'"'
+   local Windows = 'start "" "'..Url..'"'
    local Mac     = 'open "'..Url..'"'
 
    if (OSisMac()) then 
