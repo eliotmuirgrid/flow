@@ -37,7 +37,7 @@ $(TARGET): $(OBJECTS) $(LSEARCH)
 	@mkdir -p $(dir $@)
 	$(CXX) $(OBJECTS) -o $@
 	rm $(TARGET_DIR)*.elf $(TARGET_DIR)*.dbg
-	cd $(TARGET_DIR) && zip -r $(TARGET_NAME) $(TARGET_SOURCE)
+	cd $(TARGET_DIR) && zip -qr $(TARGET_NAME) $(TARGET_SOURCE)
 
 $(BUILD_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)

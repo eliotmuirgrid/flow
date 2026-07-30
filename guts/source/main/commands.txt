@@ -1,7 +1,11 @@
 music:play=MUSICplay
 prefix:move=CODErenamePrefix
-code:function:split=FUNCsplit
+function:lua:create=FUNClua
 function:lua:c:create=FUNCluaCppExtension
 function:c:create=FUNCcppFunction
 function:lua:c:helper:create=FUNCluaCHelper
-
+build=MAKEbuild
+clean=MAKEclean
+edit=FLOWeditCommand
+function:delete=FLOWdeleteCommand
+lib:regenerate=LIBregenerate

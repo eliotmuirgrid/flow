@@ -4,13 +4,13 @@ COLrequire "DATEcomputerPretty"
 COLrequire "CODEprefixRemainder"
 COLrequire "TEMPLATEfill"
 COLrequire "DIRflowCode"
+COLrequire "FLOWedit"
+COLrequire "PREFIXget"
 
 local Header=[[
 #pragma once
 //----------------------------------------------------------------
 // Copyright (C) Eliot Muir @@YEAR@@ All rights reserved.
-//
-// @@NAME@@ 
 //
 // @@EXPLANATION@@
 //
@@ -33,6 +33,7 @@ local Body=[[
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
+#include <@@PREFIX@@/@@NAME@@.h>
 #include <COL/COLtrace.h>
 COL_TRACE_INIT;
 
@@ -50,6 +51,7 @@ function FUNCcppFunction(Args)
    end	
    local Tokens={
       NAME       =Name,
+      PREFIX     =PREFIXget(Name),
       HUMAN_DATE =DATEhumanPretty(),
       HEX_DATE   =DATEcomputerPretty(),
       YEAR       =os.date("%Y"),
@@ -68,4 +70,6 @@ function FUNCcppFunction(Args)
    COL_VAR2(HName, BName);
    FUNCwrite(HName, HContent);
    FUNCwrite(BName, BContent);
+   print ("Let's edit "..Name);
+   FLOWedit(Name);
 end

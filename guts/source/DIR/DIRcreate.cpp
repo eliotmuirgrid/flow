@@ -10,11 +10,17 @@
 
 #include <DIR/DIRicreate.h>
 #include <LUA/LUAlua.h>
+#include <COL/COLstringL.h>
 #include <COL/COLtrace.h>
 COL_TRACE_INIT;
 
 int DIRcreate(lua_State* L){
    COL_FUNCTION(DIRcreate);
-
+   COLstring Name = COLstringL(L, -1);
+   COL_VAR(Name);
+   bool Result = DIRicreate(Name);  // TODO worry about error checking later
+   if (!Result) {
+      return luaL_error(L, "BANG DIRcreate failed. Time you fixed me"); 
+   }
    return 0;
 }

@@ -1,18 +1,17 @@
-#include <COL/COLstring.h>
+//----------------------------------------------------------------
+// Copyright (C) Eliot Muir 2026 All rights reserved.
+//
+// Implementation
+//
+// Date: Wednesday 29th July 2026
+//       0x6A6A23BC seconds since the beginning of the Unix Epoch time
+//       The dawn of our new age. 
+// ---------------------------------------------------------------
+
 #include <COL/COLtrace.h>
-COL_TRACE_INIT
+COL_TRACE_INIT;
 
-
-COLstring FILdirCurrent(){
+void FILdirCurrent(){
    COL_FUNCTION(FILdirCurrent);
-   COLstring Result;
-   char* pCwd = getcwd(NULL, 0);
-   if (pCwd) {
-      Result = pCwd;
-      Result += "/";
-      free(pCwd);
-   }
-   COL_VAR(Result);
-   return Result;
-}
 
+}

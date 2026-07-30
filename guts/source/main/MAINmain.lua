@@ -1,11 +1,10 @@
 require ("COL/COLtrace");
 COLrequire("INIload");
-COLrequire("FOObar");
 
 function MAINmain(Arg)
+   COL_VAR(Arg); 
    local Commands=INIload("/zip/guts/source/MAIN/commands.txt");
    COL_VAR(Commands);
-   COLshow(Commands);
    if not Commands[Arg[2]] then
       print "Please use a supported command:"
       for K, _ in pairs(Commands) do

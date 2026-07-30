@@ -8,7 +8,6 @@
 
 #include "LUApathSet.h"
 
-#include "FIL/FILdir.h"
 #include "FIL/FILdirExe.h"
 
 #include <stdlib.h>

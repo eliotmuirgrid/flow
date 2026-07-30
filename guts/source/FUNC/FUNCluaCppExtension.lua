@@ -5,13 +5,12 @@ COLrequire "CODEprefixRemainder"
 COLrequire "TEMPLATEfill"
 COLrequire "DIRflowCode"
 COLrequire "LIBregister"
+COLrequire "FLOWedit"
 
 local Header=[[
 #pragma once
 //----------------------------------------------------------------
 // Copyright (C) Eliot Muir @@YEAR@@ All rights reserved.
-//
-// @@NAME@@ 
 //
 // @@EXPLANATION@@
 //
@@ -73,4 +72,5 @@ function FUNCluaCppExtension(Args)
    FUNCwrite(HName, HContent);
    FUNCwrite(BName, BContent);
    LIBregister(Name);
+   FLOWedit(Name);
 end

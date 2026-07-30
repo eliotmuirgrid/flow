@@ -4,13 +4,12 @@ COLrequire "DATEcomputerPretty"
 COLrequire "CODEprefixRemainder"
 COLrequire "TEMPLATEfill"
 COLrequire "DIRflowCode"
+COLrequire "FLOWedit"
 
 local Header=[[
 #pragma once
 //----------------------------------------------------------------
 // Copyright (C) Eliot Muir @@YEAR@@ All rights reserved.
-//
-// @@NAME@@ 
 //
 // @@EXPLANATION@@
 //
@@ -73,4 +72,6 @@ function FUNCluaCHelper(Args)
    COL_VAR2(HName, BName);
    FUNCwrite(HName, HContent);
    FUNCwrite(BName, BContent);
+   print ("Now lets edit "..Name);
+   FLOWedit(Name);
 end

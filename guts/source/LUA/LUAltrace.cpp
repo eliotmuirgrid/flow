@@ -9,14 +9,14 @@
 // ---------------------------------------------------------------
 
 #include <LUA/LUAlua.h>
-#include <LUA/LUAtraceEnabled.h>
+#include <LUA/LUAtraceFileGet.h>
 #include <COL/COLstringL.h>
 #include <COL/COLtrace.h>
 COL_TRACE_INIT;
 
 int LUAltrace(lua_State* L){
    COL_FUNCTION(LUAltrace);
-   COLstring FileName = LUAtraceEnabled(L);
+   COLstring FileName = LUAtraceFileGet(L);
    if (!FileName.empty()){
       COLstring Message = COLstringL(L, 1);
       COL_VAR(Message);

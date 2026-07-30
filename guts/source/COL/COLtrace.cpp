@@ -14,7 +14,7 @@ void COLtrace(const char* Pattern){}
 void COLsetTraceFile(const char* FileName){}
 #else
 
-#include "COLglob.h"
+#include "COLglobMatch.h"
 #include "COLhex.h"
 #include "COLtimestamp.h"
 #include "COLsinkFile.h"
