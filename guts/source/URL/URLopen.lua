@@ -2,7 +2,7 @@ function URLopen(Url)
    COL_VAR(Url)
    -- Bill instead of worrying about Africa couldn't you have fixed your
    -- operating system?
-   local Windows = 'C:\\\\Windows\\\\System32\\\\cmd.exe /c start " " "'..Url..'"'cmd /c start " " "'..Url..'"'
+   local Windows = 'C:\\\\Windows\\\\System32\\\\cmd.exe /c start " " "'..Url..'"'
    local Mac     = 'open "'..Url..'"'
    COL_VAR2(Windows,Mac);
 
