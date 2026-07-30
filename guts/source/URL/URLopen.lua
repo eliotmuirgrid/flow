@@ -1,7 +1,8 @@
 function URLopen(Url)
    COL_VAR(Url)
-   local Windows = 'start "" "'..Url..'"'
+   local Windows = 'start " " "'..Url..'"'
    local Mac     = 'open "'..Url..'"'
+   COL_VAR2(Windows,Mac);
 
    if (OSisMac()) then 
       os.execute(Mac);	
