@@ -11,10 +11,10 @@
 // Date:   Wednesday 01 July 2026 - 07:40PM
 // ---------------------------------------------------------------------------
 
-#include "FIL/FILdirExe.h"
-#include "FIL/FILpathName.h"
+#include "FILdirExe.h"
+#include "FILpathName.h"
 
-#include "COL/COLtrace.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 COLstring FILdirExe(const COLstring& ExeFile){

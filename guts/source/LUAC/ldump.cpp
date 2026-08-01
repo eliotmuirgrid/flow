@@ -4,7 +4,7 @@
 ** See Copyright Notice in lua.h
 */
 
-#include <stddef.h>
+#include "stddef.h"
 
 #define ldump_c
 
@@ -167,4 +167,3 @@ void luaU_dump (lua_State* L, const Proto* Main, lua_Chunkwriter w, void* data)
  DumpHeader(&D);
  DumpFunction(Main,NULL,&D);
 }
-

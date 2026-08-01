@@ -5,9 +5,9 @@
 */
 
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
 
 #define ldblib_c
 
@@ -296,4 +296,3 @@ LUALIB_API int luaopen_debug (lua_State *L) {
   lua_settable(L, LUA_GLOBALSINDEX);
   return 1;
 }
-

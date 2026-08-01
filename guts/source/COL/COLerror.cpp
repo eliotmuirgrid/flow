@@ -11,10 +11,10 @@
 #include "COLtrace.h"
 COL_TRACE_INIT;
 
-#include <errno.h>
+#include "errno.h"
 
 #ifdef _WIN32
-#include <windows.h>
+#include "windows.h"
 COLstring COLerrorMessage(int ErrorCode){
    char* MessageBuffer;
    DWORD dwFormatFlags = FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_IGNORE_INSERTS | FORMAT_MESSAGE_FROM_SYSTEM;

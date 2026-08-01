@@ -8,10 +8,10 @@
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include <DIR/DIRicreate.h>
-#include <LUA/LUAlua.h>
-#include <COL/COLstringL.h>
-#include <COL/COLtrace.h>
+#include "DIRicreate.h"
+#include "LUAlua.h"
+#include "COLstringL.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 int DIRcreate(lua_State* L){

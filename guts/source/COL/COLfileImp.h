@@ -25,4 +25,3 @@
   #define O_RDONLY _O_RDONLY
   #define S_IREAD _S_IREAD
 #endif
-

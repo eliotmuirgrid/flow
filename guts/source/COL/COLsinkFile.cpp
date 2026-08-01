@@ -5,7 +5,7 @@
 //-------------------------------------------------------
 
 #include "COLsinkFile.h"
-#include <stdio.h>
+#include "stdio.h"
 
 #include "COLfileImp.h"
 

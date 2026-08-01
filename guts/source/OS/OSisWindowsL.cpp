@@ -8,9 +8,9 @@
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include <OS/OSisWindows.h>
-#include <LUA/LUAlua.h>
-#include <COL/COLtrace.h>
+#include "OSisWindows.h"
+#include "LUAlua.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 int OSisWindowsL(lua_State* L){

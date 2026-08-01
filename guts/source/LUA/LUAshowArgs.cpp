@@ -8,9 +8,9 @@
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include <LUA/LUAlua.h>
-#include <LUA/LUAprintValue.h>
-#include <COL/COLtrace.h>
+#include "LUAlua.h"
+#include "LUAprintValue.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 void LUAshowArgs(lua_State* L, lua_Debug* ar, COLstream& Out){

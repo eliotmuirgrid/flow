@@ -5,12 +5,12 @@
 */
 
 
-#include <stdarg.h>
-#include <stdlib.h>
-#include <string.h>
+#include "stdarg.h"
+#include "stdlib.h"
+#include "string.h"
 
 /* needed only when `lua_number2str' uses `sprintf' */
-#include <stdio.h>
+#include "stdio.h"
 
 #define lvm_c
 
@@ -777,5 +777,4 @@ StkId luaV_execute (lua_State *L) {
     }
   }
 }
-
 

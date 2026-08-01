@@ -8,9 +8,9 @@
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include <LUA/LUAlua.h>
-#include <COL/COLtrace.h>
-#include <REG/REGkeyGet.h>
+#include "LUAlua.h"
+#include "COLtrace.h"
+#include "REGkeyGet.h"
 COL_TRACE_INIT;
 
 COLstring LUAtracePatternGet(lua_State* L){

@@ -8,9 +8,9 @@
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include <LUA/LUAdebugOut.h>
-#include <LUA/LUAlua.h>
-#include <COL/COLtrace.h>
+#include "LUAdebugOut.h"
+#include "LUAlua.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 void HOOKtailReturn(lua_State* L, lua_Debug* pDb){

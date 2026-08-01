@@ -8,9 +8,9 @@
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include <LUA/LUAlua.h>
-#include <LUA/LUAdebugOut.h>
-#include <COL/COLtrace.h>
+#include "LUAlua.h"
+#include "LUAdebugOut.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 void LUAdebugOut(COLstream& Stream, const struct lua_Debug& LD){

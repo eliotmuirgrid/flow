@@ -1,23 +1,23 @@
-#include "LUA/LUAlua.h"
+#include "LUAlua.h"
 
 #include "LUAC/lua.h"
 #include "LUAC/lauxlib.h"
 #include "LUAC/lualib.h"
 
-#include "LIB/LIBregister.h"
-#include "LUA/LUAarray.h"
-#include "LUA/LUApathSet.h"
-#include "LUA/LUAloadLib.h"
-#include "LUA/LUAdebug.h"
-#include "FIL/FILdirExe.h"
+#include "LIBregister.h"
+#include "LUAarray.h"
+#include "LUApathSet.h"
+#include "LUAloadLib.h"
+#include "LUAdebug.h"
+#include "FILdirExe.h"
 
-#include "FLAG/FLAGpresentWithArg.h"
-#include "FLAG/FLAGpresent.h"
-#include "COL/COLstring.h"
-#include "COL/COLstream.h"
-#include "COL/COLarray.h"
-#include "COL/COLarrayCopy.h"
-#include "COL/COLtrace.h"
+#include "FLAGpresentWithArg.h"
+#include "FLAGpresent.h"
+#include "COLstring.h"
+#include "COLstream.h"
+#include "COLarray.h"
+#include "COLarrayCopy.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 void APPrun(lua_State* L, const COLarray<COLstring>& Args){
@@ -60,4 +60,3 @@ int main (int argc, const char** argv) {
 
   return 0;  // 0 means success.  Nothing is success apparently.
 }
-

@@ -12,4 +12,3 @@ template <typename T> constexpr const T& COL_MIN(const T& A, const T& B) { retur
 
 
 void COLsleep(int Milliseconds);
-

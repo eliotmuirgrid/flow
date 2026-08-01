@@ -20,16 +20,16 @@ void COLsetTraceFile(const char* FileName){}
 #include "COLsinkFile.h"
 #include "COLthread.h"
 
-#include <time.h>
-#include <stdio.h>  // for printf
+#include "time.h"
+#include "stdio.h"  // for printf
 
-#include <inttypes.h>
-#include <math.h>
-#include <string.h>
+#include "inttypes.h"
+#include "math.h"
+#include "string.h"
 
 
-#include <errno.h>
-#include <fcntl.h>
+#include "errno.h"
+#include "fcntl.h"
 
 
 //COLmutex s_LogMutex;

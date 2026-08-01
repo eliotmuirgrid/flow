@@ -1,4 +1,4 @@
-#include "COL/COLtrace.h"
+#include "COLtrace.h"
 COL_TRACE_INIT
 
 

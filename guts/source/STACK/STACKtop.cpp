@@ -8,10 +8,10 @@
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include <STACK/STACKfetch.h>
-#include <STACK/STACKsize.h>
-#include <LUA/LUAlua.h>
-#include <COL/COLtrace.h>
+#include "STACKfetch.h"
+#include "STACKsize.h"
+#include "LUAlua.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 void STACKtop(lua_State* L, int i){

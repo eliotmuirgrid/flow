@@ -5,12 +5,12 @@
 */
 
 
-#include <errno.h>
-#include <locale.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
+#include "errno.h"
+#include "locale.h"
+#include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
+#include "time.h"
 
 #define liolib_c
 
@@ -759,4 +759,3 @@ LUALIB_API int luaopen_io (lua_State *L) {
   registerfile(L, stderr, "stderr", NULL);
   return 1;
 }
-

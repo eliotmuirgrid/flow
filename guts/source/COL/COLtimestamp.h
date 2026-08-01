@@ -9,7 +9,7 @@
 //-------------------------------------------------------
 
 #include "COLtypes.h"
-#include <time.h>
+#include "time.h"
 
 class COLtimestamp{
 public:

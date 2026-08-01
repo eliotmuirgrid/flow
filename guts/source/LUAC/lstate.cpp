@@ -5,7 +5,7 @@
 */
 
 
-#include <stdlib.h>
+#include "stdlib.h"
 
 #define lstate_c
 
@@ -218,4 +218,3 @@ LUA_API void lua_close (lua_State *L) {
   lua_assert(G(L)->tmudata == NULL);
   close_state(L);
 }
-

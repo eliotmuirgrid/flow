@@ -5,8 +5,8 @@
 */
 
 
-#include <stdlib.h>
-#include <math.h>
+#include "stdlib.h"
+#include "math.h"
 
 #define lmathlib_c
 
@@ -243,4 +243,3 @@ LUALIB_API int luaopen_math (lua_State *L) {
   lua_settable(L, LUA_GLOBALSINDEX);
   return 1;
 }
-

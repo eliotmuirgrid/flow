@@ -11,7 +11,7 @@
 #include "COLtrace.h"
 COL_TRACE_INIT;
 
-#include <string.h>
+#include "string.h"
 
 COLstring::COLstring(){
    init();
@@ -173,4 +173,3 @@ bool COLisThisAlpha(char Character){
    return (Character >= 'A' && Character <= 'Z') ||
           (Character >= 'a' && Character <= 'z');
 }
-

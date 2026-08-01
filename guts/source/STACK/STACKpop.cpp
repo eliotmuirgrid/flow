@@ -8,9 +8,9 @@
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include <STACK/STACKsize.h>
-#include <LUA/LUAlua.h>
-#include <COL/COLtrace.h>
+#include "STACKsize.h"
+#include "LUAlua.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 // Just remove the top - it doesn't destroy it.

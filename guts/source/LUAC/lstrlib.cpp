@@ -5,11 +5,11 @@
 */
 
 
-#include <ctype.h>
-#include <stddef.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "ctype.h"
+#include "stddef.h"
+#include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
 
 #define lstrlib_c
 
@@ -767,4 +767,3 @@ LUALIB_API int luaopen_string (lua_State *L) {
   luaL_openlib(L, LUA_STRLIBNAME, strlib, 0);
   return 1;
 }
-

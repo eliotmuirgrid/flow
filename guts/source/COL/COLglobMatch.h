@@ -10,4 +10,3 @@
 //-------------------------------------------------------
 
 bool COLglobMatch(const char* pTarget, const char* pPattern);
-

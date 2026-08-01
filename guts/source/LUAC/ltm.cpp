@@ -5,7 +5,7 @@
 */
 
 
-#include <string.h>
+#include "string.h"
 
 #define ltm_c
 
@@ -84,4 +84,3 @@ const TObject *luaT_gettmbyobj (lua_State *L, const TObject *o, TMS event) {
       ? luaH_getstr(mt, ename)
       : &luaO_nilobject;
 }
-

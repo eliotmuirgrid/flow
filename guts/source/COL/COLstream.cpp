@@ -11,8 +11,8 @@
 #include "COLsinkFile.h"
 #include "COLhex.h"
 
-#include <string.h>
-#include <stdio.h>
+#include "string.h"
+#include "stdio.h"
 
 COLstream COLout(new COLsinkFile(1), true);
 COLstream COLerr(new COLsinkFile(2), true); 

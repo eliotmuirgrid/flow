@@ -8,9 +8,9 @@
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include <OS/OSisMac.h>
-#include <LUA/LUAlua.h>
-#include <COL/COLtrace.h>
+#include "OSisMac.h"
+#include "LUAlua.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 int OSisMacL(lua_State* L){

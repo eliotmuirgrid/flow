@@ -8,11 +8,11 @@
 
 #include "LUApathSet.h"
 
-#include "FIL/FILdirExe.h"
+#include "FILdirExe.h"
 
-#include <stdlib.h>
+#include "stdlib.h"
 
-#include "COL/COLtrace.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 void LUApathSet(lua_State* L, const COLstring& Exe){

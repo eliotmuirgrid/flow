@@ -4,7 +4,7 @@
 // COLthread
 //-------------------------------------------------------
 
-#include <libc/thread/thread.h>
+#include "libc/thread/thread.h"
 
 int COLthreadId(){
    return pthread_getthreadid_np();

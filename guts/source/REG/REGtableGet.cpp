@@ -8,9 +8,9 @@
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include <COL/COLstringPushL.h>
-#include <LUA/LUAlua.h>
-#include <COL/COLtrace.h>
+#include "COLstringPushL.h"
+#include "LUAlua.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 void REGtableGet(lua_State* L, const COLstring& Name){

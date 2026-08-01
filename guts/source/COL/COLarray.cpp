@@ -11,7 +11,7 @@
 #include "COLtrace.h"
 COL_TRACE_INIT;
 
-#include <assert.h>
+#include "assert.h"
 
 void COLcheckBoundary(int i, int Size){
    //COL_FUNCTION(COLcheckBoundary);

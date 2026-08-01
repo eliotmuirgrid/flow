@@ -8,12 +8,12 @@
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include <LUA/LUAlua.h>
-#include <LUA/LUAtracePatternGet.h>
-#include <LUA/LUAtraceFileSet.h>
-#include <FIL/FILpathNameNoExt.h>
-#include <COL/COLglobMatch.h>
-#include <COL/COLtrace.h>
+#include "LUAlua.h"
+#include "LUAtracePatternGet.h"
+#include "LUAtraceFileSet.h"
+#include "FILpathNameNoExt.h"
+#include "COLglobMatch.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 void HOOKreturn(lua_State* L, lua_Debug* ar){

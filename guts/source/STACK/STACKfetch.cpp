@@ -8,8 +8,8 @@
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include <LUA/LUAlua.h>
-#include <COL/COLtrace.h>
+#include "LUAlua.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 void STACKfetch(lua_State* L, int i, int j){

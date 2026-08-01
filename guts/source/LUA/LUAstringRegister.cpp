@@ -6,11 +6,11 @@
  * Date: Wed  1 Jul 2026 06:17:53 EST
  ***************************************/
 
-#include "LUA/LUAstringRegister.h"
-#include "LUA/LUAstringSplit.h"
-#include "LUA/LUAlua.h"
+#include "LUAstringRegister.h"
+#include "LUAstringSplit.h"
+#include "LUAlua.h"
 
-#include "COL/COLtrace.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 // We have to extend Lua 5.0 to do what 5.1 already has

@@ -13,7 +13,7 @@
 #include "libc/stdio/stdio.h"
 #include "libc/sysv/consts/s.h"
 
-#include <COL/COLtrace.h>
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 bool DIRicreate(const COLstring& Path){

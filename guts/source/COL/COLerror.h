@@ -12,4 +12,3 @@ class COLstring;
 
 // This returns the error code from the operating system translation table.  May be quite incomprehensible :-)
 COLstring COLerrorMessage(int ErrorCode);
-

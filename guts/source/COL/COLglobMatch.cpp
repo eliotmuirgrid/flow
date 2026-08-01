@@ -11,7 +11,7 @@
 //#include "COLstring.h"
 //COL_TRACE_INIT;
 
-#include <string.h>
+#include "string.h"
 
 bool COLmatchUntilChar(const char** ppTarget, char Char){
   // COL_FUNCTION(COLmatchUntilChar);

@@ -8,10 +8,10 @@
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include <LUA/LUAlua.h>
-#include <LUA/LUAtraceFileGet.h>
-#include <COL/COLstringL.h>
-#include <COL/COLtrace.h>
+#include "LUAlua.h"
+#include "LUAtraceFileGet.h"
+#include "COLstringL.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 int LUAltrace(lua_State* L){

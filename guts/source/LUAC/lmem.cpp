@@ -5,7 +5,7 @@
 */
 
 
-#include <stdlib.h>
+#include "stdlib.h"
 
 #define lmem_c
 
@@ -88,4 +88,3 @@ void *luaM_realloc (lua_State *L, void *block, lu_mem oldsize, lu_mem size) {
   }
   return block;
 }
-

@@ -10,4 +10,3 @@
 class COLsink;
 
 void COLhex(int Size, const void* pData, COLsink* pSink, int Indent);
-

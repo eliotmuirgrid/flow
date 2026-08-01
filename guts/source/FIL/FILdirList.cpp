@@ -8,12 +8,12 @@
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include <FIL/FILdirList.h>
+#include "FILdirList.h"
 
-#include <dirent.h>
+#include "dirent.h"
 
-#include <COL/COLdictSorted.h>
-#include <COL/COLtrace.h>
+#include "COLdictSorted.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 bool FILdirList(const COLstring& Dir, COLdictSorted<COLstring, COLfile>* pList){
@@ -30,4 +30,3 @@ bool FILdirList(const COLstring& Dir, COLdictSorted<COLstring, COLfile>* pList){
    closedir(dir);
    return true;
 }
-

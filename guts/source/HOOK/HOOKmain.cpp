@@ -8,12 +8,12 @@
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include <LUA/LUAlua.h>
-#include <HOOK/HOOKcall.h>
-#include <HOOK/HOOKreturn.h>
-#include <HOOK/HOOKtailReturn.h>
+#include "LUAlua.h"
+#include "HOOKcall.h"
+#include "HOOKreturn.h"
+#include "HOOKtailReturn.h"
 
-#include <COL/COLtrace.h>
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 void HOOKmain(lua_State* L, lua_Debug* pDb){

@@ -7,9 +7,9 @@
 //       0x6A68EB84 seconds since the beginning of the Unix Epoch time
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
-#include <sys/stat.h>
-#include <LUA/LUAlua.h>
-#include <COL/COLtrace.h>
+#include "sys/stat.h"
+#include "LUAlua.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 int FILEexists(lua_State* L){

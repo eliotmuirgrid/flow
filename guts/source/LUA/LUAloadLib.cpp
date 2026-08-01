@@ -6,11 +6,11 @@
  * Date: Wed  1 Jul 2026 06:17:53 EST
  ***************************************/
 
-#include "LUA/LUAloadLib.h"
-#include "LUA/LUAlua.h"
-#include "LUA/LUAstringRegister.h"
+#include "LUAloadLib.h"
+#include "LUAlua.h"
+#include "LUAstringRegister.h"
 
-#include "COL/COLtrace.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 void LUAloadLib(lua_State* L){
@@ -23,4 +23,3 @@ void LUAloadLib(lua_State* L){
    luaopen_debug(L);
    LUAstringRegister(L);
 }
-

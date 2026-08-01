@@ -9,8 +9,8 @@
 #define lauxlib_h
 
 
-#include <stddef.h>
-#include <stdio.h>
+#include "stddef.h"
+#include "stdio.h"
 
 #include "lua.h"
 
@@ -141,5 +141,4 @@ LUALIB_API int   lua_dobuffer (lua_State *L, const char *buff, size_t sz,
 
 
 #endif
-
 

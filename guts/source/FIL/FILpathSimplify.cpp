@@ -9,8 +9,8 @@
 // ---------------------------------------------------------------
 
 
-#include <FIL/FILdirSeparator.h>
-#include <COL/COLtrace.h>
+#include "FILdirSeparator.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 #define MAX_NESTED_DEPTH 256

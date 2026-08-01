@@ -7,10 +7,10 @@
 //       0x6A6A5A0D seconds since the beginning of the Unix Epoch time
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
-#include <dirent.h>
+#include "dirent.h"
 
-#include <LUA/LUAlua.h>
-#include <COL/COLtrace.h>
+#include "LUAlua.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 int DIRlist(lua_State* L){

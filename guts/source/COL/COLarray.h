@@ -88,4 +88,3 @@ COLstream& operator<<(COLstream& Stream, const COLarray<VType>& Vector){
    Vector.printOn(Stream);
    return Stream;
 }
-

@@ -8,8 +8,8 @@
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include <OS/OSisMac.h>
-#include <COL/COLtrace.h>
+#include "OSisMac.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 #define _COSMO_SOURCE

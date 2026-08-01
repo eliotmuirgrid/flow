@@ -8,10 +8,10 @@
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include <unistd.h>
-#include <LUA/LUAlua.h>
-#include <COL/COLstringL.h>
-#include <COL/COLtrace.h>
+#include "unistd.h"
+#include "LUAlua.h"
+#include "COLstringL.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 int DIRdelete(lua_State* L){

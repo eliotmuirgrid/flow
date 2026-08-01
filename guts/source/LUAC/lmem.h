@@ -8,7 +8,7 @@
 #define lmem_h
 
 
-#include <stddef.h>
+#include "stddef.h"
 
 #include "llimits.h"
 #include "lua.h"
@@ -41,4 +41,3 @@ void *luaM_growaux (lua_State *L, void *block, int *size, int size_elem,
 
 
 #endif
-

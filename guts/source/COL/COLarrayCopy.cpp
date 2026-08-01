@@ -6,7 +6,7 @@
 #include "COLarrayCopy.h"
 #include "COLarray.h"
 
-#include <string.h>
+#include "string.h"
 
 #include "COLtrace.h" 
 COL_TRACE_INIT

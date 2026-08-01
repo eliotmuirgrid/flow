@@ -9,6 +9,6 @@
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include "COL/COLbase.h"
+#include "COLbase.h"
 
 bool FLAGpresent(const COLstring& Name, COLarray<COLstring>* pArgs);

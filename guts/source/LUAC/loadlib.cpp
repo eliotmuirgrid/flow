@@ -43,7 +43,7 @@
 * as an emulation layer on top of native functions.
 */
 
-#include <dlfcn.h>
+#include "dlfcn.h"
 
 static int loadlib(lua_State *L)
 {
@@ -90,7 +90,7 @@ static int loadlib(lua_State *L)
 * This is an implementation of loadlib for Windows using native functions.
 */
 
-#include <windows.h>
+#include "windows.h"
 
 static void pusherror(lua_State *L)
 {

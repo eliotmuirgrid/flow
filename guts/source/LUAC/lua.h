@@ -10,8 +10,8 @@
 #ifndef lua_h
 #define lua_h
 
-#include <stdarg.h>
-#include <stddef.h>
+#include "stdarg.h"
+#include "stddef.h"
 
 
 #define LUA_VERSION	"Lua 5.0.3"

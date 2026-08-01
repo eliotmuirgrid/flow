@@ -45,4 +45,3 @@ COLstream& newline(COLstream& Stream);
 
 extern COLstream COLout; 
 extern COLstream COLerr;
-

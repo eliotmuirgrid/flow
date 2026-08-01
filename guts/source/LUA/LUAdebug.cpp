@@ -4,15 +4,15 @@
  * Date: Wed  1 Jul 2026 06:17:53 EST
  **************************/
 
-#include <COL/COLstring.h>
-#include <COL/COLglobMatch.h>
-#include <LUA/LUAlua.h>
-#include <LUA/LUAdebug.h>
-#include <LUA/LUAtraceFileSet.h>
-#include <HOOK/HOOKmain.h>
-#include <LUA/LUAtracePatternSet.h>
+#include "COLstring.h"
+#include "COLglobMatch.h"
+#include "LUAlua.h"
+#include "LUAdebug.h"
+#include "LUAtraceFileSet.h"
+#include "HOOKmain.h"
+#include "LUAtracePatternSet.h"
 
-#include "COL/COLtrace.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 void LUAdebug(lua_State* L, const COLstring& Match){

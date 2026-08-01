@@ -6,10 +6,10 @@
 
 
 
-#include <ctype.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "ctype.h"
+#include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
 
 #define lbaselib_c
 
@@ -18,7 +18,7 @@
 #include "lauxlib.h"
 #include "lualib.h"
 
-#include <COL/COLtrace.h>
+#include "COLtrace.h"
 COL_TRACE_INIT
 
 
@@ -676,4 +676,3 @@ LUALIB_API int luaopen_base (lua_State *L) {
   lua_setglobal(L, REQTAB);
   return 0;
 }
-

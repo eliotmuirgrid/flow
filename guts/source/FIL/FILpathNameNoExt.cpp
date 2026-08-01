@@ -1,7 +1,7 @@
-#include <FIL/FILpathName.h>
+#include "FILpathName.h"
 
-#include <COL/COLstring.h>
-#include <COL/COLtrace.h>
+#include "COLstring.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 

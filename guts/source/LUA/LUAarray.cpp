@@ -8,8 +8,8 @@
 
 #include "LUAlua.h"
 
-#include <COL/COLarray.h>
-#include <COL/COLtrace.h>
+#include "COLarray.h"
+#include "COLtrace.h"
 COL_TRACE_INIT
 
 void LUApushArray(lua_State* L, const COLarray<COLstring>& In){

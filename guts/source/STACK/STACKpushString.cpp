@@ -8,10 +8,10 @@
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include <STACK/STACKpush.h>
-#include <LUA/LUAlua.h>
-#include <COL/COLstringPushL.h>
-#include <COL/COLtrace.h>
+#include "STACKpush.h"
+#include "LUAlua.h"
+#include "COLstringPushL.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 void STACKpushString(lua_State* L, int i, const COLstring& Value){

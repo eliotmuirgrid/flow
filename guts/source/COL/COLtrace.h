@@ -21,10 +21,10 @@
 //-------------------------------------------------------
 
 #include "COLstream.h"
-#include <stdio.h>
+#include "stdio.h"
 #include "COLstring.h"
 #include "COLsinkString.h"
-#include <string.h>
+#include "string.h"
 
 // Call this to activate tracing - see COLarg too
 void COLtrace(const char* Pattern);
@@ -123,4 +123,3 @@ private:
 
 void COLwriteIndent(COLsink* pSink, int Level);
 #endif
-

@@ -149,4 +149,3 @@ public:
    COLdictSortedIteratorT<KType, VType> cbegin() const { COLdictSortedIteratorT<KType, VType> i(m_pRoot); i.first(); return i; }
    COLdictSortedIteratorT<KType, VType> cend()   const { COLdictSortedIteratorT<KType, VType> i(m_pRoot); i.end(); return i; }
 };
-

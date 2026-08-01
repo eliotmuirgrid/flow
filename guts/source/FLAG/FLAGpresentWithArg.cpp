@@ -8,9 +8,9 @@
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include <FLAG/FLAGpresentWithArg.h>
-#include <COL/COLarray.h>
-#include <COL/COLtrace.h>
+#include "FLAGpresentWithArg.h"
+#include "COLarray.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 bool FLAGpresentWithArg(const COLstring& Name, COLstring* pValue, COLarray<COLstring>* pArgs){
@@ -28,4 +28,3 @@ bool FLAGpresentWithArg(const COLstring& Name, COLstring* pValue, COLarray<COLst
    }
    return false;
 }
-

@@ -11,7 +11,7 @@
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include "COL/COLbase.h"
+#include "COLbase.h"
 
 class COLstring;
 

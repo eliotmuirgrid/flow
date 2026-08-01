@@ -7,7 +7,7 @@
 //-------------------------------------------------------
 #include "COLtimestamp.h"
 
-#include <time.h>
+#include "time.h"
 
 COLtimestamp COLcurrentTime() {
    struct timespec Time;

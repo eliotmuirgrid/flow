@@ -8,8 +8,8 @@
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include <LUAC/LUACstate.h>
-#include <COL/COLtrace.h>
+#include "LUACstate.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 void LUACstate(){

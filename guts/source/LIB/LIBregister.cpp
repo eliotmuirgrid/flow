@@ -9,17 +9,17 @@
 // ---------------------------------------------------------------
 
 #include "LUAlua.h"
-#include <DIR/DIRcreate.h>
-#include <DIR/DIRdelete.h>
-#include <DIR/DIRlist.h>
-#include <FILE/FILEexists.h>
-#include <FILE/FILEextension.h>
-#include <LUA/LUAltrace.h>
-#include <OS/OSisMacL.h>
-#include <OS/OSisWindowsL.h>
-#include <STRING/STRINGsplit.h>
+#include "DIRcreate.h"
+#include "DIRdelete.h"
+#include "DIRlist.h"
+#include "FILEexists.h"
+#include "FILEextension.h"
+#include "LUAltrace.h"
+#include "OSisMacL.h"
+#include "OSisWindowsL.h"
+#include "STRINGsplit.h"
 
-#include <COL/COLtrace.h>
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 // This file is auto generated. 

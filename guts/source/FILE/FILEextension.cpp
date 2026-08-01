@@ -8,10 +8,10 @@
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include <COL/COLstringL.h>
-#include <COL/COLstringPushL.h>
-#include <LUA/LUAlua.h>
-#include <COL/COLtrace.h>
+#include "COLstringL.h"
+#include "COLstringPushL.h"
+#include "LUAlua.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 int FILEextension(lua_State* L){
