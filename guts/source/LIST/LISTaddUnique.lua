@@ -1,3 +1,5 @@
+COLrequire 'SORTalpha'
+
 function LISTaddUnique(List, Value)
    for _, V in ipairs(List) do
       if V == Value then
@@ -5,4 +7,5 @@ function LISTaddUnique(List, Value)
       end
    end
    table.insert(List, Value)
+   SORTalpha(List);
 end	

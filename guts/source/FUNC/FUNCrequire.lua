@@ -1,0 +1,5 @@
+
+
+function FUNCrequire(FuncName)
+
+end
