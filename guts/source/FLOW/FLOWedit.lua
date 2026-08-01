@@ -3,6 +3,10 @@ COLrequire 'DIRflowCode'
 COLrequire 'FLOWopen'
 
 function FLOWedit(FName)
+   if FName == "commands.txt" then  -- TODO Flow is not architecturally proud - we do what makes thing flow in immediately and keep going
+      FLOWopen(DIRflowCode().."MAIN/commands.txt");
+      return
+   end	
    local P = PREFIXget(FName);
    local B = DIRflowCode()..P.."/"..FName;
    local LFile = B..".lua";

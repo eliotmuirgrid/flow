@@ -9,7 +9,7 @@
 #include <LUA/LUAlua.h>
 #include <LUA/LUAdebug.h>
 #include <LUA/LUAtraceFileSet.h>
-#include <LUA/LUAhook.h>
+#include <HOOK/HOOKmain.h>
 #include <LUA/LUAtracePatternSet.h>
 
 #include "COL/COLtrace.h"
@@ -19,7 +19,7 @@ void LUAdebug(lua_State* L, const COLstring& Match){
    COL_FUNCTION(LUAdebug);
    COL_VAR(Match);
    LUAtracePatternSet(L, Match);
-   lua_sethook(L, LUAhook, LUA_MASKCALL | LUA_MASKRET, 0);
+   lua_sethook(L, HOOKmain, LUA_MASKCALL | LUA_MASKRET, 0);
    // TODO this is really ugly Eliot you should be ashamed of yourself!  CLEAN ME!
    if (COLglobMatch("MAINmain", Match.data())){ 
       COL_TRC("Tracing MAINmain.lua");

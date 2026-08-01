@@ -7,8 +7,8 @@ function MAINmain(Arg)
    COL_VAR(Commands);
    if not Commands[Arg[2]] then
       print "Please use a supported command:"
-      for K, _ in pairs(Commands) do
-         print("   "..K);
+      for K, V in pairs(Commands) do
+         print("   "..K.." -> "..V);
       end
       return;
    end

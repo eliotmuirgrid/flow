@@ -49,14 +49,6 @@ COLstream& operator<<(COLstream& Stream, const char* pString){
    return Stream;
 }
 
-
-COLstream& operator<<(COLstream& Stream, int Number){
-   char Buffer[32];
-   int Size = sprintf(Buffer, "%d", Number);
-   Stream.sink()->write(Buffer, Size);
-   return Stream;
-}
-
 COLstream& operator<<(COLstream& Stream, bool Value){
    if (Value){
       Stream.sink()->write("true", 4);
@@ -66,45 +58,51 @@ COLstream& operator<<(COLstream& Stream, bool Value){
    return Stream;
 }
 
+COLstream& operator<<(COLstream& Stream, int Number){
+   char Buffer[32];
+   int Size = snprintf(Buffer, sizeof(Buffer), "%d", Number);
+   Stream.sink()->write(Buffer, Size);
+   return Stream;
+}
+
 COLstream& operator<<(COLstream& Stream, long Number){
    char Buffer[32];
-   int Size = sprintf(Buffer, "%ld", Number);
+   int Size = snprintf(Buffer, sizeof(Buffer), "%ld", Number);
    Stream.sink()->write(Buffer, Size);
    return Stream;
 }
 
 COLstream& operator<<(COLstream& Stream, unsigned int Number){
    char Buffer[32];
-   int Size = sprintf(Buffer, "%d", Number);
+   int Size = snprintf(Buffer, sizeof(Buffer), "%d", Number);
    Stream.sink()->write(Buffer, Size);
    return Stream;
 }
 
 COLstream& operator<<(COLstream& Stream, unsigned long Number){
    char Buffer[32];
-   int Size = sprintf(Buffer, "%lu", Number);
+   int Size = snprintf(Buffer, sizeof(Buffer), "%lu", Number);
    Stream.sink()->write(Buffer, Size);
    return Stream;
 }
 
 COLstream& operator<<(COLstream& Stream, double Number){
    char Buffer[32];
-   int Size = sprintf(Buffer, "%f", Number);
+   int Size = snprintf(Buffer, sizeof(Buffer), "%f", Number);
    Stream.sink()->write(Buffer, Size);
    return Stream;
 }
 
 COLstream& operator<<(COLstream& Stream, COLint64 Number){
    char Buffer[32];
-   int Size = sprintf(Buffer, "%llu", Number);
+   int Size = snprintf(Buffer, sizeof(Buffer), "%llu", Number);
    Stream.sink()->write(Buffer, Size);
    return Stream;
 }
 
-
 COLstream& operator<<(COLstream& Stream, const void* pPointer){
    char Buffer[32];
-   int Size = sprintf(Buffer, "%p", pPointer);
+   int Size = snprintf(Buffer, sizeof(Buffer), "%p", pPointer);
    Stream.sink()->write(Buffer, Size);
    return Stream;
 }

@@ -9,3 +9,6 @@ clean=MAKEclean
 edit=FLOWeditCommand
 function:delete=FLOWdeleteCommand
 lib:regenerate=LIBregenerate
+md:link:find=MDlinkFindCommand
+test:trace=TESTtest
+include:reduce=INCLUDEreduce

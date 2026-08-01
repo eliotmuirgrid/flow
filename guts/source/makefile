@@ -13,6 +13,7 @@ CXX := $(TOOL_DIR)cosmoc++
 DIRS    := $(wildcard ./*/)
 SEARCH  := $(foreach dir,$(DIRS),$(dir)*.c $(dir)*.cpp)
 LSEARCH := $(sort $(wildcard */*.lua))
+ISEARCH := $(foreach dir,$(DIRS), -I$(dir))
 SOURCES := $(wildcard $(SEARCH))
 
 # Convert:
@@ -26,8 +27,8 @@ OBJECTS += $(OBJECTS_EXTRA)
 # -MMD generates a .d file beside each object file.
 DEPENDS := $(OBJECTS:.o=.d)
 
-PCFLAGS   := -Wno-pointer-to-int-cast -MMD -MP -I.
-PCPPFLAGS := -MMD -MP -I.
+PCFLAGS   := -Wno-pointer-to-int-cast -MMD -MP -I. $(ISEARCH)
+PCPPFLAGS := -MMD -MP -I. $(ISEARCH) 
 
 .PHONY: all clean show depends
 
@@ -47,8 +48,8 @@ $(BUILD_DIR)/%.o: %.cpp
 	@mkdir -p $(dir $@)
 	$(CXX) $(PCPPFLAGS) -c -o $@ $<
 
-lsearch:
-	@echo LSEARCH = $(LSEARCH)
+isearch:
+	@echo ISEARCH = $(ISEARCH)
 
 show:
 	@echo "Making: $(TARGET)"
