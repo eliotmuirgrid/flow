@@ -38,7 +38,7 @@ function LIBregenerate()
       YEAR       =os.date("%Y"),
    }
    -- Code to load the list and add the new name.
-   local List = FILEreadLines(DIRflowCode().."LIB/LIBlist.config");
+   local List = LISTload("LIBlist");
    local IList = '';
    local RList = '';
    for i=1, table.getn(List) do
@@ -50,6 +50,5 @@ function LIBregenerate()
    Tokens.REGISTER_LIST = RList;
    local BContent = TEMPLATEfill(Body,Tokens);
    local RFile = DIRflowCode().."LIB/LIBregister.cpp";
-   FLOWdeleteFile(RFile);
-   FUNCwrite(RFile, BContent);
+   FUNCwrite(RFile, BContent, true);
 end

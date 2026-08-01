@@ -1,6 +1,5 @@
-function COMMANDaddCommand()
-   --load commands
-   --Add unigue
-   --sort them
-   --add Function
+COLrequire 'COMMANDadd'
+
+function COMMANDaddCommand(Arg)
+   COMMANDadd(Arg[3]);
 end

@@ -10,8 +10,7 @@ function @@NAME@@()
 end
 ]]
 
-function FUNClua(Args)
-   local Name = Args[3]; 
+function FUNClua(Name)
    if (not Name) then
       print("Need a name of the function.");
       return;
