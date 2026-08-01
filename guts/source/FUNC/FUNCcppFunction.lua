@@ -5,7 +5,6 @@ COLrequire "CODEprefixRemainder"
 COLrequire "TEMPLATEfill"
 COLrequire "DIRflowCode"
 COLrequire "FLOWedit"
-COLrequire "PREFIXget"
 
 local Header=[[
 #pragma once
@@ -33,8 +32,8 @@ local Body=[[
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include <@@PREFIX@@/@@NAME@@.h>
-#include <COL/COLtrace.h>
+#include "@@NAME@@.h"
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 void @@NAME@@(){
@@ -51,7 +50,6 @@ function FUNCcppFunction(Args)
    end	
    local Tokens={
       NAME       =Name,
-      PREFIX     =PREFIXget(Name),
       HUMAN_DATE =DATEhumanPretty(),
       HEX_DATE   =DATEcomputerPretty(),
       YEAR       =os.date("%Y"),

@@ -19,9 +19,9 @@ local Body=[[
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include <LUA/LUAlua.h>
+#include "LUAlua.h"
 @@INCLUDE_LIST@@
-#include <COL/COLtrace.h>
+#include "COLtrace.h"
 COL_TRACE_INIT;
 
 // This file is auto generated. 
@@ -43,7 +43,7 @@ function LIBregenerate()
    local RList = '';
    for i=1, table.getn(List) do
       local Prefix = PREFIXget(List[i]);
-      IList = IList.."#include <"..Prefix.."/"..List[i]..".h>\n";
+      IList = IList..'#include "'..List[i]..'.h"\n';
       RList = RList..'   lua_register(L, "'..FLOWstripTrailingL(List[i])..'", '..List[i]..");\n";
    end
    Tokens.INCLUDE_LIST  = IList;
