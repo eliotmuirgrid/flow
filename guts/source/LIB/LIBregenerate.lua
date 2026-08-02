@@ -6,7 +6,7 @@ COLrequire "TEMPLATEfill"
 COLrequire "PREFIXget"
 COLrequire "DIRflowCode"
 COLrequire "FLOWdeleteFile"
-COLrequire "FLOWstripTrailingL"
+COLrequire "FLOWstripTrailing"
 
 local Body=[[
 //----------------------------------------------------------------
@@ -44,7 +44,7 @@ function LIBregenerate()
    for i=1, table.getn(List) do
       local Prefix = PREFIXget(List[i]);
       IList = IList..'#include "'..List[i]..'.h"\n';
-      RList = RList..'   lua_register(L, "'..FLOWstripTrailingL(List[i])..'", '..List[i]..");\n";
+      RList = RList..'   lua_register(L, "'..FLOWstripTrailing(List[i])..'", '..List[i]..");\n";
    end
    Tokens.INCLUDE_LIST  = IList;
    Tokens.REGISTER_LIST = RList;

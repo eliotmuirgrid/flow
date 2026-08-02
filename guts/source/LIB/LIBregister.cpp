@@ -3,8 +3,8 @@
 //
 // Implementation
 //
-// Date: Saturday 1st August 2026
-//       0x6A6E21F3 the beginning of the Unix Epoch time
+// Date: Sunday 2nd August 2026
+//       0x6A6F5119 the beginning of the Unix Epoch time
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
@@ -14,6 +14,7 @@
 #include "DIRlist.h"
 #include "FILEexists.h"
 #include "FILEextension.h"
+#include "FILEpath.h"
 #include "LUAltrace.h"
 #include "OSisMacL.h"
 #include "OSisWindowsL.h"
@@ -30,6 +31,7 @@ void LIBregister(lua_State* L){
    lua_register(L, "DIRlist", DIRlist);
    lua_register(L, "FILEexists", FILEexists);
    lua_register(L, "FILEextension", FILEextension);
+   lua_register(L, "FILEpath", FILEpath);
    lua_register(L, "LUAltrace", LUAltrace);
    lua_register(L, "OSisMac", OSisMacL);
    lua_register(L, "OSisWindows", OSisWindowsL);

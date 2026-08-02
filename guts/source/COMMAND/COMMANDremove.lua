@@ -8,6 +8,6 @@ function COMMANDremove(Command)
       return;
    end
    print("Removing command: "..Command);
-   LISTconfigRemove("MAINcommands", Command);
-   FLOWdelete(Command);
+   LISTconfigRemove("MAINcommands", Command.."Command");
+   FLOWdelete(Command.."Command");
 end

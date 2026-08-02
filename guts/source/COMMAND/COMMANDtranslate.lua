@@ -8,7 +8,9 @@ function COMMANDtranslate(Command)
    Command = COMMANDcommandStrip(Command);
    local Prefix = PREFIXget(Command);
    local Out = '';
-   local Out=STRINGtoLower(Prefix)..":"
+   if Prefix ~= 'FLOW' then  -- FLOW is special!
+      Out=STRINGtoLower(Prefix)..":"
+   end
    Command = Command:sub(Prefix:len()+1, Command:len());
    for i=1, Command:len() do  -- not super efficient shrug
       local Char = Command:sub(i, i);
