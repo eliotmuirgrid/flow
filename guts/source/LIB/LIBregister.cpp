@@ -3,8 +3,8 @@
 //
 // Implementation
 //
-// Date: Sunday 2nd August 2026
-//       0x6A6F5119 the beginning of the Unix Epoch time
+// Date: Tuesday 4th August 2026
+//       0x6A720CE2 the beginning of the Unix Epoch time
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 

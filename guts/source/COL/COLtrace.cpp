@@ -68,7 +68,7 @@ void COLtimeStamp(const char* pModule, COLstream& Stream){
 }
 
 COLmodule::COLmodule(const char* pFileName){
-   strncpy(ModuleName, pFileName, sizeof(ModuleName));
+   strncpy(Name, pFileName, sizeof(Name));
 }
 
 static const char* s_TracePattern = "";
@@ -93,8 +93,8 @@ void COLheader(){
    COLout << "### Tracing redirected into " << FileName << newline;
 }*/
 
-bool COLloggingEnabled(const char* ModuleName, int* pResult){
-   if (COLglobMatch(ModuleName, s_TracePattern)){
+bool COLloggingEnabled(const char* Name, int* pResult){
+   if (COLglobMatch(Name, s_TracePattern)){
       *pResult = 1;
       return true;
    } else {

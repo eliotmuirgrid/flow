@@ -22,6 +22,9 @@ public:
 
    bool empty() const { return m_Size ==0; }
 
+   void clear();
+   void set(const char* pString, int Size);
+
    int size() const { return m_Size; }
    void setSize(int NewSize) { m_Size = NewSize; }  // no checking - be careful
 
@@ -31,6 +34,7 @@ public:
    char* data()             { return m_Capacity < 16 ? m_pData.ShortBuffer : m_pData.pHeap; }
    const char* data() const { return m_Capacity < 16 ? m_pData.ShortBuffer : m_pData.pHeap; }
 
+   COLstring& append(const COLstring& From);
    COLstring& append(const char* pData, int Size);
    COLstring& append(const char* pData);
    COLstring& operator+=(const char Char);
@@ -52,6 +56,18 @@ public:
 
    const char& operator[](int i) const{ return data()[i]; }	   
    char& operator[](int i)            { return data()[i]; }	   
+
+   void swap(COLstring* pThat);
+
+
+   // Case insensitive string compare similar to stricmp/strcasecmp.
+   // Returns 0 for equal, negative if this is less than s, positive if this is greater than s.
+   int icompare(const COLstring& s) const;
+   int icompare(const char*      s) const;
+
+   // YUCK - make a function. 
+   // Case insensitive string compare similar to stricmp/strcasecmp.
+   static int icompare(const char* s1, const char* s2);
 private:
    void init() {
       m_Size = 0;

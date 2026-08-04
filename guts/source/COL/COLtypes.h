@@ -1,5 +1,4 @@
-#ifndef _COL_TYPES_H_
-#define _COL_TYPES_H_
+#pragma once
 //-------------------------------------------------------
 // Copyright (C) 2021 Eliot Muir.  All Rights Reserved
 //
@@ -9,7 +8,5 @@
 //-------------------------------------------------------
 
 #define COLint64 long long
+#define COLuint64 unsigned long long
 
-// I deliberately avoid supporting unsigned integers - no sense to encourage their use.
-
-#endif

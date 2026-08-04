@@ -46,7 +46,7 @@ int @@NAME@@(lua_State* L){
 }
 ]]
 
-function FUNCluaCppExtension(Args)
+function FUNCluaC(Args)
    local Name = Args[3]; 
    if (not Name) then
       print("Need a name of the function.");

@@ -12,29 +12,22 @@
 COL_TRACE_INIT;
 
 #include "errno.h"
+#include "stdlib.h"
+#include "string.h"
 
-#ifdef _WIN32
-#include "windows.h"
-COLstring COLerrorMessage(int ErrorCode){
-   char* MessageBuffer;
-   DWORD dwFormatFlags = FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_IGNORE_INSERTS | FORMAT_MESSAGE_FROM_SYSTEM;
-   ::FormatMessage(dwFormatFlags, NULL, 
-      ErrorCode,
-      MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), 
-      (char*) &MessageBuffer, 0, NULL);
-   COLstring Result = MessageBuffer;
-   LocalFree(MessageBuffer);
-   COL_VAR2(ErrorCode, Result);
-   return Result;
-}
-#else
 COLstring COLerrorMessage(int ErrorCode){
    COL_FUNCTION(COLerrorMessage);
-   COLstring Result;
-   Result.setCapacity(255);
-   strerror_r(ErrorCode, Result.data(), Result.capacity());
-   Result.setSize(strlen(Result.data()));
+
+   char Buffer[256];
+   strerror_r(ErrorCode, Buffer, sizeof(Buffer));
+
+   COLstring Result = Buffer;
    COL_VAR2(ErrorCode, Result);
    return Result;
 }
-#endif
+
+void COLassert(const char* expr, const char* file, int line, const char* func){
+   COL_FUNCTION(COLassert)
+   COL_ERR("Assertion: " << expr << " in " << file << ":" << line << " in " << func);
+   abort();
+}

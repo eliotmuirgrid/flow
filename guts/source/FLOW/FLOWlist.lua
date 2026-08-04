@@ -10,8 +10,8 @@ function FLOWlist(Prefix)
    end
    local Dir = DIRflowCode().."/"..Prefix;
 
-   local DList = DIRlistWild(Dir);
-   print (COLshow(DList));
+   --local DList = DIRlistWild(Dir);
+   --print (COLshow(DList));
    if not FILEexists(Dir) then
       print(Prefix.." does not exist.");
       return;

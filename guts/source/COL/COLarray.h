@@ -22,6 +22,9 @@ unsigned int COLcalculateCapacity(unsigned int v);
 
 template<typename VType> class COLarray {
 public:
+   typedef VType*       iterator;
+   typedef const VType* const_iterator;
+
    COLarray() : m_Size(0), m_Capacity(0) { m_pItems = 0; }
    COLarray(int DesiredCapacity) : m_Size(0){
       m_Capacity = COLcalculateCapacity(DesiredCapacity);
@@ -66,10 +69,15 @@ public:
       m_Capacity = NewCapacity;
       m_pItems = pNewSpace;   
    } 
-   const VType* cbegin() const { return m_pItems; }
-   const VType* cend()   const { return m_pItems + m_Size; }
-   VType* begin() { return m_pItems; }
-   VType* end()   { return m_pItems + m_Size; }
+   iterator begin() { return m_pItems; }
+   iterator end()   { return m_pItems + m_Size; }
+
+   const_iterator begin() const { return m_pItems; }
+   const_iterator end()   const { return m_pItems + m_Size; }
+
+   const_iterator cbegin() const { return m_pItems; }
+   const_iterator cend()   const { return m_pItems + m_Size; }
+
    void printOn(COLstream& Stream) const {
       Stream << "Vector  Size=" << m_Size <<", Capacity=" << m_Capacity;
       int Count=0;

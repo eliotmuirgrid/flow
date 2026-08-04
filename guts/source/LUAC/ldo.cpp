@@ -467,4 +467,3 @@ int luaD_protectedparser (lua_State *L, ZIO *z, int bin) {
   }
   return status;
 }
-

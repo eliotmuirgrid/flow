@@ -11,7 +11,9 @@
 #include "COLtrace.h"
 COL_TRACE_INIT;
 
+#include "new" 
 #include "string.h"
+#include "ctype.h"
 
 COLstring::COLstring(){
    init();
@@ -54,6 +56,12 @@ COLstring::~COLstring(){
 COLstring& COLstring::append(const char* pData){
    return append(pData, strlen(pData));
 }
+
+COLstring& COLstring::append(const COLstring& Orig){
+   return append(Orig.data(), Orig.size());
+}
+
+
 
 COLstring& COLstring::append(const char* pData, int AddSize){
    if (m_Size + AddSize > m_Capacity){
@@ -144,6 +152,43 @@ bool COLstring::find(const char* Needle) const{
    const char* P = strstr(data(), Needle);
    return NULL != P;
 }
+
+void COLstring::swap(COLstring* pThat) {
+   if (!pThat || pThat == this) {
+      return;
+   }
+
+   unsigned char Temp[sizeof(COLstring)];
+   memcpy(Temp,  pThat, sizeof(COLstring));
+   memcpy(pThat, this, sizeof(COLstring));
+   memcpy(this,  Temp, sizeof(COLstring));
+}
+
+int COLstring::icompare(const char* s1, const char* s2) {
+   const unsigned char* us1 = (const unsigned char*)s1;
+   const unsigned char* us2 = (const unsigned char*)s2;
+   int i1, i2; // must be int
+   for (; (i1 = toupper(*us1)) == (i2 = toupper(*us2)); ++us1, ++us2) {
+      if (i1 == 0) {
+         return 0;
+      }
+   }
+   return i1 - i2;
+}
+
+int COLstring::icompare(const COLstring& s) const { return icompare(data(), s.data()); }
+int COLstring::icompare(const char*      s) const { return icompare(data(), s);        }
+
+void COLstring::clear(){
+   data()[0] = 0;
+   m_Size = 0;
+}
+
+void COLstring::set(const char* s, int len){
+   clear();
+   append(s, len);
+}
+
 
 // TODO boundary checks
 COLstring COLstring::substr(int Start, int Size) const{ return COLstring(data()+Start, Size);         }

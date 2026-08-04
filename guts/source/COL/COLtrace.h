@@ -56,7 +56,7 @@ void COLmilliSeconds();
 class COLmodule{
 public:
    COLmodule(const char* pFileName);
-   char ModuleName[30];
+   char Name[30];
 };
 
 #ifdef _WIN32
@@ -67,7 +67,7 @@ public:
 
 #define COL_TRACE_INIT static COLmodule sModule(__FILENAME__);
 
-bool COLloggingEnabled(const char* ModuleName, int* pResult);
+bool COLloggingEnabled(const char* Name, int* pResult);
 
 class COLlogStream : public COLstream{
 public:
@@ -77,24 +77,26 @@ public:
 private:
 };
 
+#define COL_ERR(X) do { COLtimeStamp(sModule.Name, COLlog); COLlog << "ERROR: " << X << newline; } while(0);
+
 #define COL_TRC(X)\
    do {\
       static int COLdoLog;\
-      if (COLdoLog > 0 || (COLdoLog == 0 && COLloggingEnabled(sModule.ModuleName, &COLdoLog)) ){\
-	 COLtimeStamp(sModule.ModuleName, COLlog);\
+      if (COLdoLog > 0 || (COLdoLog == 0 && COLloggingEnabled(sModule.Name, &COLdoLog)) ){\
+	 COLtimeStamp(sModule.Name, COLlog);\
          COLlog << X << newline;\
       }\
-   } while(0)
+   } while(0);
 
 void COLhexTrace(int Size, const void* pBuffer, COLstream& Stream);
 
 #define COL_HEX(LABEL, BUFFER, SIZE)\
    do {\
       static int COLdoLog;\
-      if (COLdoLog > 0 || (COLdoLog == 0 && COLloggingEnabled(sModule.ModuleName, &COLdoLog)) ){\
+      if (COLdoLog > 0 || (COLdoLog == 0 && COLloggingEnabled(sModule.Name, &COLdoLog)) ){\
          COLlogStream LogStream;\
          LogStream << LABEL; COLhexTrace(SIZE, BUFFER, LogStream); LogStream << newline;\
-         COLtimeStamp(sModule.ModuleName, COLlog);\
+         COLtimeStamp(sModule.Name, COLlog);\
          COLlog << LogStream.m_String;\
       }\
    } while(0)
@@ -117,9 +119,9 @@ private:
 };
 
 
-#define COL_FUNCTION(NAME) static int COLfOn; COLraiiFunc ggFFF(#NAME, sModule.ModuleName, __LINE__,(COLfOn > 0) || COLloggingEnabled(sModule.ModuleName, &COLfOn))
+#define COL_FUNCTION(NAME) static int COLfOn; COLraiiFunc ggFFF(#NAME, sModule.Name, __LINE__,(COLfOn > 0) || COLloggingEnabled(sModule.Name, &COLfOn));
 
-#define COL_METHOD(NAME) static int COLfOn; COLraiiFunc ggFFF(#NAME, sModule.ModuleName, __LINE__, this, (COLfOn > 0) || COLloggingEnabled(sModule.ModuleName, &COLfOn))
+#define COL_METHOD(NAME) static int COLfOn; COLraiiFunc ggFFF(#NAME, sModule.Name, __LINE__, this, (COLfOn > 0) || COLloggingEnabled(sModule.Name, &COLfOn));
 
 void COLwriteIndent(COLsink* pSink, int Level);
 #endif

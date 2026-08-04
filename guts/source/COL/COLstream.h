@@ -33,8 +33,9 @@ COLstream& operator<<(COLstream& Stream, long Value);
 COLstream& operator<<(COLstream& Stream, const void* pObject);
 COLstream& operator<<(COLstream& Stream, char Character);
 COLstream& operator<<(COLstream& Stream, unsigned int Number);
-COLstream& operator<<(COLstream& Stream, unsigned long Number);
+COLstream& operator<<(COLstream& Stream, unsigned long long Number);
 COLstream& operator<<(COLstream& Stream, COLint64 Number);
+COLstream& operator<<(COLstream& Stream, COLuint64 Number);
 COLstream& operator<<(COLstream& Stream, double Number);
 
 

@@ -10,4 +10,3 @@
 #include "COLbase.h"
 
 void COLarrayCopy(int argc, const char** pValues, COLarray<COLstring>* pOut); 
-

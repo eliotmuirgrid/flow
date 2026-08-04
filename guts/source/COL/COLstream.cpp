@@ -74,7 +74,7 @@ COLstream& operator<<(COLstream& Stream, long Number){
 
 COLstream& operator<<(COLstream& Stream, unsigned int Number){
    char Buffer[32];
-   int Size = snprintf(Buffer, sizeof(Buffer), "%d", Number);
+   int Size = snprintf(Buffer, sizeof(Buffer), "%u", Number);
    Stream.sink()->write(Buffer, Size);
    return Stream;
 }
@@ -94,6 +94,13 @@ COLstream& operator<<(COLstream& Stream, double Number){
 }
 
 COLstream& operator<<(COLstream& Stream, COLint64 Number){
+   char Buffer[32];
+   int Size = snprintf(Buffer, sizeof(Buffer), "%lld", Number);
+   Stream.sink()->write(Buffer, Size);
+   return Stream;
+}
+
+COLstream& operator<<(COLstream& Stream, COLuint64 Number){
    char Buffer[32];
    int Size = snprintf(Buffer, sizeof(Buffer), "%llu", Number);
    Stream.sink()->write(Buffer, Size);

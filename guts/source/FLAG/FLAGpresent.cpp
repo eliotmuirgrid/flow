@@ -26,4 +26,3 @@ bool FLAGpresent(const COLstring& Name,  COLarray<COLstring>* pArgs){
    }
    return false;
 }
-
