@@ -27,10 +27,8 @@ void COLsetTraceFile(const char* FileName){}
 #include "math.h"
 #include "string.h"
 
-
 #include "errno.h"
 #include "fcntl.h"
-
 
 //COLmutex s_LogMutex;
 
@@ -130,6 +128,8 @@ COLraiiFunc::~COLraiiFunc(){
 #define G ". . . . . . . . . . . . . . . . . . . . . . . . . "
 static const char* s_pIndent = G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G;
 
+// TODO - buffer overwrite funtimes ahead!
+// TODO - newlines need indentation 
 void COLwriteIndent(COLsink* pSink, int Level){
    pSink->write(s_pIndent, Level*2);
 }

@@ -13,7 +13,10 @@ function LUAloadFunc(Filename)
       end
    end
    local F = P.."/"..Filename
-   require(F);
+   local Success, Err = pcall(require,F);
+   if (not Success) then
+      print("Warning unable to load: "..F);
+   end   
 end
 
 function LUAload(FName)

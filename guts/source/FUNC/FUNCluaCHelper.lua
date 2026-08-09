@@ -52,6 +52,7 @@ function FUNCluaCHelper(Args)
       YEAR       =os.date("%Y"),
       EXPLANATION="To be documented by an AI agent later!"
    }
+   --print("Got Tokens");
    COL_VAR(Tokens);
    local HContent = TEMPLATEfill(Header,Tokens);
    COL_VAR(HContent);
@@ -61,10 +62,10 @@ function FUNCluaCHelper(Args)
    local BName = DIRflowCode()..Prefix.."/"..Prefix..Remainder..".cpp" 
 
    local BContent = TEMPLATEfill(Body,Tokens);
-   COL_VAR(BContent);
+   --print(BContent);
    COL_VAR2(HName, BName);
    FUNCwrite(HName, HContent);
    FUNCwrite(BName, BContent);
-   print ("Now lets edit "..Name);
+   --print ("Now lets edit "..Name);
    FLOWedit(Name);
 end

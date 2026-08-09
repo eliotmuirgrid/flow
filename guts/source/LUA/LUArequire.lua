@@ -2,6 +2,7 @@ require 'FLOW/FLOWfileLua'
 require 'FILE/FILEread'
 require 'LUA/LUAcommentRemove'
 require 'LUA/LUAlistFunctions'
+require 'LUA/LUAstringRemove'
 require 'PREFIX/PREFIXget'
 require 'DIR/DIRflowCode'
 
@@ -13,8 +14,12 @@ function LUArequire(Name, List)
    List[Name] = true;
 
    local File = FLOWfileLua(Name);
-   local Content = FILEread(File);
-   local Simple = LUAcommentRemove(Content);
+   if (not FILEexists(File)) then
+      return;
+   end
+   local Simple = FILEread(File);
+   Simple = LUAstringRemove(Simple);
+   Simple = LUAcommentRemove(Simple);
    local Funcs = LUAlistFunctions(Simple);
    for _, Func in ipairs(Funcs) do
       LUArequire(Func, List);

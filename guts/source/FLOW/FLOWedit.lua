@@ -23,7 +23,7 @@ function FLOWedit(FName)
  
    print(LFile);
    if (FILEexists(LFile)) then FLOWopen(LFile) 
-   elseif (FILEexists(CFile)) then FLOWopen(CFile); FLOWopen(HFile); 
+   elseif (FILEexists(CFile)) then FLOWopen(HFile); FLOWopen(CFile); 
    elseif (FILEexists(ConfigFile)) then FLOWopen(ConfigFile) else
       print ("That function "..FName.." does not exist.");
    end
