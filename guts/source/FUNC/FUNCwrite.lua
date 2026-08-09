@@ -1,6 +1,3 @@
-COLrequire "FILEwrite"
-COLrequire "DIRname"
-
 function FUNCwrite(FileName, Content, Force)
    local Dir = DIRname(FileName);
    if (not FILEexists(Dir)) then

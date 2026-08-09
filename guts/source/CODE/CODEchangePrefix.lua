@@ -1,6 +1,3 @@
-require "FILE/FILErename"
-require "CODE/CODEprefixRemainder"
-
 function CODEchangePrefix(File, Old, New)
    local OldPrefix, Remainder = CODEprefixRemainder(File);
    local NewFile = New..Remainder;

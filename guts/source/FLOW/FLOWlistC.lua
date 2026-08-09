@@ -1,9 +1,3 @@
-COLrequire 'DIRflowCode'
-COLrequire 'TABLEsize'
-COLrequire 'LIBcList'
-COLrequire 'DIRlistWild'
-COLrequire 'TABLEpush'
-
 -- Hard to find and I am confused about whether this is a command or a helper function?
 function FLOWlistC(Prefix)
    if (not Prefix) then

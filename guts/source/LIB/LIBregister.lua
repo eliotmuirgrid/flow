@@ -1,6 +1,3 @@
-COLrequire "LISTconfigAdd"
-COLrequire "LIBregenerate"
-
 function LIBregister(Name)
    COL_FUNCTION("LIBregister");
    print("Registering the function: "..Name);

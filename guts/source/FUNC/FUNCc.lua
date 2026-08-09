@@ -1,12 +1,3 @@
-COLrequire "FUNCwrite"
-COLrequire "FUNCcHeaderTokens"
-COLrequire "FUNCcHeader"
-COLrequire "DATEhumanPretty"
-COLrequire "DATEcomputerPretty"
-COLrequire "CODEprefixRemainder"
-COLrequire "TEMPLATEfill"
-COLrequire "DIRflowCode"
-COLrequire "FLOWedit"
 
 local HeaderT=[[
 #pragma once

@@ -1,8 +1,3 @@
-COLrequire 'STRINGtoLower'
-COLrequire 'STRINGisUpper'
-COLrequire 'COMMANDcommandStrip'
-COLrequire 'PREFIXget'
-
 function COMMANDtranslate(Command)
    local Orig = Command;
    Command = COMMANDcommandStrip(Command);

@@ -1,6 +1,3 @@
-COLrequire 'FUNCwrite'
-COLrequire 'LISTconfigName'
-
 function LISTsave(Name, List)
    local FileName = LISTconfigName(Name);
    local Content = table.concat(List, "\n");

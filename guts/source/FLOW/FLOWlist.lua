@@ -1,8 +1,3 @@
-COLrequire 'DIRflowCode'
-COLrequire 'TABLEsize'
-COLrequire 'LIBcList'
-COLrequire 'DIRlistWild'
-
 function FLOWlist(Prefix)
    if (not Prefix) then
       print("Give a prefix like LIST or something");

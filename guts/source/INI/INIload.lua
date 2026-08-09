@@ -1,6 +1,3 @@
-COLrequire('FILEreadLines');
-COLrequire('INIsplitEqual');
-
 function INIload(FileName)
    COL_VAR(FileName);
    local Lines = FILEreadLines(FileName);

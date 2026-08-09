@@ -1,12 +1,3 @@
-COLrequire "FUNCwrite"
-COLrequire "DATEhumanPretty"
-COLrequire "DATEcomputerPretty"
-COLrequire "CODEprefixRemainder"
-COLrequire "TEMPLATEfill"
-COLrequire "DIRflowCode"
-COLrequire "LIBregister"
-COLrequire "FLOWedit"
-
 local Header=[[
 #pragma once
 //----------------------------------------------------------------

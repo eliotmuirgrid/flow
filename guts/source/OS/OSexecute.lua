@@ -1,5 +1,3 @@
-COLrequire 'ENVget'
-
 function OSexecute(Command)
    -- Replace any "~" with the user's home directory
    local home = ENVget("HOME")

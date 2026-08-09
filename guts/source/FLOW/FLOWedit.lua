@@ -1,12 +1,6 @@
-COLrequire 'FLOWopen'
-COLrequire 'FLOWeditPress'
-COLrequire 'FLOWfileH'
-COLrequire 'FLOWfileCpp'
-COLrequire 'FLOWfileLua'
-COLrequire 'FLOWfileConfig'
-COLrequire 'STRINGstartsWith'
-
 function FLOWedit(FName)
+   if not FName         then FLOWopen("i.md", true); return; end
+   if FILEexists(FName) then FLOWopen(FName);  return; end
    local WebRoot = "https://interfaceware.com/"
    if STRINGstartsWith(FName, WebRoot) then
       print("Flow is about now");
@@ -14,6 +8,9 @@ function FLOWedit(FName)
       return;
    end
    local Ext = FILEextension(FName);
+   print(Ext)
+   if (Ext == "md") then FLOWopen(FName, true); return; end;
+
    if (Ext:len() > 0) then
       FName = FName:sub(1, FName:len()-Ext:len()-1);
       COL_VAR("Stripped extension: "..FName);

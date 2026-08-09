@@ -1,5 +1,3 @@
-require "NUMBER/NUMBERordinal"
-
 function DATEhumanPretty(Time)
    Time = Time or os.time()
    local Date = os.date("*t", Time)

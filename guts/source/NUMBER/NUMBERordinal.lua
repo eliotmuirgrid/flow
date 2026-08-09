@@ -1,5 +1,3 @@
-require "NUMBER/NUMBERmod"
-
 function NUMBERordinal(Num)
    if Num == 11 or 
       Num == 12	or 

@@ -1,6 +1,3 @@
-COLrequire "FILEreadLines"
-COLrequire "STRINGstartsWith"
-
 function INCLUDEstrip(FileName)
    local Lines = FILEreadLines(FileName)
    COL_VAR(Lines);

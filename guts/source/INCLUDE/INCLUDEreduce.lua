@@ -1,7 +1,3 @@
-COLrequire "DIRflowCode"
-COLrequire "INCLUDEsearch"
-COLrequire "DSstoreDelete"
-
 function INCLUDEreduce()
    local Dir = DIRflowCode();
    local I = DIRlist(Dir);

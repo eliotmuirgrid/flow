@@ -1,12 +1,4 @@
-COLrequire "FUNCwrite"
-COLrequire "PREFIXget"
-COLrequire "TEMPLATEfill"
-COLrequire "DIRflowCode"
-COLrequire "FLOWedit"
-
 local Body=[[
-COLrequire '@@NAME@@'
-
 function @@NAME@@Command(Arg)
    @@NAME@@(Arg[3])
 end
@@ -26,4 +18,5 @@ function FUNCluaCommandShell(Name)
    local BContent = TEMPLATEfill(Body,Tokens);
    COL_VAR(BContent);
    FUNCwrite(BName, BContent);
+   FLOWedit(Name.."Command");
 end

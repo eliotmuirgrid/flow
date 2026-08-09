@@ -1,6 +1,3 @@
-COLrequire 'LISTconfigName'
-COLrequire 'FILEreadLines'
-
 function LISTload(Name)
    local FileName = LISTconfigName(Name)
    COL_VAR(FileName);

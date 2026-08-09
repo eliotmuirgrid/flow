@@ -1,6 +1,3 @@
-COLrequire 'TABLEpush'
-COLrequire 'SORTalpha'
-
 function TABLEkeys(T)
    local S = {}
    for K, _ in pairs(T) do

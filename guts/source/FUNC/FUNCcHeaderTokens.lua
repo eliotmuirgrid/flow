@@ -1,6 +1,3 @@
-COLrequire "DATEhumanPretty"
-COLrequire "DATEcomputerPretty"
-
 function FUNCcHeaderTokens(Tokens, Name)
    Tokens.NAME       =Name;
    Tokens.HUMAN_DATE =DATEhumanPretty();

@@ -1,9 +1,3 @@
-COLrequire "FLOWfileCpp"
-COLrequire "INCLUDEstrip"
-COLrequire "FLOWlistC"
-COLrequire "STRINGfind"
-COLrequire "SORTalpha"
-
 function INCLUDEfind(FName)
    COL_VAR(FName)
    local F = FLOWfileCpp(FName);

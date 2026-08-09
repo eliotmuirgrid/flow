@@ -1,5 +1,3 @@
-require "URL/URLopen"
-
 function MUSICplay(Args)
    COL_VAR(Args)
    

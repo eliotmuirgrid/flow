@@ -1,5 +1,3 @@
-COLrequire "INCLUDEprocess"
-
 function INCLUDEsearch(Dir)
    print (Dir);
    local I = DIRlist(Dir)

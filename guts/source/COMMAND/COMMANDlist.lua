@@ -1,5 +1,3 @@
-COLrequire 'COMMANDtranslate'
-
 function COMMANDlist(List)
    local Out = {}
    for i=1, table.getn(List) do

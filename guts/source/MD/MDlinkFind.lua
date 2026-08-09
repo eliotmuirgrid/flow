@@ -1,5 +1,3 @@
-COLrequire 'DSstoreDelete'
-
 function MDlinkFind(Dir, Base, Paths)
    local Base = Base or '/';
    local Paths = Paths or {};

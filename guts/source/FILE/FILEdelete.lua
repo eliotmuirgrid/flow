@@ -1,4 +1,3 @@
-
 function FILEdelete(File)
    if FILEexists(File) then
       COL_TRC("Removing "..File);

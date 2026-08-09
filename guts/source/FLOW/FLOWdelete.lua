@@ -1,10 +1,3 @@
-COLrequire 'PREFIXget'
-COLrequire 'DIRflowCode'
-COLrequire 'FLOWopen'
-COLrequire 'FLOWdeleteFile'
-COLrequire 'LIBunregister'
-COLrequire 'DIRempty'
-
 function FLOWdelete(FName)
    local P = PREFIXget(FName);
    local Dir = DIRflowCode()..P.."/"

@@ -1,7 +1,3 @@
-COLrequire 'LISTconfigAdd'
-COLrequire 'FUNClua'
-COLrequire 'FUNCluaCommandShell'
-
 function COMMANDadd(Command)
    if not Command then
       print "Supply a command to add";

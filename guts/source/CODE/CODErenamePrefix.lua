@@ -1,9 +1,3 @@
-require 'CODE/CODEprefixRemainder'
-require 'CODE/CODEchangePrefix'
-require 'CODE/CODEroot'
-require 'PATH/PATHfile'
-
-
 function CODErenamePrefix(Old, New)
    local Dir    = CODEroot()..Old.."/"
    local NewDir = CODEroot()..New.."/"

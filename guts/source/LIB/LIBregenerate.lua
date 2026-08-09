@@ -1,13 +1,3 @@
-COLrequire "FUNCwrite"
-COLrequire "FILEreadLines"
-COLrequire "DATEhumanPretty"
-COLrequire "DATEcomputerPretty"
-COLrequire "TEMPLATEfill"
-COLrequire "PREFIXget"
-COLrequire "DIRflowCode"
-COLrequire "FLOWdeleteFile"
-COLrequire "FLOWstripTrailing"
-
 local Body=[[
 //----------------------------------------------------------------
 // Copyright (C) Eliot Muir @@YEAR@@ All rights reserved.

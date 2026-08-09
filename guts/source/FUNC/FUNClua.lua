@@ -1,9 +1,3 @@
-COLrequire "FUNCwrite"
-COLrequire "PREFIXget"
-COLrequire "TEMPLATEfill"
-COLrequire "DIRflowCode"
-COLrequire "FLOWedit"
-
 local Body=[[
 function @@NAME@@()
 
@@ -17,10 +11,7 @@ function FUNClua(Name)
    end	
    local Tokens={NAME=Name}
    COL_VAR(Tokens);
-   local Prefix = PREFIXget(Name);
-   COL_VAR2(Prefix, Remainder);
-   local Dir   = DIRflowCode()..Prefix;
-   local BName = Dir.."/"..Name..".lua" 
+   local BName = FLOWfileLua(Name);
    local BContent = TEMPLATEfill(Body,Tokens);
    COL_VAR(BContent);
    FUNCwrite(BName, BContent);

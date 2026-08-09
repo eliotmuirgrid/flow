@@ -1,4 +1,3 @@
-COLrequire 'ENVget' 
 function FLOWeditPress(Path)
    local FullPath = ENVget("HOME").."/press"..Path..".md";
    print(FullPath);

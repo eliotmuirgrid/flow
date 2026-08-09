@@ -1,22 +1,22 @@
 require ("COL/COLtrace");
-COLrequire "LISTload";
-COLrequire "COMMANDlist";
-COLrequire "TABLEkeys";
-COLrequire "TABLEsize";
+require ("LUA/LUAload");
 
 function MAINmain(Arg)
-   COL_VAR(Arg); 
+   COL_VAR(Arg);
+   LUAload("LISTload")
    local Functions =LISTload("MAINcommands");
    COL_VAR(Functions);
+   LUAload("COMMANDlist");
    local Commands = COMMANDlist(Functions);
    local Action = Arg[2];
    if (Action and Commands[Action]) then
       print("Run: "..Action.." using "..Commands[Action]);
-      COLrequire(Commands[Action]);
+      LUAload(Commands[Action]);
       _G[Commands[Action]](Arg);
       return
    end
-   
+   LUAload('TABLEkeys');  
+   LUAload('TABLEsize');  
    print "Commands recognized:";
    local C = TABLEkeys(Commands);
    for i=1, TABLEsize(C) do
