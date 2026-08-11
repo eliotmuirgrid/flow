@@ -9,11 +9,14 @@
 // ---------------------------------------------------------------
 
 #include "LUAlua.h"
+#include "COLassert.h"
 #include "COLtrace.h"
 COL_TRACE_INIT;
 
 int STACKsize(lua_State* L, int i){
    COL_FUNCTION(STACKsize);
+   COL_VAR(i);
+   COLASSERT(lua_istable(L, i));
    int Size = luaL_getn(L, i);
    COL_VAR(Size);
    return Size;

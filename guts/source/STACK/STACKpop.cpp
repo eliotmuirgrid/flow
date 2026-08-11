@@ -17,7 +17,8 @@ COL_TRACE_INIT;
 void STACKpop(lua_State* L, int i){
    COL_FUNCTION(STACKpop);
    int Size = STACKsize(L, i);
-   if (Size < 0){
+   COL_VAR(Size);
+   if (Size > 0){
       lua_pushnil(L);
       lua_rawseti(L, i, Size);
    }

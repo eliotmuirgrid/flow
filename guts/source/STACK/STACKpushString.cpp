@@ -10,12 +10,16 @@
 
 #include "STACKpush.h"
 #include "LUAlua.h"
+#include "LUAabsoluteIndex.h"
 #include "COLstringPushL.h"
 #include "COLtrace.h"
 COL_TRACE_INIT;
 
 void STACKpushString(lua_State* L, int i, const COLstring& Value){
    COL_FUNCTION(STACKpushString);
+   COL_VAR(i);
+   int t = LUAabsoluteIndex(L, i);
+   COL_VAR(t)
    COLstringPushL(L, Value);
-   STACKpush(L, i);
+   STACKpush(L, t);
 }

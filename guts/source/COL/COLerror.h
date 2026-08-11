@@ -14,6 +14,3 @@ class COLstring;
 // May be quite incomprehensible :-)
 COLstring COLerrorMessage(int ErrorCode);
 
-void COLassert(const char *expr, const char *file, int line, const char *func);
-
-#define COLASSERT(X) ((X) ? (void)0 : COLassert(#X, __FILE__, __LINE__, __func__))

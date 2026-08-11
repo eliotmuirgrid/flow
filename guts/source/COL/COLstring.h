@@ -93,6 +93,4 @@ unsigned int COLupperPowerOfTwo(unsigned int v);
 COLstring operator+(const COLstring& Lhs, const char*     pRhs);
 COLstring operator+(const COLstring& Lhs, const COLstring& Rhs);
 
-bool COLisThisAlpha(char Character);
-
 COLstream& operator<<(COLstream& Stream, const COLstring& String);

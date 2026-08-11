@@ -13,11 +13,12 @@
 
 #define lbaselib_c
 
-#include "lua.h"
+#include "LUAClua.h"
 
-#include "lauxlib.h"
-#include "lualib.h"
+#include "LUACauxlib.h"
+#include "LUAClualib.h"
 
+#include "LUACdebug.h"
 #include "COLtrace.h"
 COL_TRACE_INIT
 

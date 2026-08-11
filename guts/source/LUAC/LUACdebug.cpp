@@ -1,10 +1,10 @@
 //----------------------------------------------------------------
 // Copyright (C) Eliot Muir 2026 All rights reserved.
 //
-// Implementation
+// To be documented by an AI agent later!
 //
-// Date: Friday 31st July 2026
-//       0x6A6CC81E seconds since the beginning of the Unix Epoch time
+// Date: Tuesday 11th August 2026
+//       0x6A7B530E seconds since the beginning of the Unix Epoch time
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
@@ -12,7 +12,20 @@
 #include "COLtrace.h"
 COL_TRACE_INIT;
 
-void LUACdebug(){
-   COL_FUNCTION(LUACdebug);
+void LUAdebugOut(COLstream& Stream, const struct lua_Debug& LD){
+   COL_FUNCTION(LUAdebugOut);
+   Stream << "event=" << LD.event << newline
+          << " name=" << (LD.name ? LD.name : "(null)") << newline
+          << " namewhat=" << (LD.namewhat ? LD.namewhat : "(null)") << newline
+          << " what=" << (LD.what ? LD.what : "(null)") << newline
+          << " source=" << (LD.source ? LD.source : "(null)") << newline
+          << " short_src=" << LD.short_src << newline
+          << " currentline=" << LD.currentline << newline
+          << " linedefined=" << LD.linedefined << newline
+          << " nups=" << LD.nups << newline;
+}
 
+COLstream& operator<<(COLstream& Stream, const struct lua_Debug& LD){
+   LUAdebugOut(Stream, LD);
+   return Stream;
 }

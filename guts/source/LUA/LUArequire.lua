@@ -7,10 +7,6 @@ require 'PREFIX/PREFIXget'
 require 'DIR/DIRflowCode'
 
 function LUArequire(Name, List)
-   if (List[Name]) then
-      return;
-   end
-
    List[Name] = true;
 
    local File = FLOWfileLua(Name);
@@ -18,10 +14,18 @@ function LUArequire(Name, List)
       return;
    end
    local Simple = FILEread(File);
+   COL_VAR(Simple);
+   -- TODO this isn't robust enough yet.
+   -- We should start with very robust removal
+   -- of comments.
    Simple = LUAstringRemove(Simple);
+   COL_VAR(Simple);
    Simple = LUAcommentRemove(Simple);
+   COL_VAR(Simple);
    local Funcs = LUAlistFunctions(Simple);
    for _, Func in ipairs(Funcs) do
-      LUArequire(Func, List);
+      if (not List[Func]) then
+         LUArequire(Func, List);
+      end
    end
 end

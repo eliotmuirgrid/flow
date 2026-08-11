@@ -8,13 +8,38 @@
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include "LUAdebugOut.h"
+#include "DEBUGstackPop.h"
+#include "FILpathNameNoExt.h"
+#include "HOOKfilterTrace.h"
+#include "HOOKfilterC.h"
 #include "LUAlua.h"
+#include "LUAtracePatternGet.h"
+#include "LUACdebug.h"
+#include "COLglobMatch.h"
 #include "COLtrace.h"
 COL_TRACE_INIT;
 
-void HOOKtailReturn(lua_State* L, lua_Debug* pDb){
+void HOOKtailReturn(lua_State* L, lua_Debug* ar){
    COL_FUNCTION(HOOKtailReturn);
-   COL_VAR(*pDb);
-   //COLcallDecrease();
+   if (!lua_getinfo(L, "nSl", ar)){ return; }
+   if (!ar->name){
+      return;
+   }
+   COLstring source = ar->short_src[0] ? ar->short_src : "?";
+   COL_VAR2(source,*ar);
+ 
+   if (HOOKfilterTrace(source)){ return; }
+   if (HOOKfilterC    (source)){ return; }
+  
+   source = FILpathNameNoExt(source);
+   DEBUGstackPop(L);
+   COL_VAR(source);
+
+   COLstring MatchPattern = LUAtracePatternGet(L);
+   if (!COLglobMatch(source.data(), MatchPattern.data())){ return; }
+  
+   COLstring name = source;
+   source += ".lua";
+   COLcallDecrease(); COLtimeStamp(source.data(), COLlog);COLlog << "<" << name << newline;    
+   
 }

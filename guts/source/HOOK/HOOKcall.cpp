@@ -8,10 +8,14 @@
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
+#include "DEBUGstackPush.h"
+#include "FILpathNameNoExt.h"
+#include "HOOKfilterTrace.h"
+#include "HOOKfilterC.h"
+#include "HOOKfilterTail.h"
 #include "LUAlua.h"
 #include "LUAtracePatternGet.h"
-#include "LUAtraceFileSet.h"
-#include "FILpathNameNoExt.h"
+#include "LUACdebug.h"
 #include "COLglobMatch.h"
 #include "COLtrace.h"
 COL_TRACE_INIT;
@@ -24,22 +28,21 @@ void HOOKcall(lua_State* L, lua_Debug* ar){
    }
    COLstring source = ar->short_src[0] ? ar->short_src : "?";
 
-   COL_TRC("Source before COL filtering =" << source);
-   if (source.find("COLshow")){ COL_TRC("Matched COLshow"); return; }
-   if (source.find("COLtrace")){ COL_TRC("Matched COLtrace"); return; }
+   COL_VAR2(source, *ar);
 
-   COL_HEX("Source:", source.data(), source.size());
-   COL_VAR(source.data()[0]);
-   bool Check =source.data()[0] == '[' || source.data()[0] == '(';
-   COL_VAR(Check);
-   if (Check) { COL_TRC("In C Function or tail call."); return; } // it equals [HACK [C]
+   if (HOOKfilterTrace(source)){ return; }
+   if (HOOKfilterC    (source)){ return; }
+   if (HOOKfilterTail (source)){ return; }
+
    source = FILpathNameNoExt(source);
-   COL_TRC("Source after FILpathNameNoExt=" << source);
+   DEBUGstackPush(L, source);
+   COL_VAR(source);
+
    COLstring MatchPattern = LUAtracePatternGet(L);
-   if (!COLglobMatch(source.data(), MatchPattern.data())){ LUAtraceFileSet(L, ""); return; }
+   if (!COLglobMatch(source.data(), MatchPattern.data())){ return; }
+
    COLstring name = source;
    source += ".lua";
-   LUAtraceFileSet(L, source);
 
    COLtimeStamp(source.data(), COLlog);
    COLlog << ">" << name << "()" << newline; COLcallIncrease();   

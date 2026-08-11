@@ -4,10 +4,12 @@
 //
 // To be documented by an AI agent later!
 //
-// Date: Friday 31st July 2026
-//       0x6A6CC81E seconds since the beginning of the Unix Epoch time
+// Date: Tuesday 11th August 2026
+//       0x6A7B530E seconds since the beginning of the Unix Epoch time
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
+
+class COLstream;
 
 #define LUA_IDSIZE	60
 
@@ -24,3 +26,7 @@ struct lua_Debug {
   /* private part */
   int i_ci;  /* active function */
 };
+
+void LUAdebugOut(COLstream& Stream, const struct lua_Debug& LD);
+
+COLstream& operator<<(COLstream& Stream, const struct lua_Debug& LD);

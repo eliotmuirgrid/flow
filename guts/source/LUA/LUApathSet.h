@@ -10,4 +10,4 @@
 typedef struct lua_State lua_State;
 class COLstring;
 
-void LUApathSet(lua_State* L, const COLstring& Exe);
+void LUApathSet(lua_State* L);

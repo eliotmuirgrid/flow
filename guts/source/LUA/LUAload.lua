@@ -22,6 +22,7 @@ end
 function LUAload(FName)
    local List = {}
    LUArequire(FName, List);
+   --print(COLshow(List));
    for K,V in pairs(List) do
       LUAloadFunc(K);
    end

@@ -213,8 +213,3 @@ unsigned int COLupperPowerOfTwo(unsigned int v){
    return v;
 }
 
-
-bool COLisThisAlpha(char Character){
-   return (Character >= 'A' && Character <= 'Z') ||
-          (Character >= 'a' && Character <= 'z');
-}

@@ -12,6 +12,6 @@
 // ---------------------------------------------------------------
 
 typedef struct lua_State lua_State;
-const COLstring;
+class COLstring;
 
 void STACKpushString(lua_State* L, int i, const COLstring& Value);

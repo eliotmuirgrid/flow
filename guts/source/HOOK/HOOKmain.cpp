@@ -12,12 +12,15 @@
 #include "HOOKcall.h"
 #include "HOOKreturn.h"
 #include "HOOKtailReturn.h"
+#include "HOOKcallToString.h"
+#include "LUACdebug.h"
 
 #include "COLtrace.h"
 COL_TRACE_INIT;
 
 void HOOKmain(lua_State* L, lua_Debug* pDb){
    COL_FUNCTION(HOOKmain);
+   COL_VAR(HOOKcallToString(pDb->event));
    switch(pDb->event){
    case LUA_HOOKCALL   : HOOKcall      (L, pDb); break;
    case LUA_HOOKRET    : HOOKreturn    (L, pDb); break;

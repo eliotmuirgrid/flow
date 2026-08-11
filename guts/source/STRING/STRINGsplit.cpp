@@ -15,4 +15,6 @@ COL_TRACE_INIT;
 int STRINGsplit(lua_State* L){
    COL_FUNCTION(STRINGsplit);
 
+
+   return 0;
 }
