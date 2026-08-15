@@ -39,21 +39,6 @@ typedef struct FileHandle {
 #endif
 
 
-/*
-** by default, posix systems get `popen'
-*/
-#ifndef USE_POPEN
-#ifdef _POSIX_C_SOURCE
-#if _POSIX_C_SOURCE >= 2
-#define USE_POPEN	1
-#endif
-#endif
-#endif
-
-#ifndef USE_POPEN
-#define USE_POPEN	0
-#endif
-
 
 
 
@@ -62,11 +47,6 @@ typedef struct FileHandle {
 ** FILE Operations
 ** =======================================================
 */
-
-
-#if !USE_POPEN
-#define pclose(f)    (-1)
-#endif
 
 
 #define FILEHANDLE		"FILE*"
@@ -207,17 +187,12 @@ static int io_open (lua_State *L) {
 
 
 static int io_popen (lua_State *L) {
-#if !USE_POPEN
-  luaL_error(L, "`popen' not supported");
-  return 0;
-#else
   const char *filename = luaL_checkstring(L, 1);
   const char *mode = luaL_optstring(L, 2, "r");
   FileHandle *fh = newfileh(L);
   fh->f = popen(filename, mode);
   fh->ispipe = 1;
   return (fh->f == COLnull) ? pushresult(L, 0, filename) : 1;
-#endif
 }
 
 

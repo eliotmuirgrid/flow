@@ -4,7 +4,7 @@
 // Implementation
 //
 // Date: Saturday 15th August 2026
-//       0x6A80829F the beginning of the Unix Epoch time
+//       0x6A809C5E the beginning of the Unix Epoch time
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
@@ -17,6 +17,7 @@
 #include "FILEextension.h"
 #include "FILEpath.h"
 #include "JSONencode.h"
+#include "JSONstringDecodeL.h"
 #include "OSisMacL.h"
 #include "OSisWindowsL.h"
 #include "STRINGsplit.h"
@@ -35,6 +36,7 @@ void LIBregister(lua_State* L){
    lua_register(L, "FILEextension", FILEextension);
    lua_register(L, "FILEpath", FILEpath);
    lua_register(L, "JSONencode", JSONencode);
+   lua_register(L, "JSONstringDecode", JSONstringDecodeL);
    lua_register(L, "OSisMac", OSisMacL);
    lua_register(L, "OSisWindows", OSisWindowsL);
    lua_register(L, "STRINGsplit", STRINGsplit);
