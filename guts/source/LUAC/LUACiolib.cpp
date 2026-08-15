@@ -94,15 +94,15 @@ static int pushresult (lua_State *L, int i, const char *filename) {
 
 static FileHandle *topfile (lua_State *L, int findex) {
   FileHandle *fh = (FileHandle *)luaL_checkudata(L, findex, FILEHANDLE);
-  if (fh == NULL) luaL_argerror(L, findex, "bad file");
+  if (fh == COLnull) luaL_argerror(L, findex, "bad file");
   return fh;
 }
 
 
 static int io_type (lua_State *L) {
   FileHandle *fh = (FileHandle *)luaL_checkudata(L, 1, FILEHANDLE);
-  if (fh == NULL) lua_pushnil(L);
-  else if (fh->f == NULL)
+  if (fh == COLnull) lua_pushnil(L);
+  else if (fh->f == COLnull)
     lua_pushliteral(L, "closed file");
   else
     lua_pushliteral(L, "file");
@@ -114,7 +114,7 @@ static int io_type (lua_State *L) {
 
 static FileHandle *tofileh (lua_State *L, int findex) {
   FileHandle *fh = topfile(L, findex);
-  if (fh->f == NULL)
+  if (fh->f == COLnull)
     luaL_error(L, "attempt to use a closed file");
   return fh;
 }
@@ -130,7 +130,7 @@ static FileHandle *tofileh (lua_State *L, int findex) {
 */
 static FileHandle *newfileh (lua_State *L) {
   FileHandle *fh = (FileHandle *)lua_newuserdata(L, sizeof(FileHandle));
-  fh->f = NULL;  /* file handle is currently `closed' */
+  fh->f = COLnull;  /* file handle is currently `closed' */
   fh->ispipe = 0;
   luaL_getmetatable(L, FILEHANDLE);
   lua_setmetatable(L, -2);
@@ -162,7 +162,7 @@ static int aux_close (lua_State *L) {
     return 0;  /* file cannot be closed */
   else {
     int ok = fh->ispipe ? (pclose(f) != -1) : (fclose(f) == 0);
-    fh->f = NULL;  /* mark file as closed */
+    fh->f = COLnull;  /* mark file as closed */
     return ok;
   }
 }
@@ -173,13 +173,13 @@ static int io_close (lua_State *L) {
     lua_pushstring(L, IO_OUTPUT);
     lua_rawget(L, lua_upvalueindex(1));
   }
-  return pushresult(L, aux_close(L), NULL);
+  return pushresult(L, aux_close(L), COLnull);
 }
 
 
 static int io_gc (lua_State *L) {
   FileHandle *fh = topfile(L, 1);
-  if (fh->f != NULL)  /* ignore closed files */
+  if (fh->f != COLnull)  /* ignore closed files */
     aux_close(L);
   return 0;
 }
@@ -188,10 +188,10 @@ static int io_gc (lua_State *L) {
 static int io_tostring (lua_State *L) {
   char buff[128];
   FileHandle *fh = topfile(L, 1);
-  if (fh->f == NULL)
+  if (fh->f == COLnull)
     strcpy(buff, "closed");
   else
-    sprintf(buff, "%p", lua_touserdata(L, 1));
+    snprintf(buff, sizeof(buff), "%p", lua_touserdata(L, 1));
   lua_pushfstring(L, "file (%s)", buff);
   return 1;
 }
@@ -202,7 +202,7 @@ static int io_open (lua_State *L) {
   const char *mode = luaL_optstring(L, 2, "r");
   FILE **pf = newfile(L);
   *pf = fopen(filename, mode);
-  return (*pf == NULL) ? pushresult(L, 0, filename) : 1;
+  return (*pf == COLnull) ? pushresult(L, 0, filename) : 1;
 }
 
 
@@ -216,7 +216,7 @@ static int io_popen (lua_State *L) {
   FileHandle *fh = newfileh(L);
   fh->f = popen(filename, mode);
   fh->ispipe = 1;
-  return (fh->f == NULL) ? pushresult(L, 0, filename) : 1;
+  return (fh->f == COLnull) ? pushresult(L, 0, filename) : 1;
 #endif
 }
 
@@ -224,7 +224,7 @@ static int io_popen (lua_State *L) {
 static int io_tmpfile (lua_State *L) {
   FILE **pf = newfile(L);
   *pf = tmpfile();
-  return (*pf == NULL) ? pushresult(L, 0, NULL) : 1;
+  return (*pf == COLnull) ? pushresult(L, 0, COLnull) : 1;
 }
 
 
@@ -242,7 +242,7 @@ static int g_iofile (lua_State *L, const char *name, const char *mode) {
     if (filename) {
       FILE **pf = newfile(L);
       *pf = fopen(filename, mode);
-      if (*pf == NULL) {
+      if (*pf == COLnull) {
         lua_pushfstring(L, "%s: %s", filename, strerror(errno));
         luaL_argerror(L, 1, lua_tostring(L, -1));
       }
@@ -326,7 +326,7 @@ static int read_number (lua_State *L, FILE *f) {
 static int test_eof (lua_State *L, FILE *f) {
   int c = getc(f);
   ungetc(c, f);
-  lua_pushlstring(L, NULL, 0);
+  lua_pushlstring(L, COLnull, 0);
   return (c != EOF);
 }
 
@@ -337,7 +337,7 @@ static int read_line (lua_State *L, FILE *f) {
   for (;;) {
     size_t l;
     char *p = luaL_prepbuffer(&b);
-    if (fgets(p, LUAL_BUFFERSIZE, f) == NULL) {  /* eof? */
+    if (fgets(p, LUAL_BUFFERSIZE, f) == COLnull) {  /* eof? */
       luaL_pushresult(&b);  /* close buffer */
       return (lua_strlen(L, -1) > 0);  /* check whether read something */
     }
@@ -429,7 +429,7 @@ static int f_read (lua_State *L) {
 
 static int io_readline (lua_State *L) {
   FILE *f = *(FILE **)lua_touserdata(L, lua_upvalueindex(2));
-  if (f == NULL)  /* file is already closed? */
+  if (f == COLnull)  /* file is already closed? */
     luaL_error(L, "file is already closed");
   if (read_line(L, f)) return 1;
   else {  /* EOF */
@@ -460,7 +460,7 @@ static int g_write (lua_State *L, FILE *f, int arg) {
       status = status && (fwrite(s, sizeof(char), l, f) == l);
     }
   }
-  return pushresult(L, status, NULL);
+  return pushresult(L, status, COLnull);
 }
 
 
@@ -476,14 +476,14 @@ static int f_write (lua_State *L) {
 
 static int f_seek (lua_State *L) {
   static const int mode[] = {SEEK_SET, SEEK_CUR, SEEK_END};
-  static const char *const modenames[] = {"set", "cur", "end", NULL};
+  static const char *const modenames[] = {"set", "cur", "end", COLnull};
   FILE *f = tofile(L, 1);
   int op = luaL_findstring(luaL_optstring(L, 2, "cur"), modenames);
   long offset = luaL_optlong(L, 3, 0);
   luaL_argcheck(L, op != -1, 2, "invalid mode");
   op = fseek(f, offset, mode[op]);
   if (op)
-    return pushresult(L, 0, NULL);  /* error */
+    return pushresult(L, 0, COLnull);  /* error */
   else {
     lua_pushnumber(L, ftell(f));
     return 1;
@@ -492,12 +492,12 @@ static int f_seek (lua_State *L) {
 
 
 static int io_flush (lua_State *L) {
-  return pushresult(L, fflush(getiofile(L, IO_OUTPUT)) == 0, NULL);
+  return pushresult(L, fflush(getiofile(L, IO_OUTPUT)) == 0, COLnull);
 }
 
 
 static int f_flush (lua_State *L) {
-  return pushresult(L, fflush(tofile(L, 1)) == 0, NULL);
+  return pushresult(L, fflush(tofile(L, 1)) == 0, COLnull);
 }
 
 
@@ -513,7 +513,7 @@ static const luaL_reg iolib[] = {
   {"tmpfile", io_tmpfile},
   {"type", io_type},
   {"write", io_write},
-  {NULL, NULL}
+  {COLnull, COLnull}
 };
 
 
@@ -526,7 +526,7 @@ static const luaL_reg flib[] = {
   {"close", io_close},
   {"__gc", io_gc},
   {"__tostring", io_tostring},
-  {NULL, NULL}
+  {COLnull, COLnull}
 };
 
 
@@ -536,7 +536,7 @@ static void createmeta (lua_State *L) {
   lua_pushliteral(L, "__index");
   lua_pushvalue(L, -2);  /* push metatable */
   lua_rawset(L, -3);  /* metatable.__index = metatable */
-  luaL_openlib(L, NULL, flib, 0);
+  luaL_openlib(L, COLnull, flib, 0);
 }
 
 /* }====================================================== */
@@ -582,7 +582,7 @@ static int io_tmpname (lua_State *L) {
 
 
 static int io_getenv (lua_State *L) {
-  lua_pushstring(L, getenv(luaL_checkstring(L, 1)));  /* if NULL push nil */
+  lua_pushstring(L, getenv(luaL_checkstring(L, 1)));  /* if COLnull push nil */
   return 1;
 }
 
@@ -644,14 +644,14 @@ static int io_date (lua_State *L) {
   time_t t = (time_t)(luaL_optnumber(L, 2, -1));
   struct tm *stm;
   if (t == (time_t)(-1))  /* no time given? */
-    t = time(NULL);  /* use current time */
+    t = time(COLnull);  /* use current time */
   if (*s == '!') {  /* UTC? */
     stm = gmtime(&t);
     s++;  /* skip `!' */
   }
   else
     stm = localtime(&t);
-  if (stm == NULL)  /* invalid date? */
+  if (stm == COLnull)  /* invalid date? */
     lua_pushnil(L);
   else if (strcmp(s, "*t") == 0) {
     lua_newtable(L);
@@ -678,7 +678,7 @@ static int io_date (lua_State *L) {
 
 static int io_time (lua_State *L) {
   if (lua_isnoneornil(L, 1))  /* called without args? */
-    lua_pushnumber(L, time(NULL));  /* return current time */
+    lua_pushnumber(L, time(COLnull));  /* return current time */
   else {
     time_t t;
     struct tm ts;
@@ -714,7 +714,7 @@ static int io_setloc (lua_State *L) {
   static const int cat[] = {LC_ALL, LC_COLLATE, LC_CTYPE, LC_MONETARY,
                       LC_NUMERIC, LC_TIME};
   static const char *const catnames[] = {"all", "collate", "ctype", "monetary",
-     "numeric", "time", NULL};
+     "numeric", "time", COLnull};
   const char *l = lua_tostring(L, 1);
   int op = luaL_findstring(luaL_optstring(L, 2, "all"), catnames);
   luaL_argcheck(L, l || lua_isnoneornil(L, 1), 1, "string expected");
@@ -741,7 +741,7 @@ static const luaL_reg syslib[] = {
   {"setlocale", io_setloc},
   {"time",      io_time},
   {"tmpname",   io_tmpname},
-  {NULL, NULL}
+  {COLnull, COLnull}
 };
 
 /* }====================================================== */
@@ -756,6 +756,6 @@ LUALIB_API int luaopen_io (lua_State *L) {
   /* put predefined file handles into `io' table */
   registerfile(L, stdin, "stdin", IO_INPUT);
   registerfile(L, stdout, "stdout", IO_OUTPUT);
-  registerfile(L, stderr, "stderr", NULL);
+  registerfile(L, stderr, "stderr", COLnull);
   return 1;
 }

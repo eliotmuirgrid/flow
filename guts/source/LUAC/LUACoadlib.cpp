@@ -50,10 +50,10 @@ static int loadlib(lua_State *L)
  const char *path=luaL_checkstring(L,1);
  const char *init=luaL_checkstring(L,2);
  void *lib=dlopen(path,RTLD_NOW);
- if (lib!=NULL)
+ if (lib!=COLnull)
  {
   lua_CFunction f=(lua_CFunction) dlsym(lib,init);
-  if (f!=NULL)
+  if (f!=COLnull)
   {
    lua_pushlightuserdata(L,lib);
    lua_pushcclosure(L,f,1);
@@ -63,8 +63,8 @@ static int loadlib(lua_State *L)
  /* else return appropriate error messages */
  lua_pushnil(L);
  lua_pushstring(L,dlerror());
- lua_pushstring(L,(lib!=NULL) ? "init" : "open");
- if (lib!=NULL) dlclose(lib);
+ lua_pushstring(L,(lib!=COLnull) ? "init" : "open");
+ if (lib!=COLnull) dlclose(lib);
  return 3;
 }
 
@@ -108,10 +108,10 @@ static int loadlib(lua_State *L)
  const char *path=luaL_checkstring(L,1);
  const char *init=luaL_checkstring(L,2);
  HINSTANCE lib=LoadLibrary(path);
- if (lib!=NULL)
+ if (lib!=COLnull)
  {
   lua_CFunction f=(lua_CFunction) GetProcAddress(lib,init);
-  if (f!=NULL)
+  if (f!=COLnull)
   {
    lua_pushlightuserdata(L,lib);
    lua_pushcclosure(L,f,1);
@@ -120,8 +120,8 @@ static int loadlib(lua_State *L)
  }
  lua_pushnil(L);
  pusherror(L);
- lua_pushstring(L,(lib!=NULL) ? "init" : "open");
- if (lib!=NULL) FreeLibrary(lib);
+ lua_pushstring(L,(lib!=COLnull) ? "init" : "open");
+ if (lib!=COLnull) FreeLibrary(lib);
  return 3;
 }
 

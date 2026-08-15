@@ -12,6 +12,7 @@
 #include "LUAlua.h"
 #include "REGtableGet.h"
 #include "LUAabsoluteIndex.h"
+#include "LUAstackCheck.h"
 #include "STACKtop.h"
 #include "COLstringL.h"
 #include "COLtrace.h"
@@ -19,17 +20,18 @@ COL_TRACE_INIT;
 
 COLstring DEBUGcurrentFunc(lua_State* L){
    COL_FUNCTION(DEBUGcurrentFunc);
+   LUAstackCheck Check(L, 0);
    REGtableGet(L, "DEBUGstack");
    if (lua_isnil(L, -1)){
       lua_pop(L, 1);
-      COL_TRC("WARNING didn't get the DEBUGstack.");
+      COL_ERR("WARNING didn't get the DEBUGstack.");
       return "";
    }
    int t = LUAabsoluteIndex(L, -1);
    COLstring Result;
    STACKtop(L,t);
    Result = COLstringL(L, -1);
-   lua_pop(L,-1);
+   lua_pop(L,2);
 
    COL_VAR(Result);
    return Result;

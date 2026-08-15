@@ -16,6 +16,7 @@
 #include "LUACstring.h"
 #include "LUACtable.h"
 #include "LUACtm.h"
+#include "COLnull.h"
 
 
 
@@ -50,7 +51,7 @@ const TObject *luaT_gettm (Table *events, TMS event, TString *ename) {
   lua_assert(event <= TM_EQ);
   if (ttisnil(tm)) {  /* no tag method? */
     events->flags |= cast(lu_byte, 1u<<event);  /* cache this fact */
-    return NULL;
+    return COLnull;
   }
   else return tm;
 }
@@ -72,11 +73,11 @@ const TObject *luaT_gettmbyobj (lua_State *L, const TObject *o, TMS event) {
       case LUA_TSTRING:
          mt = ttistable(stringmeta(L))
             ? hvalue(stringmeta(L))
-            : NULL;
+            : COLnull;
          break;
 
       default:
-         mt = NULL;
+         mt = COLnull;
          break;
    }
 

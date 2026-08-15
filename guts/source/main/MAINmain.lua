@@ -2,7 +2,8 @@ require ("COL/COLtrace");
 require ("LUA/LUAload");
 
 function MAINmain(Arg)
-   COL_VAR(Arg);
+   COL_TRC("Starting MAINmain");
+   COL_VAR(table.getn(Arg));
    LUAload("LISTload")
    local Functions =LISTload("MAINcommands");
    COL_VAR(Functions);
@@ -10,7 +11,7 @@ function MAINmain(Arg)
    local Commands = COMMANDlist(Functions);
    local Action = Arg[2];
    if (Action and Commands[Action]) then
-      print("Run: "..Action.." using "..Commands[Action]);
+      COL_TRC("Run: "..Action.." using "..Commands[Action]);
       LUAload(Commands[Action]);
       _G[Commands[Action]](Arg);
       return

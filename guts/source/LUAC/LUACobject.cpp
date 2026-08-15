@@ -27,7 +27,7 @@
 #endif
 
 
-const TObject luaO_nilobject = {LUA_TNIL, {NULL}};
+const TObject luaO_nilobject = {LUA_TNIL, {COLnull}};
 
 
 /*
@@ -113,7 +113,7 @@ const char *luaO_pushvfstring (lua_State *L, const char *fmt, va_list argp) {
   pushstr(L, "");
   for (;;) {
     const char *e = strchr(fmt, '%');
-    if (e == NULL) break;
+    if (e == COLnull) break;
     setsvalue2s(L->top, luaS_newlstr(L, fmt, e-fmt));
     incr_top(L);
     switch (*(e+1)) {
@@ -163,7 +163,7 @@ const char *luaO_pushfstring (lua_State *L, const char *fmt, ...) {
 void luaO_chunkid (char *out, const char *source, int bufflen) {
   if (*source == '=') {
     strncpy(out, source+1, bufflen);  /* remove first char */
-    out[bufflen-1] = '\0';  /* ensures null termination */
+    out[bufflen-1] = '\0';  /* ensures COLnull termination */
   }
   else {  /* out = "source", or "...source" */
     if (*source == '@') {

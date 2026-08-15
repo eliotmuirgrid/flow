@@ -100,7 +100,7 @@ static TString* LoadString (LoadState* S)
 {
  size_t size=LoadSize(S);
  if (size==0)
-  return NULL;
+  return COLnull;
  else
  {
   char* s=luaZ_openspace(S->L,S->b,size);
@@ -188,7 +188,7 @@ static void LoadConstants (LoadState* S, Proto* f)
 static Proto* LoadFunction (LoadState* S, TString* p)
 {
  Proto* f=luaF_newproto(S->L);
- f->source=LoadString(S); if (f->source==NULL) f->source=p;
+ f->source=LoadString(S); if (f->source==COLnull) f->source=p;
  f->lineDefined=LoadInt(S);
  f->nups=LoadByte(S);
  f->numparams=LoadByte(S);
@@ -255,7 +255,7 @@ static void LoadHeader (LoadState* S)
 static Proto* LoadChunk (LoadState* S)
 {
  LoadHeader(S);
- return LoadFunction(S,NULL);
+ return LoadFunction(S,COLnull);
 }
 
 /*

@@ -216,7 +216,7 @@ static void markupval (FuncState *fs, int level) {
 
 
 static void singlevaraux (FuncState *fs, TString *n, expdesc *var, int base) {
-  if (fs == NULL)  /* no more levels? */
+  if (fs == COLnull)  /* no more levels? */
     init_exp(var, VGLOBAL, NO_REG);  /* default is global variable */
   else {
     int v = searchvar(fs, n);  /* look up at current level */
@@ -333,7 +333,7 @@ static void open_func (LexState *ls, FuncState *fs) {
   fs->np = 0;
   fs->nlocvars = 0;
   fs->nactvar = 0;
-  fs->bl = NULL;
+  fs->bl = COLnull;
   f->source = ls->source;
   f->maxstacksize = 2;  /* registers 0/1 are always valid */
 }
@@ -358,7 +358,7 @@ static void close_func (LexState *ls) {
   luaM_reallocvector(L, f->upvalues, f->sizeupvalues, f->nups, TString *);
   f->sizeupvalues = f->nups;
   lua_assert(luaG_checkcode(f));
-  lua_assert(fs->bl == NULL);
+  lua_assert(fs->bl == COLnull);
   ls->fs = fs->prev;
 }
 
@@ -374,7 +374,7 @@ Proto *luaY_parser (lua_State *L, ZIO *z, Mbuffer *buff) {
   chunk(&lexstate);
   check_condition(&lexstate, (lexstate.t.token == TK_EOS), "<eof> expected");
   close_func(&lexstate);
-  lua_assert(funcstate.prev == NULL);
+  lua_assert(funcstate.prev == COLnull);
   lua_assert(funcstate.f->nups == 0);
   lua_assert(lexstate.nestlevel == 0);
   return funcstate.f;
@@ -1207,7 +1207,7 @@ static void exprstat (LexState *ls) {
     luaK_setcallreturns(fs, &v.v, 0);  /* call statement uses no results */
   }
   else {  /* stat -> assignment */
-    v.prev = NULL;
+    v.prev = COLnull;
     assignment(ls, &v, 1);
   }
 }

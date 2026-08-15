@@ -15,9 +15,9 @@ function FLOWedit(FName)
       return;
    end
    local Ext = FILEextension(FName);
-   print(Ext)
+   COL_VAR(Ext)
    local Ext = FILEextension(FName);
-   print(Ext)
+   COL_VAR(Ext)
    if (Ext == "md") then FLOWopen(FName, true); return; end;
 
    if (Ext:len() > 0) then
@@ -30,7 +30,7 @@ function FLOWedit(FName)
    local HFile = FLOWfileH(FName);
    local ConfigFile = FLOWfileConfig(FName);
  
-   print(LFile);
+   COL_VAR(LFile);
    if (FILEexists(LFile)) then FLOWopen(LFile) 
    elseif (FILEexists(CFile)) then FLOWopen(HFile); FLOWopen(CFile); 
    elseif (FILEexists(ConfigFile)) then FLOWopen(ConfigFile) else

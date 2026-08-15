@@ -15,7 +15,7 @@
 #include "STACKpushString.h"
 #include "STACKsize.h"
 #include "REGtableGet.h"
-#include "COLerror.h"
+#include "COLassert.h"
 #include "COLtrace.h"
 COL_TRACE_INIT;
 

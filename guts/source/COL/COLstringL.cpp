@@ -12,10 +12,10 @@
 #include "COLtrace.h"
 COL_TRACE_INIT;
 
-COLstring COLstringL(lua_State* L, int i){
+// No lua_tolstring in Lua 5.0
+COLstring COLstringL(lua_State* L, int i) {
    COL_FUNCTION(COLstringL);
    const char* S = lua_tostring(L, i);
-   if (NULL == S) { return COLstring(); }
-   size_t Len = lua_strlen(L, i);
-   return  COLstring(S, Len);
+   if (!S) return COLstring();
+   return COLstring(S, lua_strlen(L, i));
 }

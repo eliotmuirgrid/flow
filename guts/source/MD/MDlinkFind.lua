@@ -6,12 +6,13 @@ function MDlinkFind(Dir, Base, Paths)
    COL_VAR(C)
    for i, File in ipairs(C) do
       DSstoreDelete(Dir, File);
+      COL_VAR2(i, File)
       if (File == "i.md") then
          table.insert(Paths, Base);
       elseif (FILEextension(File) == "md") then
-	 table.insert(Paths, Base..File.sub(1, File:len()-3));    
+	      table.insert(Paths, Base..File.sub(1, File:len()-3));    
       end
    end
    COL_VAR(Paths);
-   print(Paths);
+   print(COLshow(Paths));
 end

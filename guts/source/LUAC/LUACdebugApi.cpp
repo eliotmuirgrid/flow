@@ -25,6 +25,7 @@
 #include "LUACtable.h"
 #include "LUACtm.h"
 #include "LUACvm.h"
+#include "COLnull.h"
 
 
 
@@ -64,9 +65,9 @@ void luaG_inithooks (lua_State *L) {
 ** this function can be called asynchronous (e.g. during a signal)
 */
 LUA_API int lua_sethook (lua_State *L, lua_Hook func, int mask, int count) {
-  if (func == NULL || mask == 0) {  /* turn off hooks? */
+  if (func == COLnull || mask == 0) {  /* turn off hooks? */
     mask = 0;
-    func = NULL;
+    func = COLnull;
   }
   L->hook = func;
   L->basehookcount = count;
@@ -116,7 +117,7 @@ LUA_API int lua_getstack (lua_State *L, int level, lua_Debug *ar) {
 
 
 static Proto *getluaproto (CallInfo *ci) {
-  return (isLua(ci) ? ci_func(ci)->l.p : NULL);
+  return (isLua(ci) ? ci_func(ci)->l.p : COLnull);
 }
 
 
@@ -125,7 +126,7 @@ LUA_API const char *lua_getlocal (lua_State *L, const lua_Debug *ar, int n) {
   CallInfo *ci;
   Proto *fp;
   lua_lock(L);
-  name = NULL;
+  name = COLnull;
   ci = L->base_ci + ar->i_ci;
   fp = getluaproto(ci);
   if (fp) {  /* is a Lua function? */
@@ -143,14 +144,14 @@ LUA_API const char *lua_setlocal (lua_State *L, const lua_Debug *ar, int n) {
   CallInfo *ci;
   Proto *fp;
   lua_lock(L);
-  name = NULL;
+  name = COLnull;
   ci = L->base_ci + ar->i_ci;
   fp = getluaproto(ci);
   L->top--;  /* pop new value */
   if (fp) {  /* is a Lua function? */
     name = luaF_getlocalname(fp, n, currentpc(ci));
     if (!name || name[0] == '(')  /* `(' starts private locals */
-      name = NULL;
+      name = COLnull;
     else
       setobjs2s(ci->base+(n-1), L->top);
   }
@@ -183,7 +184,7 @@ static const char *travglobals (lua_State *L, const TObject *o) {
     if (luaO_rawequalObj(o, gval(n)) && ttisstring(gkey(n)))
       return getstr(tsvalue(gkey(n)));
   }
-  return NULL;
+  return COLnull;
 }
 
 
@@ -216,10 +217,10 @@ static int auxgetinfo (lua_State *L, const char *what, lua_Debug *ar,
         break;
       }
       case 'n': {
-        ar->namewhat = (ci) ? getfuncname(ci, &ar->name) : NULL;
-        if (ar->namewhat == NULL) {
+        ar->namewhat = (ci) ? getfuncname(ci, &ar->name) : COLnull;
+        if (ar->namewhat == COLnull) {
           /* try to find a global name */
-          if ((ar->name = travglobals(L, f)) != NULL)
+          if ((ar->name = travglobals(L, f)) != COLnull)
             ar->namewhat = "global";
           else ar->namewhat = "";  /* not found */
         }
@@ -243,7 +244,7 @@ LUA_API int lua_getinfo (lua_State *L, const char *what, lua_Debug *ar) {
     StkId f = L->top - 1;
     if (!ttisfunction(f))
       luaG_runerror(L, "value for `lua_getinfo' is not a function");
-    status = auxgetinfo(L, what + 1, ar, f, NULL);
+    status = auxgetinfo(L, what + 1, ar, f, COLnull);
     L->top--;  /* pop function */
   }
   else if (ar->i_ci != 0) {  /* no tail call? */
@@ -487,20 +488,20 @@ static const char *getobjname (CallInfo *ci, int stackpos, const char **name) {
       default: break;
     }
   }
-  return NULL;  /* no useful name found */
+  return COLnull;  /* no useful name found */
 }
 
 
 static const char *getfuncname (CallInfo *ci, const char **name) {
   Instruction i;
   if ((isLua(ci) && ci->u.l.tailcalls > 0) || !isLua(ci - 1))
-    return NULL;  /* calling function is not Lua (or is unknown) */
+    return COLnull;  /* calling function is not Lua (or is unknown) */
   ci--;  /* calling function */
   i = ci_func(ci)->l.p->code[currentpc(ci)];
   if (GET_OPCODE(i) == OP_CALL || GET_OPCODE(i) == OP_TAILCALL)
     return getobjname(ci, GETARG_A(i), name);
   else
-    return NULL;  /* no useful name can be found */
+    return COLnull;  /* no useful name can be found */
 }
 
 
@@ -514,10 +515,10 @@ static int isinstack (CallInfo *ci, const TObject *o) {
 
 
 void luaG_typeerror (lua_State *L, const TObject *o, const char *op) {
-  const char *name = NULL;
+  const char *name = COLnull;
   const char *t = luaT_typenames[ttype(o)];
   const char *kind = (isinstack(L->ci, o)) ?
-                         getobjname(L->ci, o - L->base, &name) : NULL;
+                         getobjname(L->ci, o - L->base, &name) : COLnull;
   if (kind)
     luaG_runerror(L, "attempt to %s %s `%s' (a %s value)",
                 op, kind, name, t);
@@ -535,7 +536,7 @@ void luaG_concaterror (lua_State *L, StkId p1, StkId p2) {
 
 void luaG_aritherror (lua_State *L, const TObject *p1, const TObject *p2) {
   TObject temp;
-  if (luaV_tonumber(p1, &temp) == NULL)
+  if (luaV_tonumber(p1, &temp) == COLnull)
     p2 = p1;  /* first operand is wrong */
   luaG_typeerror(L, p2, "perform arithmetic on");
 }

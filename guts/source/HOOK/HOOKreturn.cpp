@@ -16,6 +16,8 @@
 #include "LUAlua.h"
 #include "LUAtracePatternGet.h"
 #include "LUACdebug.h"
+#include "DEBUGstackDump.h"
+#include "COLcallDecrease.h"
 #include "COLassert.h"
 #include "COLglobMatch.h"
 #include "COLtrace.h"
@@ -24,16 +26,15 @@ COL_TRACE_INIT;
 void HOOKreturn(lua_State* L, lua_Debug* ar){
    COL_FUNCTION(HOOKreturn);
    if (!lua_getinfo(L, "nSl", ar)){ return; }
-   if (!ar->name){
-      return;
-   }
+   if (!ar->name){ COL_TRC("No name."); return; }
    COLstring source = ar->short_src[0] ? ar->short_src : "?";
+   COL_VAR(source);
 
-   COL_VAR2(source, *ar);
+   COL_VAR(DEBUGstackDump(L));
 
-   if (HOOKfilterTrace(source)){ return; }
-   if (HOOKfilterC    (source)){ return; }
-   if (HOOKfilterTail (source)){ return; }
+   if (HOOKfilterTrace(source)){ COL_TRC("Filtered COLtrace/COLshow etc."); return; }
+   if (HOOKfilterC    (source)){ COL_TRC("Filtered C call");                return; }
+   if (HOOKfilterTail (source)){ COL_TRC("Filtered tail call");             return; }
 
    source = FILpathNameNoExt(source);
    DEBUGstackPop(L);
@@ -46,6 +47,6 @@ void HOOKreturn(lua_State* L, lua_Debug* ar){
    source += ".lua";
 
    COLcallDecrease(); 
-   COLtimeStamp(source.data(), COLlog);
-   COLlog << "<" << name << newline; 
+   COLtraceTime(source.data(), COLtraceOut);
+   COLtraceOut << "<" << name << newline; 
 }

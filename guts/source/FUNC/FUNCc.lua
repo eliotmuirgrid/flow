@@ -40,6 +40,6 @@ function FUNCc(Args)
    COL_VAR2(HName, BName);
    FUNCwrite(HName, HContent);
    FUNCwrite(BName, BContent);
-   print ("Let's edit "..Name);
+   COL_TRC("Let's edit "..Name);
    FLOWedit(Name);
 end

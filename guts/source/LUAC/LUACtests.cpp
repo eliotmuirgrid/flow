@@ -39,7 +39,7 @@
 #define lua_pushintegral(L,i)	lua_pushnumber(L, cast(lua_Number, (i)))
 
 
-static lua_State *lua_state = NULL;
+static lua_State *lua_state = COLnull;
 
 int islocked = 0;
 
@@ -109,22 +109,22 @@ static void freeblock (void *block, size_t size) {
 
 void *debug_realloc (void *block, size_t oldsize, size_t size) {
   lua_assert(oldsize == 0 || checkblocksize(block, oldsize));
-  /* ISO does not specify what realloc(NULL, 0) does */
-  lua_assert(block != NULL || size > 0);
+  /* ISO does not specify what realloc(COLnull, 0) does */
+  lua_assert(block != COLnull || size > 0);
   if (size == 0) {
     freeblock(block, oldsize);
-    return NULL;
+    return COLnull;
   }
   else if (size > oldsize && memdebug_total+size-oldsize > memdebug_memlimit)
-    return NULL;  /* to test memory allocation errors */
+    return COLnull;  /* to test memory allocation errors */
   else {
     void *newblock;
     int i;
     size_t realsize = HEADER+size+MARKSIZE;
     size_t commonsize = (oldsize < size) ? oldsize : size;
-    if (realsize < size) return NULL;  /* overflow! */
+    if (realsize < size) return COLnull;  /* overflow! */
     newblock = malloc(realsize);  /* alloc a new block */
-    if (newblock == NULL) return NULL;
+    if (newblock == COLnull) return COLnull;
     if (block) {
       memcpy(cast(char *, newblock)+HEADER, block, commonsize);
       freeblock(block, oldsize);  /* erase (and check) old copy */
@@ -154,22 +154,22 @@ void *debug_realloc (void *block, size_t oldsize, size_t size) {
 */
 
 
-static char *buildop (Proto *p, int pc, char *buff) {
+static char *buildop (Proto *p, int pc, char *buff, int BufferSize) {
   Instruction i = p->code[pc];
   OpCode o = GET_OPCODE(i);
   const char *name = luaP_opnames[o];
   int line = getline(p, pc);
-  sprintf(buff, "(%4d) %4d - ", line, pc);
+  snprintf(buff, BufferSize, "(%4d) %4d - ", line, pc);
   switch (getOpMode(o)) {  
     case iABC:
-      sprintf(buff+strlen(buff), "%-12s%4d %4d %4d", name,
+      snprintf(buff+strlen(buff), BufferSize-strlen(buff), "%-12s%4d %4d %4d", name,
               GETARG_A(i), GETARG_B(i), GETARG_C(i));
       break;
     case iABx:
-      sprintf(buff+strlen(buff), "%-12s%4d %4d", name, GETARG_A(i), GETARG_Bx(i));
+      snprintf(buff+strlen(buff), BufferSize-strlen(buff),"%-12s%4d %4d", name, GETARG_A(i), GETARG_Bx(i));
       break;
     case iAsBx:
-      sprintf(buff+strlen(buff), "%-12s%4d %4d", name, GETARG_A(i), GETARG_sBx(i));
+      snprintf(buff+strlen(buff), BufferSize-strlen(buff),"%-12s%4d %4d", name, GETARG_A(i), GETARG_sBx(i));
       break;
   }
   return buff;
@@ -231,7 +231,7 @@ static int listlocals (lua_State *L) {
   luaL_argcheck(L, lua_isfunction(L, 1) && !lua_iscfunction(L, 1),
                  1, "Lua function expected");
   p = clvalue(func_at(L, 1))->l.p;
-  while ((name = luaF_getlocalname(p, ++i, pc)) != NULL)
+  while ((name = luaF_getlocalname(p, ++i, pc)) != COLnull)
     lua_pushstring(L, name);
   return i-1;
 }
@@ -393,7 +393,7 @@ static int upvalue (lua_State *L) {
   luaL_checktype(L, 1, LUA_TFUNCTION);
   if (lua_isnone(L, 3)) {
     const char *name = lua_getupvalue(L, 1, n);
-    if (name == NULL) return 0;
+    if (name == COLnull) return 0;
     lua_pushstring(L, name);
     return 2;
   }
@@ -469,12 +469,12 @@ static int loadlib (lua_State *L) {
     {"tablibopen", luaopen_table},
     {"dblibopen", luaopen_debug},
     {"baselibopen", luaopen_base},
-    {NULL, NULL}
+    {COLnull, COLnull}
   };
   lua_State *L1 = cast(lua_State *,
                        cast(unsigned long, luaL_checknumber(L, 1)));
   lua_pushvalue(L1, LUA_GLOBALSINDEX);
-  luaL_openlib(L1, NULL, libs, 0);
+  luaL_openlib(L1, COLnull, libs, 0);
   return 0;
 }
 
@@ -611,7 +611,7 @@ static int testC (lua_State *L) {
     else if EQ("isnil") {
       lua_pushintegral(L, lua_isnil(L, getnum));
     }
-    else if EQ("isnull") {
+    else if EQ("isCOLnull") {
       lua_pushintegral(L, lua_isnone(L, getnum));
     }
     else if EQ("tonumber") {
@@ -747,7 +747,7 @@ static void yieldf (lua_State *L, lua_Debug *ar) {
 
 static int setyhook (lua_State *L) {
   if (lua_isnoneornil(L, 1))
-    lua_sethook(L, NULL, 0, 0);  /* turn off hooks */
+    lua_sethook(L, COLnull, 0, 0);  /* turn off hooks */
   else {
     const char *smask = luaL_checkstring(L, 1);
     int count = luaL_optint(L, 2, 0);
@@ -811,7 +811,7 @@ static const struct luaL_reg tests_funcs[] = {
   {"totalmem", mem_query},
   {"resume", coresume},
   {"setyhook", setyhook},
-  {NULL, NULL}
+  {COLnull, COLnull}
 };
 
 
@@ -844,7 +844,7 @@ int luaB_opentests (lua_State *L) {
 int main (int argc, char *argv[]) {
   char *limit = getenv("MEMLIMIT");
   if (limit)
-    memdebug_memlimit = strtoul(limit, NULL, 10);
+    memdebug_memlimit = strtoul(limit, COLnull, 10);
   l_main(argc, argv);
   return 0;
 }

@@ -30,6 +30,8 @@
 #include "LUACvm.h"
 #include "LUACzio.h"
 
+#include "COLnull.h"
+
 
 
 
@@ -108,7 +110,7 @@ static void correctstack (lua_State *L, TObject *oldstack) {
   CallInfo *ci;
   GCObject *up;
   L->top = (L->top - oldstack) + L->stack;
-  for (up = L->openupval; up != NULL; up = up->gch.next)
+  for (up = L->openupval; up != COLnull; up = up->gch.next)
     gcotouv(up)->v = (gcotouv(up)->v - oldstack) + L->stack;
   for (ci = L->base_ci; ci <= L->ci; ci++) {
     ci->top = (ci->top - oldstack) + L->stack;
@@ -242,7 +244,7 @@ StkId luaD_precall (lua_State *L, StkId func) {
     while (L->top < ci->top)
       setnilvalue(L->top++);
     L->top = ci->top;
-    return NULL;
+    return COLnull;
   }
   else {  /* if is a C function, call it */
     CallInfo *ci;
@@ -310,7 +312,7 @@ void luaD_call (lua_State *L, StkId func, int nResults) {
       luaD_throw(L, LUA_ERRERR);  /* error while handing stack error */
   }
   firstResult = luaD_precall(L, func);
-  if (firstResult == NULL)  /* is a Lua function? */
+  if (firstResult == COLnull)  /* is a Lua function? */
     firstResult = luaV_execute(L);  /* call it */
   luaD_poscall(L, nResults, firstResult);
   L->nCcalls--;
@@ -343,7 +345,7 @@ static void resume (lua_State *L, void *ud) {
     }
   }
   firstResult = luaV_execute(L);
-  if (firstResult != NULL)   /* return? */
+  if (firstResult != COLnull)   /* return? */
     luaD_poscall(L, LUA_MULTRET, firstResult);  /* finalize this coroutine */
 }
 

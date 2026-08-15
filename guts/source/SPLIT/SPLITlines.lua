@@ -14,5 +14,6 @@ function SPLITlines(Content)
       table.insert(Lines, string.sub(Content, Pos, StartPos - 1))
       Pos = EndPos + 1
    end
+   COL_VAR(Lines);
    return Lines
 end

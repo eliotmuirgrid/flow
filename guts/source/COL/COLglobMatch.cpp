@@ -8,6 +8,7 @@
 
 #include "COLglobMatch.h"
 #include "COLtrace.h"
+#include "COLnull.h"
 //#include "COLstring.h"
 //COL_TRACE_INIT;
 
@@ -62,7 +63,7 @@ bool COLglobMatch(const char* pTarget, const char* pPattern){
    strcpy(Buffer, pPattern);
 	const char* delim = " ";
 	char* pToken = strtok(Buffer, delim);
-	while(pToken != NULL){
+	while(pToken != COLnull){
     //  COL_VAR(pToken);
       if (*pToken == '+'){
          pToken++;
@@ -82,7 +83,7 @@ bool COLglobMatch(const char* pTarget, const char* pPattern){
             Match = true;
          }
       }   
-		pToken = strtok(NULL, delim);
+		pToken = strtok(COLnull, delim);
 	}
    delete []Buffer;
 //   COL_VAR(Match);

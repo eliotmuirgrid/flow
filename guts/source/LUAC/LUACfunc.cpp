@@ -41,7 +41,7 @@ UpVal *luaF_findupval (lua_State *L, StkId level) {
   GCObject **pp = &L->openupval;
   UpVal *p;
   UpVal *v;
-  while ((p = ngcotouv(*pp)) != NULL && p->v >= level) {
+  while ((p = ngcotouv(*pp)) != COLnull && p->v >= level) {
     if (p->v == level) return p;
     pp = &p->next;
   }
@@ -57,7 +57,7 @@ UpVal *luaF_findupval (lua_State *L, StkId level) {
 
 void luaF_close (lua_State *L, StkId level) {
   UpVal *p;
-  while ((p = ngcotouv(L->openupval)) != NULL && p->v >= level) {
+  while ((p = ngcotouv(L->openupval)) != COLnull && p->v >= level) {
     setobj(&p->value, p->v);  /* save current value (write barrier) */
     p->v = &p->value;  /* now current value lives here */
     L->openupval = p->next;  /* remove from `open' list */
@@ -69,24 +69,24 @@ void luaF_close (lua_State *L, StkId level) {
 Proto *luaF_newproto (lua_State *L) {
   Proto *f = luaM_new(L, Proto);
   luaC_link(L, valtogco(f), LUA_TPROTO);
-  f->k = NULL;
+  f->k = COLnull;
   f->sizek = 0;
-  f->p = NULL;
+  f->p = COLnull;
   f->sizep = 0;
-  f->code = NULL;
+  f->code = COLnull;
   f->sizecode = 0;
   f->sizelineinfo = 0;
   f->sizeupvalues = 0;
   f->nups = 0;
-  f->upvalues = NULL;
+  f->upvalues = COLnull;
   f->numparams = 0;
   f->is_vararg = 0;
   f->maxstacksize = 0;
-  f->lineinfo = NULL;
+  f->lineinfo = COLnull;
   f->sizelocvars = 0;
-  f->locvars = NULL;
+  f->locvars = COLnull;
   f->lineDefined = 0;
-  f->source = NULL;
+  f->source = COLnull;
   return f;
 }
 
@@ -111,7 +111,7 @@ void luaF_freeclosure (lua_State *L, Closure *c) {
 
 /*
 ** Look for n-th local variable at line `line' in function `func'.
-** Returns NULL if not found.
+** Returns COLnull if not found.
 */
 const char *luaF_getlocalname (const Proto *f, int local_number, int pc) {
   int i;
@@ -122,5 +122,5 @@ const char *luaF_getlocalname (const Proto *f, int local_number, int pc) {
         return getstr(f->locvars[i].varname);
     }
   }
-  return NULL;  /* not found */
+  return COLnull;  /* not found */
 }

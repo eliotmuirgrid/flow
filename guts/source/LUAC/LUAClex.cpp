@@ -19,6 +19,7 @@
 #include "LUACstate.h"
 #include "LUACstring.h"
 #include "LUACzio.h"
+#include "COLnull.h"
 
 
 
@@ -120,7 +121,7 @@ void luaX_setinput (lua_State *L, LexState *LS, ZIO *z, TString *source) {
   LS->L = L;
   LS->lookahead.token = TK_EOS;  /* no look-ahead token */
   LS->z = z;
-  LS->fs = NULL;
+  LS->fs = COLnull;
   LS->linenumber = 1;
   LS->lastline = 1;
   LS->source = source;
@@ -325,7 +326,7 @@ int luaX_lex (LexState *LS, SemInfo *seminfo) {
         /* else is a comment */
         next(LS);
         if (LS->current == '[' && (next(LS), LS->current == '['))
-          read_long_string(LS, NULL);  /* long comment */
+          read_long_string(LS, COLnull);  /* long comment */
         else  /* short comment */
           while (LS->current != '\n' && LS->current != EOZ)
             next(LS);

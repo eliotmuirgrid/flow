@@ -9,12 +9,9 @@
 #include "COLdictSorted.h"
 
 #include "COLstring.h"
+#include "COLnull.h"
 
-#ifndef NULL
-#define NULL 0
-#endif
-
-COLdictSortedNode::COLdictSortedNode() : m_pLeft(NULL), m_pRight(NULL){
+COLdictSortedNode::COLdictSortedNode() : m_pLeft(COLnull), m_pRight(COLnull){
 }
 
 COLdictSortedNode::~COLdictSortedNode(){
@@ -23,7 +20,7 @@ COLdictSortedNode::~COLdictSortedNode(){
 }
 
 
-COLdictSortedBase::COLdictSortedBase(COLavlCompare pCompareFunc, COLavlExtractKey pKey) : m_pRoot(NULL), m_pCompareFunc(pCompareFunc), m_pKeyFunc(pKey), m_Size(0){
+COLdictSortedBase::COLdictSortedBase(COLavlCompare pCompareFunc, COLavlExtractKey pKey) : m_pRoot(COLnull), m_pCompareFunc(pCompareFunc), m_pKeyFunc(pKey), m_Size(0){
 }
 
 COLdictSortedBase::~COLdictSortedBase(){
@@ -31,7 +28,7 @@ COLdictSortedBase::~COLdictSortedBase(){
 }
 
 int COLdictSortedHeight(COLdictSortedNode* pNode) {
-   if (pNode == NULL){ return 0; } // empty node - zero height
+   if (pNode == COLnull){ return 0; } // empty node - zero height
    int LeftHeight  = COLdictSortedHeight(pNode->m_pLeft);
    int RightHeight = COLdictSortedHeight(pNode->m_pRight);
    return LeftHeight > RightHeight ? LeftHeight +1 : RightHeight + 1;
@@ -88,7 +85,7 @@ COLdictSortedNode* COLdictSortedBalance(COLdictSortedNode* pNode) {
 }
 
 COLdictSortedNode* COLinsert(COLdictSortedNode* pNode, COLdictSortedNode* pNewNode, COLavlCompare pCompFunc, COLavlExtractKey pKeyFunc, int* pSize){
-   if (pNode == NULL){
+   if (pNode == COLnull){
       (*pSize)++;
       return pNewNode;
    } 
@@ -111,8 +108,8 @@ void COLdictSortedBase::insert(COLdictSortedNode* pNewNode){
 }
 
 COLdictSortedNode* COLfind(COLdictSortedNode* pNode, const void* pKey, COLavlCompare pCompFunc, COLavlExtractKey pKeyFunc){
-   if (pNode == NULL){
-      return NULL;
+   if (pNode == COLnull){
+      return COLnull;
    }
    int Compare = (*pCompFunc)((*pKeyFunc)(pNode), pKey);
    if (Compare == 0){
@@ -151,7 +148,7 @@ COLstream& operator<<(COLstream& Stream, const COLdictSortedNode& Node){
 }
 
 COLdictSortedIterator::COLdictSortedIterator(COLdictSortedNode* pRoot) : m_StackPos(1){
-   m_Stack[0] = NULL;
+   m_Stack[0] = COLnull;
    m_Stack[1] = pRoot;
 }
 
@@ -160,7 +157,9 @@ void COLdictSortedIterator::first(){
 }
 
 bool COLdictSortedIterator::next(){
-   if (root()->m_pRight != NULL){
+   if (root() == COLnull){ return false; }
+
+   if (root()->m_pRight != COLnull){
       goRight();
       return downLeft();
    }  
@@ -173,7 +172,12 @@ void COLdictSortedIterator::goRight(){
 }
 
 bool COLdictSortedIterator::downLeft(){
-   while (root()->m_pLeft != NULL){
+   if (root() == COLnull){
+      m_StackPos = 0;
+      return false;
+   }
+
+   while (root()->m_pLeft != COLnull){
       m_StackPos++;
       m_Stack[m_StackPos] = parent()->m_pLeft; 
    }
@@ -185,7 +189,7 @@ bool COLdictSortedIterator::upRight(){
       pop();
    }
    pop();
-   return root() != NULL;
+   return root() != COLnull;
 }
 
 void COLdictSortedIterator::pop(){

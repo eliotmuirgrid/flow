@@ -28,12 +28,13 @@
 #include "LUACtable.h"
 #include "LUACtm.h"
 #include "LUACvm.h"
+#include "COLnull.h"
 
 
 
 /* function to convert a lua_Number to a string */
 #ifndef lua_number2str
-#define lua_number2str(s,n)     sprintf((s), LUA_NUMBER_FMT, (n))
+#define lua_number2str(s,n)     snprintf((s), sizeof(s), LUA_NUMBER_FMT, (n))
 #endif
 
 
@@ -49,7 +50,7 @@ const TObject *luaV_tonumber (const TObject *obj, TObject *n) {
     return n;
   }
   else
-    return NULL;
+    return COLnull;
 }
 
 
@@ -124,7 +125,7 @@ static void callTM (lua_State *L, const TObject *f,
 static const TObject *luaV_index (lua_State *L, const TObject *t,
                                   TObject *key, int loop) {
   const TObject *tm = fasttm(L, hvalue(t)->metatable, TM_INDEX);
-  if (tm == NULL) return &luaO_nilobject;  /* no TM */
+  if (tm == COLnull) return &luaO_nilobject;  /* no TM */
   if (ttisfunction(tm)) {
     callTMres(L, tm, t, key);
     return L->top;
@@ -175,7 +176,7 @@ void luaV_settable (lua_State *L, const TObject *t, TObject *key, StkId val) {
       Table *h = hvalue(t);
       TObject *oldval = luaH_set(L, h, key); /* do a primitive set */
       if (!ttisnil(oldval) ||  /* result is no nil? */
-          (tm = fasttm(L, h->metatable, TM_NEWINDEX)) == NULL) { /* or no TM? */
+          (tm = fasttm(L, h->metatable, TM_NEWINDEX)) == COLnull) { /* or no TM? */
         setobj2t(oldval, val);  /* write barrier */
         return;
       }
@@ -211,13 +212,13 @@ static const TObject *get_compTM (lua_State *L, Table *mt1, Table *mt2,
                                   TMS event) {
   const TObject *tm1 = fasttm(L, mt1, event);
   const TObject *tm2;
-  if (tm1 == NULL) return NULL;  /* no metamethod */
+  if (tm1 == COLnull) return COLnull;  /* no metamethod */
   if (mt1 == mt2) return tm1;  /* same metatables => same metamethods */
   tm2 = fasttm(L, mt2, event);
-  if (tm2 == NULL) return NULL;  /* no metamethod */
+  if (tm2 == COLnull) return COLnull;  /* no metamethod */
   if (luaO_rawequalObj(tm1, tm2))  /* same metamethods? */
     return tm1;
-  return NULL;
+  return COLnull;
 }
 
 
@@ -307,7 +308,7 @@ int luaV_equalval (lua_State *L, const TObject *t1, const TObject *t2) {
     }
     default: return gcvalue(t1) == gcvalue(t2);
   }
-  if (tm == NULL) return 0;  /* no TM? */
+  if (tm == COLnull) return 0;  /* no TM? */
   callTMres(L, tm, t1, t2);  /* call TM */
   return !l_isfalse(L->top);
 }
@@ -350,8 +351,8 @@ static void Arith (lua_State *L, StkId ra,
                    const TObject *rb, const TObject *rc, TMS op) {
   TObject tempb, tempc;
   const TObject *b, *c;
-  if ((b = luaV_tonumber(rb, &tempb)) != NULL &&
-      (c = luaV_tonumber(rc, &tempc)) != NULL) {
+  if ((b = luaV_tonumber(rb, &tempb)) != COLnull &&
+      (c = luaV_tonumber(rc, &tempc)) != COLnull) {
     switch (op) {
       case TM_ADD: setnvalue(ra, nvalue(b) + nvalue(c)); break;
       case TM_SUB: setnvalue(ra, nvalue(b) - nvalue(c)); break;
@@ -422,7 +423,7 @@ StkId luaV_execute (lua_State *L) {
       if (L->ci->state & CI_YIELD) {  /* did hook yield? */
         L->ci->u.l.savedpc = pc - 1;
         L->ci->state = CI_YIELD | CI_SAVEDPC;
-        return NULL;
+        return COLnull;
       }
     }
     /* warning!! several calls may realloc the stack and invalidate `ra' */
@@ -631,7 +632,7 @@ StkId luaV_execute (lua_State *L) {
             lua_assert(L->ci->state == (CI_C | CI_YIELD));
             (L->ci - 1)->u.l.savedpc = pc;
             (L->ci - 1)->state = CI_SAVEDPC;
-            return NULL;
+            return COLnull;
           }
           /* it was a C function (`precall' called it); adjust results */
           luaD_poscall(L, nresults, firstResult);

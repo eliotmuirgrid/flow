@@ -1,0 +1,16 @@
+  Timestamp       Thread ID   File                       Trace Output
+  12:58:41.275158 34360904048 MUSICplayCommand.lua      >MUSICplayCommand()
+  12:58:41.275292 34360904048 MUSICplayCommand.lua      . In the MUSICplayCommand
+  12:58:41.275315 34360904048 MUSICplay.lua             . >MUSICplay()
+  12:58:41.275351 34360904048 MUSICplay.lua             . . {
+                                                        . .   1 = Queen
+                                                        . . }
+  12:58:41.275388 34360904048 MUSICplay.lua             . . https://open.spotify.com/search/query=Queen
+  12:58:41.275405 34360904048 URLopen.lua               . . >URLopen()
+  12:58:41.275427 34360904048 URLopen.lua               . . . https://open.spotify.com/search/query=Queen
+  12:58:41.275451 34360904048 URLopen.lua               . . . C:\\Windows\\System32\\cmd.exe /c start " " "https://open.spotify.com/search/query=Queen", open "https://open.spotify.com/search/query=Queen"
+  12:58:41.319408 34360904048 URLopen.lua               . . . Eliot suggests be careful about using URLopen with any URLs you didn't create yourself
+  12:58:41.319452 34360904048 URLopen.lua               . . . This code is unsafe - but a lot of engineering effort will be required to make it safe.  Later!
+  12:58:41.319474 34360904048 URLopen.lua               . . <URLopen
+  12:58:41.319490 34360904048 MUSICplay.lua             . <MUSICplay
+  12:58:41.319506 34360904048 MUSICplayCommand.lua      <MUSICplayCommand

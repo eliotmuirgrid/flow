@@ -33,6 +33,12 @@ public:
 
    char* data()             { return m_Capacity < 16 ? m_pData.ShortBuffer : m_pData.pHeap; }
    const char* data() const { return m_Capacity < 16 ? m_pData.ShortBuffer : m_pData.pHeap; }
+  
+   char* begin(){ return data(); }
+   char* end(){ return data() + size(); }
+   const char* begin() const{ return data(); }
+   const char* end() const{ return data() + size(); }
+
 
    COLstring& append(const COLstring& From);
    COLstring& append(const char* pData, int Size);

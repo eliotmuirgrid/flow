@@ -8,4 +8,4 @@
 class COLstring;
 typedef struct lua_State lua_State;
 
-void LUAdebug(lua_State* L, const COLstring& String);
+void LUAdebug(lua_State* L, const COLstring& Trace);

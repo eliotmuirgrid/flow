@@ -55,7 +55,7 @@ LUALIB_API int luaL_argerror (lua_State *L, int narg, const char *extramsg) {
     if (narg == 0)  /* error is in the self argument itself? */
       return luaL_error(L, "calling `%s' on bad self (%s)", ar.name, extramsg);
   }
-  if (ar.name == NULL)
+  if (ar.name == COLnull)
     ar.name = "?";
   return luaL_error(L, "bad argument #%d to `%s' (%s)",
                         narg, ar.name, extramsg);
@@ -134,7 +134,7 @@ LUALIB_API void  luaL_getmetatable (lua_State *L, const char *tname) {
 
 LUALIB_API void *luaL_checkudata (lua_State *L, int ud, const char *tname) {
   const char *tn;
-  if (!lua_getmetatable(L, ud)) return NULL;  /* no metatable? */
+  if (!lua_getmetatable(L, ud)) return COLnull;  /* no metatable? */
   lua_rawget(L, LUA_REGISTRYINDEX);  /* get registry[metatable] */
   tn = lua_tostring(L, -1);
   if (tn && (strcmp(tn, tname) == 0)) {
@@ -143,7 +143,7 @@ LUALIB_API void *luaL_checkudata (lua_State *L, int ud, const char *tname) {
   }
   else {
     lua_pop(L, 1);
-    return NULL;
+    return COLnull;
   }
 }
 
@@ -489,9 +489,9 @@ typedef struct LoadF {
 static const char *getF (lua_State *L, void *ud, size_t *size) {
   LoadF *lf = (LoadF *)ud;
   (void)L;
-  if (feof(lf->f)) return NULL;
+  if (feof(lf->f)) return COLnull;
   *size = fread(lf->buff, 1, LUAL_BUFFERSIZE, lf->f);
-  return (*size > 0) ? lf->buff : NULL;
+  return (*size > 0) ? lf->buff : COLnull;
 }
 
 
@@ -509,7 +509,7 @@ LUALIB_API int luaL_loadfile (lua_State *L, const char *filename) {
   int status, readstatus;
   int c;
   int fnameindex = lua_gettop(L) + 1;  /* index of filename on the stack */
-  if (filename == NULL) {
+  if (filename == COLnull) {
     lua_pushliteral(L, "=stdin");
     lf.f = stdin;
   } else {
@@ -517,12 +517,12 @@ LUALIB_API int luaL_loadfile (lua_State *L, const char *filename) {
     lua_pushfstring(L, "@%s", filename);
     lf.f = fopen(filename, "r");
   }
-  if (lf.f == NULL) return errfile(L, fnameindex);  /* unable to open file */
+  if (lf.f == COLnull) return errfile(L, fnameindex);  /* unable to open file */
   c = ungetc(getc(lf.f), lf.f);
   if (!(isspace(c) || isprint(c)) && lf.f != stdin) {  /* binary file? */
     fclose(lf.f);
     lf.f = fopen(filename, "rb");  /* reopen in binary mode */
-    if (lf.f == NULL) return errfile(L, fnameindex); /* unable to reopen file */
+    if (lf.f == COLnull) return errfile(L, fnameindex); /* unable to reopen file */
   }
   status = lua_load(L, getF, &lf, lua_tostring(L, -1));
   readstatus = ferror(lf.f);
@@ -545,7 +545,7 @@ typedef struct LoadS {
 static const char *getS (lua_State *L, void *ud, size_t *size) {
   LoadS *ls = (LoadS *)ud;
   (void)L;
-  if (ls->size == 0) return NULL;
+  if (ls->size == 0) return COLnull;
   *size = ls->size;
   ls->size = 0;
   return ls->s;

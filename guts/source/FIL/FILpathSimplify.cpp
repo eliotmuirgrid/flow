@@ -2,6 +2,9 @@
 #include "COLarray.h"
 #include "COLtrace.h"
 COL_TRACE_INIT;
+
+#include "string.h"
+
 static bool FILisThisAlpha(const char C){
    return ((0x41 <= C && C <= 0x5a) || (0x61 <= C && C <= 0x7A));
 }

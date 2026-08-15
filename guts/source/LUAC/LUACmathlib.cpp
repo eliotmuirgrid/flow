@@ -226,7 +226,7 @@ static const luaL_reg mathlib[] = {
   {"rad",   math_rad},
   {"random",     math_random},
   {"randomseed", math_randomseed},
-  {NULL, NULL}
+  {COLnull, COLnull}
 };
 
 

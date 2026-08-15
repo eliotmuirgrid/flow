@@ -11,6 +11,7 @@
 // Date:   02/05/2004
 //---------------------------------------------------------------------------
 #include "COLmap.h"
+#include "COLassert.h"
 #include "memory.h"
 #include "COLstream.h"
 
@@ -78,7 +79,7 @@ static void Balance1(COLavlTreePlace& p, bool& h)
          // now do the ups
          p->Up = p->Left->Up;
          p->Left->Up = p;
-         if (p->Left->Right != NULL)
+         if (p->Left->Right != COLnull)
             p->Left->Right->Up = p->Left;
       }
       else
@@ -270,7 +271,7 @@ static bool Del(COLavlTreePlace& r, COLavlTreePlace& q, bool& h)
             rprev->Up = rup;
          }
          else{
-            rup->Right = NULL;
+            rup->Right = COLnull;
          }  
       }
       r = rprev;
@@ -283,9 +284,9 @@ static bool Del(COLavlTreePlace& r, COLavlTreePlace& q, bool& h)
 // COLavlTreeNode
 
 COLavlTreeNode::COLavlTreeNode(void):
-   Up(NULL),
-   Left(NULL),
-   Right(NULL),
+   Up(COLnull),
+   Left(COLnull),
+   Right(COLnull),
    Balance(0)
 {
 }
@@ -293,14 +294,14 @@ COLavlTreeNode::COLavlTreeNode(void):
 // COLavlTreeBase
 
 COLavlTreeBase::COLavlTreeBase(void):
-   RootNode(NULL),
+   RootNode(COLnull),
    NodeCount(0)
 {
 }
 
 void COLavlTreeBase::clear(void)
 {
-   if (RootNode != NULL)
+   if (RootNode != COLnull)
    {
       COLavlTreePlace curr = RootNode;
       COLavlTreePlace parent;
@@ -308,36 +309,36 @@ void COLavlTreeBase::clear(void)
       {
          while (true)  // find a leaf
          {
-            if (curr->Left != NULL)
+            if (curr->Left != COLnull)
             {
                curr = curr->Left;
                continue;
             }
-            if (curr->Right != NULL)
+            if (curr->Right != COLnull)
             {
                curr = curr->Right;
                continue;
             }
-            break;    // now at a leaf since both Left and Right pointers are NULL
+            break;    // now at a leaf since both Left and Right pointers are COLnull
          }
 
-         if ((parent = curr->Up) == NULL)
+         if ((parent = curr->Up) == COLnull)
          {
             destroyItem(curr);  // only the root of the tree is Left, delete it and break out of loop
             break;
          }
          else
          {
-            if (parent->Left == curr) // Set the appropriate pointer to NULL, The parent may become a leaf
-               parent->Left = NULL;
+            if (parent->Left == curr) // Set the appropriate pointer to COLnull, The parent may become a leaf
+               parent->Left = COLnull;
             else
-               parent->Right = NULL;
+               parent->Right = COLnull;
             destroyItem(curr);
             curr = parent;
          }
       }
    }
-   RootNode = NULL;
+   RootNode = COLnull;
    NodeCount = 0;
 }
 
@@ -351,7 +352,7 @@ struct COLavlTreeBaseContext           // used for zapping a node
 
 void COLavlTreeBase::remove(COLavlTreePlace Place)
 {
-   COLASSERT(Place != NULL);
+   COLASSERT(Place != COLnull);
    bool Higher = false;
    COLavlTreeBaseContext Context;
    memset(&Context, 0, sizeof(Context));
@@ -379,18 +380,18 @@ COLavlTreePlace COLavlTreeBase::last(void) const
 
 COLavlTreePlace COLavlTreeBase::previous(COLavlTreePlace Place) const
 {
-   if (Place == NULL)
+   if (Place == COLnull)
       return last();
-   if (Place->Left != NULL)
+   if (Place->Left != COLnull)
       return downRight(Place->Left);
    return upLeft(Place);
 }
 
 COLavlTreePlace COLavlTreeBase::next(COLavlTreePlace Place) const
 {
-   if (Place == NULL)
+   if (Place == COLnull)
       return first();
-   if (Place->Right != NULL)
+   if (Place->Right != COLnull)
       return downLeft(Place->Right);
    return upRight(Place);
 }
@@ -410,11 +411,11 @@ bool COLavlTreeBase::removeItem(const void* Key)
 COLavlTreePlace COLavlTreeBase::addItem(const void* Key, COLavlTreePlace Item)
 {
    bool new_level = false;
-   COLavlTreePlace Place = insertIt(Key, Item, RootNode, NULL, new_level, false);
-   if (Place == NULL)
+   COLavlTreePlace Place = insertIt(Key, Item, RootNode, COLnull, new_level, false);
+   if (Place == COLnull)
    {
       destroyItem(Item);
-      return NULL;
+      return COLnull;
    }
    NodeCount++;
    invariant();
@@ -424,11 +425,11 @@ COLavlTreePlace COLavlTreeBase::addItem(const void* Key, COLavlTreePlace Item)
 COLavlTreePlace COLavlTreeBase::addUniqueItem(const void* Key, COLavlTreePlace Item)
 {
    bool new_level = false;
-   COLavlTreePlace Place = insertIt(Key, Item, RootNode, NULL, new_level, true);
-   if (Place == NULL)
+   COLavlTreePlace Place = insertIt(Key, Item, RootNode, COLnull, new_level, true);
+   if (Place == COLnull)
    {
       destroyItem(Item);
-      return NULL;
+      return COLnull;
    }
    NodeCount++;
    invariant();
@@ -447,7 +448,7 @@ COLavlTreePlace COLavlTreeBase::findFirstItem(const void* Key) const
 COLavlTreePlace COLavlTreeBase::findItem(const void* Key) const
 {
    COLavlTreePlace curr = RootNode;
-   while (curr != NULL)
+   while (curr != COLnull)
    {
       int comparism = compareKey(Key, curr);
       if (comparism < 0)
@@ -463,21 +464,21 @@ COLavlTreePlace COLavlTreeBase::findItem(const void* Key) const
 COLavlTreePlace COLavlTreeBase::findNearestItem(const void* Key) const
 {
    COLavlTreePlace curr = RootNode;
-   while (curr != NULL)
+   while (curr != COLnull)
    {
       int comparism = compareKey(Key, curr);
       if (comparism < 0)
-         if (curr->Left != NULL)
+         if (curr->Left != COLnull)
             curr = curr->Left;
          else
             break; // found nearest
       else if (comparism > 0)
-         if (curr->Right != NULL)
+         if (curr->Right != COLnull)
             curr = curr->Right;
          else
          {
             COLavlTreePlace p = next(curr);
-            if (p != NULL)
+            if (p != COLnull)
                curr = p;
             break; // found nearest
          }
@@ -490,11 +491,11 @@ COLavlTreePlace COLavlTreeBase::findNearestItem(const void* Key) const
 COLavlTreePlace COLavlTreeBase::findBelowItem(const void* Key) const
 {
    COLavlTreePlace curr = RootNode;
-   while (curr != NULL)
+   while (curr != COLnull)
    {
       int comparism = compareKey(Key, curr);
       if (comparism <= 0)
-         if (curr->Left != NULL)
+         if (curr->Left != COLnull)
             curr = curr->Left;
          else
          {
@@ -502,7 +503,7 @@ COLavlTreePlace COLavlTreeBase::findBelowItem(const void* Key) const
             break; // found below
          }
       else
-         if (curr->Right != NULL)
+         if (curr->Right != COLnull)
          curr = curr->Right;
       else
          break; // found below
@@ -513,11 +514,11 @@ COLavlTreePlace COLavlTreeBase::findBelowItem(const void* Key) const
 COLavlTreePlace COLavlTreeBase::findAboveItem(const void* Key) const
 {
    COLavlTreePlace curr = RootNode;
-   while (curr != NULL)
+   while (curr != COLnull)
    {
       int comparism = compareKey(Key, curr);
       if (comparism >= 0)
-         if (curr->Right != NULL)
+         if (curr->Right != COLnull)
             curr = curr->Right;
          else
          {
@@ -525,7 +526,7 @@ COLavlTreePlace COLavlTreeBase::findAboveItem(const void* Key) const
             break; // found above
          }
       else
-         if (curr->Left != NULL)
+         if (curr->Left != COLnull)
          curr = curr->Left;
       else
          break; // found above
@@ -535,24 +536,24 @@ COLavlTreePlace COLavlTreeBase::findAboveItem(const void* Key) const
 
 COLavlTreePlace COLavlTreeBase::downLeft(COLavlTreePlace Place) const
 {
-   if (Place != NULL)
-      while (Place->Left != NULL)
+   if (Place != COLnull)
+      while (Place->Left != COLnull)
          Place = Place->Left;
    return Place;
 }
 
 COLavlTreePlace COLavlTreeBase::downRight(COLavlTreePlace Place) const
 {
-   if (Place != NULL)
-      while (Place->Right != NULL)
+   if (Place != COLnull)
+      while (Place->Right != COLnull)
          Place = Place->Right;
    return Place;
 }
 
 COLavlTreePlace COLavlTreeBase::upLeft(COLavlTreePlace Place) const
 {
-   if (Place != NULL)
-      while (Place->Up != NULL && Place->Up->Left == Place)
+   if (Place != COLnull)
+      while (Place->Up != COLnull && Place->Up->Left == Place)
          Place = Place->Up;
    Place = Place->Up;
    return Place;
@@ -560,8 +561,8 @@ COLavlTreePlace COLavlTreeBase::upLeft(COLavlTreePlace Place) const
 
 COLavlTreePlace COLavlTreeBase::upRight(COLavlTreePlace Place) const
 {
-   if (Place != NULL)
-      while (Place->Up != NULL && Place->Up->Right == Place)
+   if (Place != COLnull)
+      while (Place->Up != COLnull && Place->Up->Right == Place)
          Place = Place->Up;
    Place = Place->Up;
    return Place;
@@ -581,11 +582,11 @@ COLavlTreePlace COLavlTreeBase::insertIt(const void* Key,
 
    Higher = false;
 
-   if (CurrNode == NULL)        // check if we are empty - in which case insert
+   if (CurrNode == COLnull)        // check if we are empty - in which case insert
    {
       CurrNode = Item;
-      CurrNode->Left = NULL;
-      CurrNode->Right = NULL;
+      CurrNode->Left = COLnull;
+      CurrNode->Right = COLnull;
       CurrNode->Up = NodeAbove;   // from recursion
       CurrNode->Balance = 0;       // no need to Balance this node
       Higher = true;
@@ -695,10 +696,10 @@ COLavlTreePlace COLavlTreeBase::insertIt(const void* Key,
                CurrNode = p2;
                CurrNode->Up = CurrNode->Left->Up;
                CurrNode->Left->Up = CurrNode;
-               if (CurrNode->Left->Right != NULL)
+               if (CurrNode->Left->Right != COLnull)
                   CurrNode->Left->Right->Up = CurrNode->Left;
                CurrNode->Right->Up = CurrNode;
-               if (CurrNode->Right->Left != NULL)
+               if (CurrNode->Right->Left != COLnull)
                   CurrNode->Right->Left->Up = CurrNode->Right;
             }
             CurrNode->Balance = 0;
@@ -708,7 +709,7 @@ COLavlTreePlace COLavlTreeBase::insertIt(const void* Key,
    }
    else // comparism == 0
    {
-      return NULL;
+      return COLnull;
    }
    return result;
 }
@@ -718,10 +719,10 @@ bool COLavlTreeBase::zapIt(COLavlTreeBaseContext& Context, // path down tree to 
                         bool& Higher)  // true if new level added
 {
    COLavlTreePlace kill_node;
-   COLavlTreePlace p = NULL;
+   COLavlTreePlace p = COLnull;
    bool result = false;
 
-   if (CurrNode == NULL)
+   if (CurrNode == COLnull)
    {
       Higher = false;
       return result;
@@ -784,11 +785,11 @@ bool COLavlTreeBase::zapIt(const void* Key,  // search for a Key
                         bool& Higher)  // true if new level added
 {
    COLavlTreePlace kill_node;
-   COLavlTreePlace p = NULL;
+   COLavlTreePlace p = COLnull;
    int comparism;
    bool result = false;
 
-   if (CurrNode == NULL)
+   if (CurrNode == COLnull)
    {
       Higher = false;
       return result;
@@ -853,10 +854,10 @@ COLstream& operator<<(COLstream& Stream, const COLmap<COLstring, COLstring>& Map
 
 void COLavlTreeBase::testLinkage(COLavlTreePlace Place) const
 {
-   if (Place == NULL)
+   if (Place == COLnull)
       return;
-   COLASSERT(Place->Left == NULL || Place->Left->Up == Place);
-   COLASSERT(Place->Right == NULL || Place->Right->Up == Place);
+   COLASSERT(Place->Left == COLnull || Place->Left->Up == Place);
+   COLASSERT(Place->Right == COLnull || Place->Right->Up == Place);
    testLinkage(Place->Left);
    testLinkage(Place->Right);
 }
@@ -864,14 +865,14 @@ void COLavlTreeBase::testLinkage(COLavlTreePlace Place) const
 void COLavlTreeBase::invariant(void) const
 {
    testLinkage(RootNode);
-   if (RootNode == NULL)
+   if (RootNode == COLnull)
    {
       COLASSERT(NodeCount == 0);
    }
    else
    {
       COLuint64 count = 0;
-      for (COLavlTreePlace curr = first(); curr != NULL; curr = next(curr))
+      for (COLavlTreePlace curr = first(); curr != COLnull; curr = next(curr))
       {
          COLASSERT(curr->Balance >= -1 && curr->Balance <= 1);
          count++;

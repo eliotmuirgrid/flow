@@ -7,38 +7,38 @@
 //
 // Templated double linked list class
 //---------------------------------------------------------------------------
-#include "COLerror.h"
+#include "COLassert.h"
 #include "COLlist.h"
 
-COLvoidList::COLvoidList(): Size(0), Head(NULL), Tail(NULL){}
+COLvoidList::COLvoidList(): Size(0), Head(COLnull), Tail(COLnull){}
 
 
 void COLvoidList::clear(){
    COLlistPlace Place = Head;
-   while (Place != NULL){
+   while (Place != COLnull){
       COLlistPlace Current = Place;
       Place = Place->Next;
       destroyItem(Current);
    }
    Size = 0;
-   Head = NULL;
-   Tail = NULL;
+   Head = COLnull;
+   Tail = COLnull;
    invariant();
 }
 
 void COLvoidList::remove(COLlistPlace Place){
-   COLASSERT(Place != NULL);
-   if (Place == NULL){
+   COLASSERT(Place != COLnull);
+   if (Place == COLnull){
       return; // TODO not needed if precondition is used
    }
 
-   if (Place->Previous == NULL){
+   if (Place->Previous == COLnull){
       Head = Place->Next;
    } else {
       Place->Previous->Next = Place->Next;
    }
 
-   if (Place->Next == NULL) {
+   if (Place->Next == COLnull) {
       Tail = Place->Previous;
    } else{
       Place->Next->Previous = Place->Previous;
@@ -50,8 +50,8 @@ void COLvoidList::remove(COLlistPlace Place){
 }
 
 void COLvoidList::exchange(COLlistPlace Place1, COLlistPlace Place2){
-   COLASSERT(Place1 != NULL && Place2 != NULL);
-   if (Place1 == NULL || Place2 == NULL){
+   COLASSERT(Place1 != COLnull && Place2 != COLnull);
+   if (Place1 == COLnull || Place2 == COLnull){
       return; // TODO not needed if precondition is used
    }
 
@@ -63,7 +63,7 @@ void COLvoidList::exchange(COLlistPlace Place1, COLlistPlace Place2){
       Place2->Previous = Previous;
       Place2->Next = Next;
 
-      if (Place1->Previous != NULL){
+      if (Place1->Previous != COLnull){
          if (Place1->Previous == Place1){
             Place1->Previous = Place2;
          } else {
@@ -71,7 +71,7 @@ void COLvoidList::exchange(COLlistPlace Place1, COLlistPlace Place2){
          }
       }
 
-      if (Place1->Next != NULL){
+      if (Place1->Next != COLnull){
          if (Place1->Next == Place1){
             Place1->Next = Place2;
          } else {
@@ -79,7 +79,7 @@ void COLvoidList::exchange(COLlistPlace Place1, COLlistPlace Place2){
          }
       }
 
-      if (Place2->Previous != NULL) {
+      if (Place2->Previous != COLnull) {
          if (Place2->Previous == Place2) {
             Place2->Previous = Place1;
          } else {
@@ -87,7 +87,7 @@ void COLvoidList::exchange(COLlistPlace Place1, COLlistPlace Place2){
          }
       }
 
-      if (Place2->Next != NULL) {
+      if (Place2->Next != COLnull) {
          if (Place2->Next == Place2){
             Place2->Next = Place1;
          } else {
@@ -111,21 +111,21 @@ void COLvoidList::exchange(COLlistPlace Place1, COLlistPlace Place2){
 }
 
 COLlistPlace COLvoidList::previous(COLlistPlace Place) const{
-   return Place == NULL ? Tail : Place->Previous;
+   return Place == COLnull ? Tail : Place->Previous;
 }
 
 COLlistPlace COLvoidList::next(COLlistPlace Place) const{
-   return Place == NULL ? Head : Place->Next;
+   return Place == COLnull ? Head : Place->Next;
 }
 
 COLlistPlace COLvoidList::insertItem(COLlistPlace Item, COLlistPlace Place){
-   COLASSERT(Item != NULL);
-   if (Place == NULL){
+   COLASSERT(Item != COLnull);
+   if (Place == COLnull){
       return addItem(Item);
    }
    Item->Previous = Place->Previous;
    Item->Next = Place;
-   if (Item->Previous == NULL){
+   if (Item->Previous == COLnull){
       Head = Item;
    } else {
       Item->Previous->Next = Item;
@@ -137,10 +137,10 @@ COLlistPlace COLvoidList::insertItem(COLlistPlace Item, COLlistPlace Place){
 }
 
 COLlistPlace COLvoidList::addItem(COLlistPlace Item){
-   COLASSERT(Item != NULL);
+   COLASSERT(Item != COLnull);
    Item->Previous = Tail;
-   Item->Next = NULL;
-   if (Tail == NULL){
+   Item->Next = COLnull;
+   if (Tail == COLnull){
       Head = Item;
    } else {
       Tail->Next = Item;
@@ -154,21 +154,21 @@ COLlistPlace COLvoidList::addItem(COLlistPlace Item){
 #ifdef COL_ENABLE_INVARIANT_INTEGRITY_CHECK
 void COLvoidList::invariant() const{
    if (Size == 0) {
-      COLASSERT(Head == NULL && Tail == NULL);
+      COLASSERT(Head == COLnull && Tail == COLnull);
    } else {
-      COLASSERT(Head != NULL && Tail != NULL);
-      COLASSERT(Head->Previous == NULL && Tail->Next == NULL);
+      COLASSERT(Head != COLnull && Tail != COLnull);
+      COLASSERT(Head->Previous == COLnull && Tail->Next == COLnull);
    }
    COLlistPlace Place = Head;
    for (COLindex i = 0; i < Size; i++){
-      COLASSERT(Place != NULL);
-      if (Place->Next == NULL) {
+      COLASSERT(Place != COLnull);
+      if (Place->Next == COLnull) {
          COLASSERT(Place == Tail);
       } else {
          COLASSERT(Place->Next->Previous == Place);
       }
       Place = Place->Next;
    }
-   COLASSERT(Place == NULL);
+   COLASSERT(Place == COLnull);
 }
 #endif // DEBUG

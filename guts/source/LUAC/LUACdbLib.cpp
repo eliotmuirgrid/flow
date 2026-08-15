@@ -115,7 +115,7 @@ static int auxupvalue (lua_State *L, int get) {
   luaL_checktype(L, 1, LUA_TFUNCTION);
   if (lua_iscfunction(L, 1)) return 0;  /* cannot touch C upvalues from Lua */
   name = get ? lua_getupvalue(L, 1, n) : lua_setupvalue(L, 1, n);
-  if (name == NULL) return 0;
+  if (name == COLnull) return 0;
   lua_pushstring(L, name);
   lua_insert(L, -(get+1));
   return get + 1;
@@ -178,7 +178,7 @@ static char *unmakemask (int mask, char *smask) {
 static int sethook (lua_State *L) {
   if (lua_isnoneornil(L, 1)) {
     lua_settop(L, 1);
-    lua_sethook(L, NULL, 0, 0);  /* turn off hooks */
+    lua_sethook(L, COLnull, 0, 0);  /* turn off hooks */
   }
   else {
     const char *smask = luaL_checkstring(L, 2);
@@ -197,7 +197,7 @@ static int gethook (lua_State *L) {
   char buff[5];
   int mask = lua_gethookmask(L);
   lua_Hook hook = lua_gethook(L);
-  if (hook != NULL && hook != hookf)  /* external hook? */
+  if (hook != COLnull && hook != hookf)  /* external hook? */
     lua_pushliteral(L, "external hook");
   else {
     lua_pushlightuserdata(L, (void *)&KEY_HOOK);
@@ -286,7 +286,7 @@ static const luaL_reg dblib[] = {
   {"setupvalue", setupvalue},
   {"debug", debug},
   {"traceback", errorfb},
-  {NULL, NULL}
+  {COLnull, COLnull}
 };
 
 

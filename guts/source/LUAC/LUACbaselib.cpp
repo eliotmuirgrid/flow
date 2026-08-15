@@ -39,7 +39,7 @@ static int luaB_print (lua_State *L) {
     lua_pushvalue(L, i);   /* value to print */
     lua_call(L, 1, 1);
     s = lua_tostring(L, -1);  /* get result */
-    if (s == NULL)
+    if (s == COLnull)
       return luaL_error(L, "`tostring' must return a string to `print'");
     if (i>1) fputs("\t", stdout);
     fputs(s, stdout);
@@ -271,13 +271,13 @@ static int luaB_loadstring (lua_State *L) {
 
 
 static int luaB_loadfile (lua_State *L) {
-  const char *fname = luaL_optstring(L, 1, NULL);
+  const char *fname = luaL_optstring(L, 1, COLnull);
   return load_aux(L, luaL_loadfile(L, fname));
 }
 
 
 static int luaB_dofile (lua_State *L) {
-  const char *fname = luaL_optstring(L, 1, NULL);
+  const char *fname = luaL_optstring(L, 1, COLnull);
   int n = lua_gettop(L);
   int status = luaL_loadfile(L, fname);
   if (status != 0) lua_error(L);
@@ -327,7 +327,7 @@ static int luaB_xpcall (lua_State *L) {
   return lua_gettop(L);  /* return status + all results */
 }
 
-
+// TODO - naff tostring
 static int luaB_tostring (lua_State *L) {
   char buff[128];
   luaL_checkany(L, 1);
@@ -344,17 +344,17 @@ static int luaB_tostring (lua_State *L) {
       lua_pushstring(L, (lua_toboolean(L, 1) ? "true" : "false"));
       return 1;
     case LUA_TTABLE:
-      sprintf(buff, "table: %p", lua_topointer(L, 1));
+      snprintf(buff, sizeof(buff),"table: %p", lua_topointer(L, 1));
       break;
     case LUA_TFUNCTION:
-      sprintf(buff, "function: %p", lua_topointer(L, 1));
+      snprintf(buff, sizeof(buff),"function: %p", lua_topointer(L, 1));
       break;
     case LUA_TUSERDATA:
     case LUA_TLIGHTUSERDATA:
-      sprintf(buff, "userdata: %p", lua_touserdata(L, 1));
+      snprintf(buff, sizeof(buff), "userdata: %p", lua_touserdata(L, 1));
       break;
     case LUA_TTHREAD:
-      sprintf(buff, "thread: %p", (void *)lua_tothread(L, 1));
+      snprintf(buff, sizeof(buff), "thread: %p", (void *)lua_tothread(L, 1));
       break;
     case LUA_TNIL:
       lua_pushliteral(L, "nil");
@@ -431,10 +431,10 @@ static const char *getpath (lua_State *L) {
 
 static const char *pushnextpath (lua_State *L, const char *path) {
   const char *l;
-  if (*path == '\0') return NULL;  /* no more paths */
+  if (*path == '\0') return COLnull;  /* no more paths */
   if (*path == LUA_PATH_SEP) path++;  /* skip separator */
   l = strchr(path, LUA_PATH_SEP);  /* find next separator */
-  if (l == NULL) l = path+strlen(path);
+  if (l == COLnull) l = path+strlen(path);
   lua_pushlstring(L, path, l - path);  /* directory name */
   return l;
 }
@@ -444,7 +444,7 @@ static void pushcomposename (lua_State *L) {
   const char *path = lua_tostring(L, -1);
   const char *wild;
   int n = 1;
-  while ((wild = strchr(path, LUA_PATH_MARK)) != NULL) {
+  while ((wild = strchr(path, LUA_PATH_MARK)) != COLnull) {
     /* is there stack space for prefix, name, and eventual last sufix? */
     luaL_checkstack(L, 3, "too many marks in a path component");
     lua_pushlstring(L, path, wild - path);  /* push prefix */
@@ -473,7 +473,7 @@ static int luaB_require (lua_State *L) {
   else {  /* must load it */
     while (status == LUA_ERRFILE) {
       lua_settop(L, 3);  /* reset stack position */
-      if ((path = pushnextpath(L, path)) == NULL) break;
+      if ((path = pushnextpath(L, path)) == COLnull) break;
       pushcomposename(L);
       status = luaL_loadfile(L, lua_tostring(L, -1));  /* try to load it */
     }
@@ -536,7 +536,7 @@ static const luaL_reg base_funcs[] = {
   {"dofile", luaB_dofile},
   {"loadstring", luaB_loadstring},
   {"require", luaB_require},
-  {NULL, NULL}
+  {COLnull, COLnull}
 };
 
 
@@ -642,7 +642,7 @@ static const luaL_reg co_funcs[] = {
   {"resume", luaB_coresume},
   {"yield", luaB_yield},
   {"status", luaB_costatus},
-  {NULL, NULL}
+  {COLnull, COLnull}
 };
 
 /* }====================================================== */
@@ -652,7 +652,7 @@ static const luaL_reg co_funcs[] = {
 static void base_open (lua_State *L) {
   lua_pushliteral(L, "_G");
   lua_pushvalue(L, LUA_GLOBALSINDEX);
-  luaL_openlib(L, NULL, base_funcs, 0);  /* open lib into global table */
+  luaL_openlib(L, COLnull, base_funcs, 0);  /* open lib into global table */
   lua_pushliteral(L, "_VERSION");
   lua_pushliteral(L, LUA_VERSION);
   lua_rawset(L, -3);  /* set global _VERSION */

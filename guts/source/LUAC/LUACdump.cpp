@@ -14,6 +14,7 @@
 #include "LUACopcodes.h"
 #include "LUACstate.h"
 #include "LUACundump.h"
+#include "COLnull.h"
 
 #define DumpVector(b,n,size,D)	DumpBlock(b,(n)*(size),D)
 #define DumpLiteral(s,D)	DumpBlock("" s,(sizeof(s))-1,D)
@@ -54,7 +55,7 @@ static void DumpNumber(lua_Number x, DumpState* D)
 
 static void DumpString(TString* s, DumpState* D)
 {
- if (s==NULL || getstr(s)==NULL)
+ if (s==COLnull || getstr(s)==COLnull)
   DumpSize(0,D);
  else
  {
@@ -126,7 +127,7 @@ static void DumpConstants(const Proto* f, DumpState* D)
 
 static void DumpFunction(const Proto* f, const TString* p, DumpState* D)
 {
- DumpString((f->source==p) ? NULL : f->source,D);
+ DumpString((f->source==p) ? COLnull : f->source,D);
  DumpInt(f->lineDefined,D);
  DumpByte(f->nups,D);
  DumpByte(f->numparams,D);
@@ -165,5 +166,5 @@ void luaU_dump (lua_State* L, const Proto* Main, lua_Chunkwriter w, void* data)
  D.write=w;
  D.data=data;
  DumpHeader(&D);
- DumpFunction(Main,NULL,&D);
+ DumpFunction(Main,COLnull,&D);
 }

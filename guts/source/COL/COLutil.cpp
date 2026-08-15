@@ -6,6 +6,7 @@
 // Implementation
 //-------------------------------------------------------
 
+#include "COLnull.h"
 #include "COLutil.h"
 #include "COLtrace.h"
 COL_TRACE_INIT;
@@ -24,6 +25,6 @@ void COLsleep(int Milliseconds){
    timespec I;
    I.tv_sec = Milliseconds / 1000;
    I.tv_nsec = (Milliseconds % 1000) * 1000000;
-   nanosleep(&I, NULL);
+   nanosleep(&I, COLnull);
 #endif
 }

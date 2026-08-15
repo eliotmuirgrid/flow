@@ -9,7 +9,8 @@
 
 class COLsink;
 
-#include "COLtypes.h"
+#include "COLint64.h"
+#include "COLuint64.h"
 
 class COLstream{
 public:

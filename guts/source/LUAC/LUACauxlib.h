@@ -1,16 +1,9 @@
-/*
-** $Id: lauxlib.h,v 1.60 2003/04/03 13:35:34 roberto Exp $
-** Auxiliary functions for building Lua libraries
-** See Copyright Notice in lua.h
-*/
-
-
-#ifndef lauxlib_h
-#define lauxlib_h
+#pragma once
 
 
 #include "stddef.h"
 #include "stdio.h"
+#include "COLnull.h"
 
 #include "LUAClua.h"
 
@@ -72,8 +65,8 @@ LUALIB_API int luaL_loadbuffer (lua_State *L, const char *buff, size_t sz,
 
 #define luaL_argcheck(L, cond,numarg,extramsg) if (!(cond)) \
                                                luaL_argerror(L, numarg,extramsg)
-#define luaL_checkstring(L,n)	(luaL_checklstring(L, (n), NULL))
-#define luaL_optstring(L,n,d)	(luaL_optlstring(L, (n), (d), NULL))
+#define luaL_checkstring(L,n)	(luaL_checklstring(L, (n), COLnull))
+#define luaL_optstring(L,n,d)	(luaL_optlstring(L, (n), (d), COLnull))
 #define luaL_checkint(L,n)	((int)luaL_checknumber(L, n))
 #define luaL_checklong(L,n)	((long)luaL_checknumber(L, n))
 #define luaL_optint(L,n,d)	((int)luaL_optnumber(L, n,(lua_Number)(d)))
@@ -139,5 +132,3 @@ LUALIB_API int   lua_dobuffer (lua_State *L, const char *buff, size_t sz,
 #define luaL_opt_int	luaL_optint
 #define luaL_opt_long	luaL_optlong
 
-
-#endif

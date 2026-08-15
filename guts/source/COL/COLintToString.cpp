@@ -13,6 +13,8 @@
 #include "COLtrace.h"
 COL_TRACE_INIT;
 
+#include <stdio.h>
+
 COLstring COLintToString(int V){
    COL_FUNCTION(COLintToString);
    char Result[32]; // Room for a 64-bit int.

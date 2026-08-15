@@ -19,7 +19,7 @@ COL_TRACE_INIT;
 void FLOWbinDirSet(lua_State* L, const COLstring& Dir){
    COL_FUNCTION(FLOWcodeDirSet);
    COLstring CodeDir = Dir + FLOWcodeDir();
-   COL_VAR(CodeDir);
+   COL_VAR2(Dir, CodeDir);
    if (!FILexists(CodeDir)){
       COL_TRC("No code dir so we are zip land!");
       CodeDir = "/zip/" + FLOWcodeDir();

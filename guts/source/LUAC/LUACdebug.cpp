@@ -15,10 +15,10 @@ COL_TRACE_INIT;
 void LUAdebugOut(COLstream& Stream, const struct lua_Debug& LD){
    COL_FUNCTION(LUAdebugOut);
    Stream << "event=" << LD.event << newline
-          << " name=" << (LD.name ? LD.name : "(null)") << newline
-          << " namewhat=" << (LD.namewhat ? LD.namewhat : "(null)") << newline
-          << " what=" << (LD.what ? LD.what : "(null)") << newline
-          << " source=" << (LD.source ? LD.source : "(null)") << newline
+          << " name=" << (LD.name ? LD.name : "(COLnull)") << newline
+          << " namewhat=" << (LD.namewhat ? LD.namewhat : "(COLnull)") << newline
+          << " what=" << (LD.what ? LD.what : "(COLnull)") << newline
+          << " source=" << (LD.source ? LD.source : "(COLnull)") << newline
           << " short_src=" << LD.short_src << newline
           << " currentline=" << LD.currentline << newline
           << " linedefined=" << LD.linedefined << newline

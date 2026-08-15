@@ -7,8 +7,7 @@
 // MAX/MIN macros etc.
 //-------------------------------------------------------
 
-template <typename T> constexpr const T& COL_MAX(const T& A, const T& B) { return A > B ? A : B; }
-template <typename T> constexpr const T& COL_MIN(const T& A, const T& B) { return A < B ? A : B; }
-
+#define COL_MAX(A, B) ((A) > (B) ? (A) : (B))
+#define COL_MIN(A, B) ((A) < (B) ? (A) : (B))
 
 void COLsleep(int Milliseconds);

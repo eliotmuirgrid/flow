@@ -18,8 +18,8 @@
 
 int luaZ_fill (ZIO *z) {
   size_t size;
-  const char *buff = z->reader(NULL, z->data, &size);
-  if (buff == NULL || size == 0) return EOZ;
+  const char *buff = z->reader(COLnull, z->data, &size);
+  if (buff == COLnull || size == 0) return EOZ;
   z->n = size - 1;
   z->p = buff;
   return char2int(*(z->p++));
@@ -42,7 +42,7 @@ void luaZ_init (ZIO *z, lua_Chunkreader reader, void *data, const char *name) {
   z->data = data;
   z->name = name;
   z->n = 0;
-  z->p = NULL;
+  z->p = COLnull;
 }
 
 

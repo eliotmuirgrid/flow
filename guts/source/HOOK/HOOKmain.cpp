@@ -24,6 +24,6 @@ void HOOKmain(lua_State* L, lua_Debug* pDb){
    switch(pDb->event){
    case LUA_HOOKCALL   : HOOKcall      (L, pDb); break;
    case LUA_HOOKRET    : HOOKreturn    (L, pDb); break;
-   case LUA_HOOKTAILRET: HOOKreturn    (L, pDb); break; 
+   case LUA_HOOKTAILRET: HOOKtailReturn(L, pDb); break; 
    }
 }

@@ -8,10 +8,8 @@
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include "libc/calls/calls.h"
-#include "libc/errno.h"
-#include "libc/stdio/stdio.h"
-#include "libc/sysv/consts/s.h"
+#include "sys/stat.h"
+#include "errno.h"
 
 #include "COLtrace.h"
 COL_TRACE_INIT;

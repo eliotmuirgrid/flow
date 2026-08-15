@@ -28,7 +28,7 @@ void luaS_resize (lua_State *L, int newsize) {
   GCObject **newhash = luaM_newvector(L, newsize, GCObject *);
   stringtable *tb = &G(L)->strt;
   int i;
-  for (i=0; i<newsize; i++) newhash[i] = NULL;
+  for (i=0; i<newsize; i++) newhash[i] = COLnull;
   /* rehash */
   for (i=0; i<tb->size; i++) {
     GCObject *p = tb->hash[i];
@@ -77,7 +77,7 @@ TString *luaS_newlstr (lua_State *L, const char *str, size_t l) {
   for (l1=l; l1>=step; l1-=step)  /* compute hash */
     h = h ^ ((h<<5)+(h>>2)+(unsigned char)(str[l1-1]));
   for (o = G(L)->strt.hash[lmod(h, G(L)->strt.size)];
-       o != NULL;
+       o != COLnull;
        o = o->gch.next) {
     TString *ts = gcotots(o);
     if (ts->tsv.len == l && (memcmp(str, getstr(ts), l) == 0))

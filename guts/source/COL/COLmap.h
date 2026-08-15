@@ -8,15 +8,19 @@
 //-----------------------------------------------------------------------------
 //
 #include "COLpair.h"
-#include "COLerror.h"
+#include "COLassert.h"
 #include "COLstring.h"
-#include "COLtypes.h"
+#include "COLuint64.h"
 
 /***************************\
 *                           *
 * AVL Tree collection class *
 *                           *
 \***************************/
+
+#ifndef COLnull
+#define COLnull 0
+#endif
 
 struct COLavlTreeNode
 {
@@ -99,15 +103,15 @@ public:
       clear(); 
    }
    Type& operator [](COLavlTreePlace Place) {
-      COLASSERT(Place != NULL);
+      COLASSERT(Place != COLnull);
       return((COLavlTreeItemNode<KeyType, Type>*) Place)->Item;
    }
    const Type& operator [](COLavlTreePlace Place) const {
-      COLASSERT(Place != NULL);
+      COLASSERT(Place != COLnull);
       return((COLavlTreeItemNode<KeyType, Type>*) Place)->Item;
    }
    const KeyType& key(COLavlTreePlace Place) const {
-      COLASSERT(Place != NULL);
+      COLASSERT(Place != COLnull);
       return((COLavlTreeItemNode<KeyType, Type>*) Place)->Key;
    }
    bool removeKey(const KeyType& Key) {
@@ -119,7 +123,7 @@ public:
    COLavlTreePlace addUnique(const KeyType& Key, const Type& Item) {
       return this->addUniqueItem(&Key, new COLavlTreeItemNode<KeyType, Type>(Key, Item));
    }
-   //returns the first place matching the key, or null if the key isn't mapped
+   //returns the first place matching the key, or COLnull if the key isn't mapped
    COLavlTreePlace findFirst(const KeyType& Key) const {
       return this->findFirstItem(&Key);
    }
@@ -197,7 +201,7 @@ public:
    typedef COLmapPlace  TPlace;
 
    struct iterator {
-      iterator() : map_(NULL), place_(NULL) { }
+      iterator() : map_(COLnull), place_(COLnull) { }
       iterator(const iterator& that) : map_(that.map_), place_(that.place_) { }
       iterator& operator=(const iterator& that) {
          map_ = that.map_;
@@ -254,7 +258,7 @@ public:
    };
 
    struct const_iterator {
-      const_iterator() : map_(NULL), place_(NULL) { }
+      const_iterator() : map_(COLnull), place_(COLnull) { }
       const_iterator(const const_iterator& that) : map_(that.map_), place_(that.place_) { }
       const_iterator(const iterator& that) : map_(that.map_), place_(that.place_) { }
       const_iterator& operator=(const const_iterator& that) {
@@ -320,9 +324,9 @@ public:
    const_iterator begin()  const { return const_iterator(this, COLavlTreeBase::first()); }
    const_iterator cbegin() const { return const_iterator(this, COLavlTreeBase::first()); }
 
-   iterator       end()          { return       iterator(this, NULL); }
-   const_iterator end()  const   { return const_iterator(this, NULL); }
-   const_iterator cend() const   { return const_iterator(this, NULL); }
+   iterator       end()          { return       iterator(this, COLnull); }
+   const_iterator end()  const   { return const_iterator(this, COLnull); }
+   const_iterator cend() const   { return const_iterator(this, COLnull); }
 
    // legacy COLavlTreePlace find(const KeyType& Key) const replaced with iterator versions.
    // iterator classes have an operator COLavlTreePlace() method for backwards compatibility.
@@ -416,14 +420,14 @@ public:
    Type& operator[](const KeyType& key) {
       COLavlTree<KeyType,Type>& me = *this;
       TPlace place = this->find(key);
-      if (place==NULL)
+      if (place==COLnull)
          place = this->addUnique(key, TValue());
       return me.operator[](place);
    }
    const Type& operator[](const KeyType& key) const {
       const COLavlTree<KeyType,Type>& me = *this;
       TPlace place = this->find(key);
-      COLASSERT(place != NULL);
+      COLASSERT(place != COLnull);
       return me.operator[](place);
    }
    const Type& operator[](COLavlTreePlace place) const {

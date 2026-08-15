@@ -12,11 +12,16 @@
 #include "COLtrace.h"
 COL_TRACE_INIT;
 
-#define _COSMO_SOURCE
-
+#ifdef _COSMO_SOURCE
 #include "libc/dce.h"
 
 bool OSisWindows(){
    COL_FUNCTION(OSisWindows);
    return IsWindows();
 }
+#else
+bool OSisWindows(){
+   COL_FUNCTION(OSisWindows);
+   return false;
+}
+#endif

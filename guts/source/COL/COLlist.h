@@ -1,4 +1,4 @@
-#pragma hdrstop
+#pragma once
 //---------------------------------------------------------------------------
 // Copyright (C) Eliot Muir.  All Rights Reserved
 //
@@ -10,7 +10,8 @@
 //
 //---------------------------------------------------------------------------
 #include "COLerror.h"
-#include "COLtypes.h"
+#include "COLuint64.h"
+#include "COLnull.h"
 
 struct COLlistNode {
    COLlistNode*  Previous;
@@ -64,8 +65,8 @@ public:
       COLlist<Type>* list_;
       COLlistPlace place_;
       iterator()
-      : list_(NULL)
-      , place_(NULL) {
+      : list_(COLnull)
+      , place_(COLnull) {
       }
       iterator(const iterator& that)
       : list_(that.list_)
@@ -123,8 +124,8 @@ public:
       const COLlist<Type>* list_;
       COLlistPlace place_;
       const_iterator()
-      : list_(NULL)
-      , place_(NULL) {
+      : list_(COLnull)
+      , place_(COLnull) {
       }
       const_iterator(const const_iterator& that)
       : list_(that.list_)
@@ -191,8 +192,8 @@ public:
       COLlist<Type>* list_;
       COLlistPlace place_;
       reverse_iterator()
-      : list_(NULL)
-      , place_(NULL) {
+      : list_(COLnull)
+      , place_(COLnull) {
       }
       reverse_iterator(const reverse_iterator& that)
       : list_(that.list_)
@@ -250,8 +251,8 @@ public:
       const COLlist<Type>* list_;
       COLlistPlace place_;
       const_reverse_iterator()
-      : list_(NULL)
-      , place_(NULL) {
+      : list_(COLnull)
+      , place_(COLnull) {
       }
       const_reverse_iterator(const const_reverse_iterator& that)
       : list_(that.list_)
@@ -329,11 +330,11 @@ public:
       this->clear(); 
    }
    Type& operator[](COLlistPlace Place) {
-      COLASSERT(Place != NULL);
+      COLASSERT(Place != COLnull);
       return ((COLlistItemNode<Type>*) Place)->Item;
    }
    const Type& operator[](COLlistPlace Place) const {
-      COLASSERT(Place != NULL);
+      COLASSERT(Place != COLnull);
       return ((COLlistItemNode<Type>*) Place)->Item;
    }
    COLlistPlace insert(const Type& Item, COLlistPlace Place) {
@@ -357,20 +358,20 @@ public:
    const_iterator begin() const { return const_iterator(this, this->first()); }
    iterator       begin()       { return iterator(this, this->first()); }
 
-   const_iterator end() const { return const_iterator(this, NULL); }
-   iterator       end()       { return iterator(this, NULL); }
+   const_iterator end() const { return const_iterator(this, COLnull); }
+   iterator       end()       { return iterator(this, COLnull); }
 
    const_reverse_iterator rbegin() const { return const_reverse_iterator(this, this->last()); }
    reverse_iterator       rbegin()       { return reverse_iterator(this, this->last()); }
 
-   const_reverse_iterator rend() const { return const_reverse_iterator(this, NULL); }
-   reverse_iterator       rend()       { return reverse_iterator(this, NULL); }
+   const_reverse_iterator rend() const { return const_reverse_iterator(this, COLnull); }
+   reverse_iterator       rend()       { return reverse_iterator(this, COLnull); }
 
    const_iterator cbegin() const { return const_iterator(this, this->first()); }
-   const_iterator cend()   const { return const_iterator(this, NULL); }
+   const_iterator cend()   const { return const_iterator(this, COLnull); }
 
    const_reverse_iterator crbegin() const { return const_reverse_iterator(this, this->last()); }
-   const_reverse_iterator crend()   const { return const_reverse_iterator(this, NULL); }
+   const_reverse_iterator crend()   const { return const_reverse_iterator(this, COLnull); }
 
    iterator insert(iterator position, const Type& value) {
       COLASSERT(this == position.list_);

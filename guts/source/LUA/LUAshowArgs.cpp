@@ -21,7 +21,7 @@ void LUAshowArgs(lua_State* L, lua_Debug* ar, COLstream& Out){
       if (!localName) { break; }
       if (i > 1) { Out << ", "; }
 
-      COLlog << localName << "=";
+      COLtraceOut << localName << "=";
       LUAprintValue(L, -1, Out);
       lua_pop(L, 1);
    }

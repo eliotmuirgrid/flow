@@ -1,70 +1,71 @@
-TARGET_DIR:= ../../
-TARGET_NAME:=flow.com
-TARGET    := $(TARGET_DIR)$(TARGET_NAME)
-TARGET_SOURCE:=guts/source/
-BUILD_DIR := ../build
+TOOL_DIR  := $(HOME)/cosmo/bin/
+TARGET_DIR := ../../
 
-TOOL_DIR := $(HOME)/cosmo/bin/
+COSMO_TARGET    := $(TARGET_DIR)flow.com
+MEMCHECK_TARGET := $(TARGET_DIR)flow
 
-CC  := $(TOOL_DIR)cosmocc
-CXX := $(TOOL_DIR)cosmoc++
+TARGET_SOURCE := guts/source/
+BUILD_DIR     := ../build
 
-# Find C and C++ source files in immediate subdirectories.
 DIRS    := $(wildcard ./*/)
-SEARCH  := $(foreach dir,$(DIRS),$(dir)*.c $(dir)*.cpp)
+DIRS    := $(filter-out ./makefile,$(DIRS))
+ISEARCH := $(foreach dir,$(DIRS),-I$(dir))
+
+SEARCH  := $(foreach dir,$(DIRS),$(dir)*.cpp)
 LSEARCH := $(sort $(wildcard */*.lua))
-ISEARCH := $(foreach dir,$(DIRS), -I$(dir))
 SOURCES := $(wildcard $(SEARCH))
 
-# Convert:
-#   COL/COLstring.cpp     -> build/COL/example.o
-OBJECTS := $(patsubst ./%.cpp,$(BUILD_DIR)/%.o,$(filter %.cpp,$(SOURCES)))
-OBJECTS += $(patsubst ./%.c,$(BUILD_DIR)/%.o,$(filter %.c,$(SOURCES)))
-
-# Add any explicitly supplied object files.
+OBJECTS := $(patsubst ./%.cpp,$(BUILD_DIR)/%.o,$(SOURCES))
 OBJECTS += $(OBJECTS_EXTRA)
 
-# -MMD generates a .d file beside each object file.
 DEPENDS := $(OBJECTS:.o=.d)
 
-PCFLAGS   := -Wno-pointer-to-int-cast -MMD -MP -I. $(ISEARCH)
-PCPPFLAGS := -MMD -MP -I. $(ISEARCH) 
+.PHONY: all cosmo memcheck clean show dirs
 
-.PHONY: all clean show depends
+all: cosmo
 
-all: $(TARGET)
+cosmo: CXX    := $(TOOL_DIR)cosmoc++ -D_COSMO_SOURCE -MMD -MP -I.
+cosmo: LINKER := $(TOOL_DIR)cosmoc++
+cosmo: $(COSMO_TARGET)
 
-$(TARGET): $(OBJECTS) $(LSEARCH)
+memcheck: CXX    := clang++ -std=c++11 -fsanitize=address -g -O0 -MMD -MP 
+memcheck: LINKER := clang++ -fsanitize=address
+memcheck: $(MEMCHECK_TARGET)
+
+
+$(COSMO_TARGET): $(OBJECTS) $(LSEARCH)
 	@mkdir -p $(dir $@)
-	$(CXX) $(OBJECTS) -o $@
-	rm $(TARGET_DIR)*.elf $(TARGET_DIR)*.dbg
-	cd $(TARGET_DIR) && zip -qr $(TARGET_NAME) $(TARGET_SOURCE)
+	$(LINKER) $(OBJECTS) -o $@
+	rm -f $(TARGET_DIR)*.elf $(TARGET_DIR)*.dbg
+	cd $(TARGET_DIR) && zip -qr flow.com $(TARGET_SOURCE)
 
-$(BUILD_DIR)/%.o: %.c
+
+$(MEMCHECK_TARGET): $(OBJECTS)
 	@mkdir -p $(dir $@)
-	$(CC) $(PCFLAGS) -c -o $@ $<
+	$(LINKER) $(OBJECTS) -o $@
+
 
 $(BUILD_DIR)/%.o: %.cpp
 	@mkdir -p $(dir $@)
-	$(CXX) $(PCPPFLAGS) -c -o $@ $<
+	$(CXX) $(ISEARCH) -c -o $@ $<
 
-isearch:
-	@echo ISEARCH = $(ISEARCH)
+
+dirs:
+	@echo DIRS = $(DIRS)
+
 
 show:
-	@echo "Making: $(TARGET)"
-	@echo DIRS    = $(DIRS)
-	@echo CC      = $(CC)
-	@echo SEARCH  = $(SEARCH)
-	@echo LSEARCH = $(LSEARCH)
-	@echo SOURCES = $(SOURCES)
-	@echo OBJECTS = $(OBJECTS)
-	@echo DEPENDS = $(DEPENDS)
+	@echo DIRS            = $(DIRS)
+	@echo SEARCH          = $(SEARCH)
+	@echo LSEARCH         = $(LSEARCH)
+	@echo SOURCES         = $(SOURCES)
+	@echo OBJECTS         = $(OBJECTS)
+	@echo DEPENDS         = $(DEPENDS)
+	@echo COSMO_TARGET    = $(COSMO_TARGET)
+	@echo MEMCHECK_TARGET = $(MEMCHECK_TARGET)
 
-clean::
-	$(RM) -r $(BUILD_DIR) 
+
+clean:
+	$(RM) -r $(BUILD_DIR)
 
 -include $(DEPENDS)
-
-
-

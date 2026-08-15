@@ -13,6 +13,8 @@
 #include "COLtrace.h"
 COL_TRACE_INIT;
 
+#include "string.h"
+
 int DIRlist(lua_State* L){
    COL_FUNCTION(DIRlist);
    const char *path = luaL_checkstring(L, 1);
@@ -27,7 +29,7 @@ int DIRlist(lua_State* L){
    int index = 1;
    struct dirent *entry;
 
-   while ((entry = readdir(directory)) != NULL) {
+   while ((entry = readdir(directory)) != COLnull) {
       if (strcmp(entry->d_name, ".") == 0 ||
           strcmp(entry->d_name, "..") == 0) {
           continue;

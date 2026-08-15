@@ -21,7 +21,7 @@
 
 
 /*
-** definition for realloc function. It must assure that l_realloc(NULL,
+** definition for realloc function. It must assure that l_realloc(COLnull,
 ** 0, x) allocates a new block (ANSI C assures that). (`os' is the old
 ** block size; some allocators may use that.)
 */
@@ -64,26 +64,26 @@ void *luaM_growaux (lua_State *L, void *block, int *size, int size_elems,
 ** generic allocation routine.
 */
 void *luaM_realloc (lua_State *L, void *block, lu_mem oldsize, lu_mem size) {
-  lua_assert((oldsize == 0) == (block == NULL));
+  lua_assert((oldsize == 0) == (block == COLnull));
   if (size == 0) {
-    if (block != NULL) {
+    if (block != COLnull) {
       l_free(block, oldsize);
-      block = NULL;
+      block = COLnull;
     }
-    else return NULL;  /* avoid `nblocks' computations when oldsize==size==0 */
+    else return COLnull;  /* avoid `nblocks' computations when oldsize==size==0 */
   }
   else if (size >= MAX_SIZET)
     luaG_runerror(L, "memory allocation error: block too big");
   else {
     block = l_realloc(block, oldsize, size);
-    if (block == NULL) {
+    if (block == COLnull) {
       if (L)
         luaD_throw(L, LUA_ERRMEM);
-      else return NULL;  /* error before creating state! */
+      else return COLnull;  /* error before creating state! */
     }
   }
   if (L) {
-    lua_assert(G(L) != NULL && G(L)->nblocks > 0);
+    lua_assert(G(L) != COLnull && G(L)->nblocks > 0);
     G(L)->nblocks -= oldsize;
     G(L)->nblocks += size;
   }

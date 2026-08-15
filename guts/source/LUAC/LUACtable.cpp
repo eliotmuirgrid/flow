@@ -255,12 +255,12 @@ static void setnodevector (lua_State *L, Table *t, int lsize) {
     t->node = G(L)->dummynode;  /* use common `dummynode' */
     lua_assert(ttisnil(gkey(t->node)));  /* assert invariants: */
     lua_assert(ttisnil(gval(t->node)));
-    lua_assert(t->node->next == NULL);  /* (`dummynode' must be empty) */
+    lua_assert(t->node->next == COLnull);  /* (`dummynode' must be empty) */
   }
   else {
     t->node = luaM_newvector(L, size, Node);
     for (i=0; i<size; i++) {
-      t->node[i].next = NULL;
+      t->node[i].next = COLnull;
       setnilvalue(gkey(gnode(t, i)));
       setnilvalue(gval(gnode(t, i)));
     }
@@ -284,7 +284,7 @@ static void resize (lua_State *L, Table *t, int nasize, int nhsize) {
     nold = temp;
     setnilvalue(gkey(G(L)->dummynode));  /* restate invariant */
     setnilvalue(gval(G(L)->dummynode));
-    lua_assert(G(L)->dummynode->next == NULL);
+    lua_assert(G(L)->dummynode->next == COLnull);
   }
   if (nasize > oldasize)  /* array part must grow? */
     setarrayvector(L, t, nasize);
@@ -331,10 +331,10 @@ Table *luaH_new (lua_State *L, int narray, int lnhash) {
   t->metatable = hvalue(defaultmeta(L));
   t->flags = cast(lu_byte, ~0);
   /* temporary values (kept only if some malloc fails) */
-  t->array = NULL;
+  t->array = COLnull;
   t->sizearray = 0;
   t->lsizenode = 0;
-  t->node = NULL;
+  t->node = COLnull;
   setarrayvector(L, t, narray);
   setnodevector(L, t, lnhash);
   return t;
@@ -361,11 +361,11 @@ void luaH_remove (Table *t, Node *e) {
     mp->next = e->next;  /* remove `e' from its list */
   }
   else {
-    if (e->next != NULL) ??
+    if (e->next != COLnull) ??
   }
   lua_assert(ttisnil(gval(node)));
   setnilvalue(gkey(e));  /* clear node `e' */
-  e->next = NULL;
+  e->next = COLnull;
 }
 #endif
 
@@ -388,7 +388,7 @@ static TObject *newkey (lua_State *L, Table *t, const TObject *key) {
       while (othern->next != mp) othern = othern->next;  /* find previous */
       othern->next = n;  /* redo the chain with `n' in place of `mp' */
       *n = *mp;  /* copy colliding node into free pos. (mp->next also goes) */
-      mp->next = NULL;  /* now `mp' is free */
+      mp->next = COLnull;  /* now `mp' is free */
       setnilvalue(gval(mp));
     }
     else {  /* colliding node is in its own main position */

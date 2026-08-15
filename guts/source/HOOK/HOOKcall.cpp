@@ -16,6 +16,7 @@
 #include "LUAlua.h"
 #include "LUAtracePatternGet.h"
 #include "LUACdebug.h"
+#include "COLcallIncrease.h"
 #include "COLglobMatch.h"
 #include "COLtrace.h"
 COL_TRACE_INIT;
@@ -28,13 +29,14 @@ void HOOKcall(lua_State* L, lua_Debug* ar){
    }
    COLstring source = ar->short_src[0] ? ar->short_src : "?";
 
-   COL_VAR2(source, *ar);
+   COL_VAR(source);
 
-   if (HOOKfilterTrace(source)){ return; }
    if (HOOKfilterC    (source)){ return; }
    if (HOOKfilterTail (source)){ return; }
 
    source = FILpathNameNoExt(source);
+   if (HOOKfilterTrace(source)){ return; }
+   
    DEBUGstackPush(L, source);
    COL_VAR(source);
 
@@ -44,6 +46,6 @@ void HOOKcall(lua_State* L, lua_Debug* ar){
    COLstring name = source;
    source += ".lua";
 
-   COLtimeStamp(source.data(), COLlog);
-   COLlog << ">" << name << "()" << newline; COLcallIncrease();   
+   COLtraceTime(source.data(), COLtraceOut);
+   COLtraceOut << ">" << name << "()" << newline; COLcallIncrease();   
 }

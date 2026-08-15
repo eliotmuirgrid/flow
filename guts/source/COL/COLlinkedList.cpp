@@ -6,7 +6,7 @@
 // Implementation
 //-------------------------------------------------------
 #include "COLlinkedList.h"
-
+#include "COLnull.h"
 #include "COLtrace.h"
 COL_TRACE_INIT;
 
@@ -16,7 +16,7 @@ COLstream& operator<<(COLstream& Stream, const COLlink& Link){
 }
 
 
-COLlinkedListBase::COLlinkedListBase() : m_pHead(NULL), m_pTail(NULL), m_Size(0) {
+COLlinkedListBase::COLlinkedListBase() : m_pHead(COLnull), m_pTail(COLnull), m_Size(0) {
    COL_METHOD(COLlinkedListBase::COLlinkedListBase);
 
 }
@@ -28,15 +28,15 @@ COLlinkedListBase::~COLlinkedListBase(){
 void COLlinkedListBase::clear(){
    COL_METHOD(COLlinkedListBase::clear);
    COLlink* pLink = m_pHead;
-   while (pLink != NULL){
+   while (pLink != COLnull){
       COL_TRC("Deleting " << pLink);
       COLlink* pOld = pLink;
       pLink = pLink->pNext;
       destroyLink(pOld);
    }
    m_Size = 0;
-   m_pHead = NULL;
-   m_pTail = NULL;
+   m_pHead = COLnull;
+   m_pTail = COLnull;
 }
    
 void COLlinkedListBase::removeItem(COLlink* pLink){
@@ -64,7 +64,7 @@ void COLlinkedListBase::addItem(COLlink* pLink){
    COL_METHOD(COLlinkedListBase::addItem);
    COL_VAR4(*pLink, m_pTail, m_pHead, m_Size);
    pLink->pPrevious = m_pTail;
-   if (m_pTail == NULL){
+   if (m_pTail == COLnull){
       m_pHead = pLink;
    } else {
       m_pTail->pNext = pLink;

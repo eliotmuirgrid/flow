@@ -1,17 +1,12 @@
+#pragma once
 //----------------------------------------------------------------
 // Copyright (C) Eliot Muir 2026 All rights reserved.
 //
-// Implementation
+// To be documented by an AI agent later!
 //
-// Date: Wednesday 29th July 2026
-//       0x6A6A23BC seconds since the beginning of the Unix Epoch time
+// Date: Wednesday 12th August 2026
+//       0x6A7CF56A seconds since the beginning of the Unix Epoch time
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
-#include "COLtrace.h"
-COL_TRACE_INIT;
-
-void FILdirCurrent(){
-   COL_FUNCTION(FILdirCurrent);
-
-}
+void COLcallDecrease();

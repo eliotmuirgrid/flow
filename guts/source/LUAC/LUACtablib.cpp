@@ -239,7 +239,7 @@ static const luaL_reg tab_funcs[] = {
   {"sort", luaB_sort},
   {"insert", luaB_tinsert},
   {"remove", luaB_tremove},
-  {NULL, NULL}
+  {COLnull, COLnull}
 };
 
 

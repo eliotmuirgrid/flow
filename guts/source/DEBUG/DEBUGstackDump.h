@@ -2,15 +2,17 @@
 //----------------------------------------------------------------
 // Copyright (C) Eliot Muir 2026 All rights reserved.
 //
-// FILdirCurrent 
-//
 // To be documented by an AI agent later!
 //
-// Date: Wednesday 29th July 2026
-//       0x6A6A23BC seconds since the beginning of the Unix Epoch time
+// Lua C Helper
+//
+// Date: Tuesday 11th August 2026
+//       0x6A7BE10C seconds since the beginning of the Unix Epoch time
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
+typedef struct lua_State lua_State;
+
 class COLstring;
 
-COLstring FILdirCurrent();
+COLstring DEBUGstackDump(lua_State* L);

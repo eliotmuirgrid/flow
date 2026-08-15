@@ -16,7 +16,6 @@
 COL_TRACE_INIT;
 
 void COLassert(const char* expr, const char* file, int line, const char* func){
-   COL_FUNCTION(COLassert)
-   COL_ERR("Assertion: " << expr << " in " << file << ":" << line << " in " << func);
+   COLout << "Assertion: " << expr << " in " << file << ":" << line << " in " << func;
    abort();
 }

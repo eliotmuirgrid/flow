@@ -5,6 +5,7 @@
 // 
 // Implementation
 //-------------------------------------------------------
+#include "COLnull.h"
 #include "COLstring.h"
 #include "COLstream.h"
 #include "COLsink.h"
@@ -34,16 +35,20 @@ COLstring::COLstring(const COLstring& Orig){
    append(Orig.data(), Orig.size());
 }
 
-COLstring& COLstring::operator=(const char* pString){
+COLstring& COLstring::operator=(const COLstring& Orig){
+   if (this == &Orig){
+      return *this;
+   }
+
    m_Size = 0;
-   append(pString, strlen(pString));
+   append(Orig.data(), Orig.size());
    return *this;
 }
 
 // TODO - could optimize more for small strings.
-COLstring& COLstring::operator=(const COLstring& Orig){
+COLstring& COLstring::operator=(const char* pOrig){
    m_Size = 0;
-   append(Orig.data(), Orig.size());
+   append(pOrig, strlen(pOrig));
    return *this;
 }
 
@@ -64,12 +69,12 @@ COLstring& COLstring::append(const COLstring& Orig){
 
 
 COLstring& COLstring::append(const char* pData, int AddSize){
-   if (m_Size + AddSize > m_Capacity){
+   if (m_Size + AddSize >= m_Capacity){
       setCapacity(COLupperPowerOfTwo(m_Size+AddSize+1));
    }
    strncpy((data() + m_Size), pData, AddSize);
    m_Size += AddSize;
-   data()[m_Size] = 0;  // NULL terminate
+   data()[m_Size] = 0;  // COLnull terminate
    return *this;   
 }
 
@@ -89,19 +94,20 @@ void COLstring::setCapacity(int NewCapacity){
       }
       return;
    }
+
    // Coming from Long
    if (NewCapacity < sizeof(m_pData.ShortBuffer)){
       char* pOldHeap = m_pData.pHeap;
       m_Capacity = NewCapacity;
       strncpy(m_pData.ShortBuffer, pOldHeap, m_Size+1);
-      delete pOldHeap;
+      delete []pOldHeap;
    } else {
       char* pOldHeap = m_pData.pHeap;
       char* pNewHeap = new char[NewCapacity];
       strncpy(pNewHeap, pOldHeap, m_Size+1);
       m_Capacity = NewCapacity;
       m_pData.pHeap = pNewHeap;
-      delete pOldHeap;
+      delete []pOldHeap;
    }
 }
 
@@ -150,7 +156,7 @@ int COLstring::reverseFind(char Char) const{
 bool COLstring::find(const char* Needle) const{
    COL_METHOD(COLstring::find);
    const char* P = strstr(data(), Needle);
-   return NULL != P;
+   return COLnull != P;
 }
 
 void COLstring::swap(COLstring* pThat) {

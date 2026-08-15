@@ -28,6 +28,7 @@ void APPrun(lua_State* L, const COLstring& Func, const COLarray<COLstring>& Args
    COL_FUNCTION(APPrun);
    LUAloadLib(L);
    LIBregister(L);  // TODO wonder if we should do this on demand?
+   COL_VAR(Args[0]);
    FLOWbinDirSet(L, FILdirExe(Args[0]));
    LUApathSet(L);
    COLstring FileName = FLOWbinDirGet(L) + FLOWfileLua(Func);

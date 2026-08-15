@@ -36,7 +36,7 @@ typedef struct Mbuffer {
 
 char *luaZ_openspace (lua_State *L, Mbuffer *buff, size_t n);
 
-#define luaZ_initbuffer(L, buff) ((buff)->buffer = NULL, (buff)->buffsize = 0)
+#define luaZ_initbuffer(L, buff) ((buff)->buffer = COLnull, (buff)->buffsize = 0)
 
 #define luaZ_sizebuffer(buff)	((buff)->buffsize)
 #define luaZ_buffer(buff)	((buff)->buffer)

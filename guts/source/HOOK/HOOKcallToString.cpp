@@ -14,7 +14,6 @@
 COL_TRACE_INIT;
 
 COLstring HOOKcallToString(int Code){
-   COL_FUNCTION(HOOKcallToString);
    switch(Code){
       case LUA_HOOKCALL   : return "HOOK_CALL";
       case LUA_HOOKRET    : return "HOOK_RETURN";

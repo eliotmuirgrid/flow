@@ -114,21 +114,21 @@ size_t luaC_separateudata (lua_State *L) {
   size_t deadmem = 0;
   GCObject **p = &G(L)->rootudata;
   GCObject *curr;
-  GCObject *collected = NULL;  /* to collect udata with gc event */
+  GCObject *collected = COLnull;  /* to collect udata with gc event */
   GCObject **lastcollected = &collected;
-  while ((curr = *p) != NULL) {
+  while ((curr = *p) != COLnull) {
     lua_assert(curr->gch.tt == LUA_TUSERDATA);
     if (ismarked(curr) || isfinalized(gcotou(curr)))
       p = &curr->gch.next;  /* don't bother with them */
 
-    else if (fasttm(L, gcotou(curr)->uv.metatable, TM_GC) == NULL) {
+    else if (fasttm(L, gcotou(curr)->uv.metatable, TM_GC) == COLnull) {
       markfinalized(gcotou(curr));  /* don't need finalization */
       p = &curr->gch.next;
     }
     else {  /* must call its gc method */
       deadmem += sizeudata(gcotou(curr)->uv.len);
       *p = curr->gch.next;
-      curr->gch.next = NULL;  /* link `curr' at the end of `collected' list */
+      curr->gch.next = COLnull;  /* link `curr' at the end of `collected' list */
       *lastcollected = curr;
       lastcollected = &curr->gch.next;
     }
@@ -156,8 +156,8 @@ static void traversetable (GCState *st, Table *h) {
   lua_assert(h->lsizenode || h->node == st->g->dummynode);
   mode = gfasttm(st->g, h->metatable, TM_MODE);
   if (mode && ttisstring(mode)) {  /* is there a weak mode? */
-    weakkey = (strchr(svalue(mode), 'k') != NULL);
-    weakvalue = (strchr(svalue(mode), 'v') != NULL);
+    weakkey = (strchr(svalue(mode), 'k') != COLnull);
+    weakvalue = (strchr(svalue(mode), 'v') != COLnull);
     if (weakkey || weakvalue) {  /* is really weak? */
       GCObject **weaklist;
       h->marked &= ~(KEYWEAK | VALUEWEAK);  /* clear bits */
@@ -374,7 +374,7 @@ static void freeobj (lua_State *L, GCObject *o) {
 static int sweeplist (lua_State *L, GCObject **p, int limit) {
   GCObject *curr;
   int count = 0;  /* number of collected items */
-  while ((curr = *p) != NULL) {
+  while ((curr = *p) != COLnull) {
     if ((curr->gch.marked & ~(KEYWEAK | VALUEWEAK)) > limit) {
       unmark(curr);
       p = &curr->gch.next;
@@ -413,7 +413,7 @@ static void checkSizes (lua_State *L, size_t deadmem) {
 
 static void do1gcTM (lua_State *L, Udata *udata) {
   const TObject *tm = fasttm(L, udata->uv.metatable, TM_GC);
-  if (tm != NULL) {
+  if (tm != COLnull) {
     setobj2s(L->top, tm);
     setuvalue(L->top+1, udata);
     L->top += 2;
@@ -426,7 +426,7 @@ void luaC_callGCTM (lua_State *L) {
   lu_byte oldah = L->allowhook;
   L->allowhook = 0;  /* stop debug hooks during GC tag methods */
   L->top++;  /* reserve space to keep udata while runs its gc method */
-  while (G(L)->tmudata != NULL) {
+  while (G(L)->tmudata != COLnull) {
     GCObject *o = G(L)->tmudata;
     Udata *udata = gcotou(o);
     G(L)->tmudata = udata->uv.next;  /* remove udata from `tmudata' */
@@ -467,15 +467,15 @@ static size_t mark (lua_State *L) {
   GCState st;
   GCObject *wkv;
   st.g = G(L);
-  st.tmark = NULL;
-  st.wkv = st.wk = st.wv = NULL;
+  st.tmark = COLnull;
+  st.wkv = st.wk = st.wv = COLnull;
   markroot(&st, L);
   propagatemarks(&st);  /* mark all reachable objects */
   cleartablevalues(st.wkv);
   cleartablevalues(st.wv);
   wkv = st.wkv;  /* keys must be cleared after preserving udata */
-  st.wkv = NULL;
-  st.wv = NULL;
+  st.wkv = COLnull;
+  st.wv = COLnull;
   deadmem = luaC_separateudata(L);  /* separate userdata to be preserved */
   marktmu(&st);  /* mark `preserved' userdata */
   deadmem += propagatemarks(&st);  /* remark, to propagate `preserveness' */

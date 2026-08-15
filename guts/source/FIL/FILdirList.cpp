@@ -13,6 +13,7 @@
 #include "dirent.h"
 
 #include "COLdictSorted.h"
+#include "COLnull.h"
 #include "COLtrace.h"
 COL_TRACE_INIT;
 
@@ -24,7 +25,7 @@ bool FILdirList(const COLstring& Dir, COLdictSorted<COLstring, COLfile>* pList){
 
    struct dirent* ent;
 
-   while ((ent = readdir(dir)) != NULL) {
+   while ((ent = readdir(dir)) != COLnull) {
       pList->add(ent->d_name, COLfile()); 
    }
    closedir(dir);
