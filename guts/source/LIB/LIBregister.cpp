@@ -4,7 +4,7 @@
 // Implementation
 //
 // Date: Saturday 15th August 2026
-//       0x6A80605D the beginning of the Unix Epoch time
+//       0x6A80829F the beginning of the Unix Epoch time
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
