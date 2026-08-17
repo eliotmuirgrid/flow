@@ -4,7 +4,7 @@ function URLopen(Url)
    -- operating system?
    local Windows = 'C:\\\\Windows\\\\System32\\\\cmd.exe /c start " " "'..Url..'"'
    local Mac     = 'open "'..Url..'"'
-   COL_VAR2(Windows,Mac);
+   COL_VAR(Windows,Mac);
 
    if (OSisMac()) then 
       os.execute(Mac);	

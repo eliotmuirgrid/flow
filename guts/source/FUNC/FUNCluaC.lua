@@ -54,13 +54,13 @@ function FUNCluaC(Args)
    local HContent = TEMPLATEfill(Header,Tokens);
    COL_VAR(HContent);
    local Prefix, Remainder = CODEprefixRemainder(Name);
-   COL_VAR2(Prefix, Remainder);
+   COL_VAR(Prefix, Remainder);
    local HName = DIRflowCode()..Prefix.."/"..Prefix..Remainder..".h" 
    local BName = DIRflowCode()..Prefix.."/"..Prefix..Remainder..".cpp" 
 
    local BContent = TEMPLATEfill(Body,Tokens);
    COL_VAR(BContent);
-   COL_VAR2(HName, BName);
+   COL_VAR(HName, BName);
    FUNCwrite(HName, HContent);
    FUNCwrite(BName, BContent);
    LIBregister(Name);

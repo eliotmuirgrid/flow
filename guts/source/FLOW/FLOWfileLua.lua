@@ -1,5 +1,5 @@
 require "FLOW/FLOWfile"
 
-function FLOWfileLua(FName)
-   return FLOWfile(FName, "lua");
+function FLOWfileLua(FuncName)
+   return FLOWfile(FuncName, "lua");
 end

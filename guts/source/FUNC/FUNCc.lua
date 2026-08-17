@@ -31,13 +31,13 @@ function FUNCc(Args)
    local HContent = TEMPLATEfill(HeaderT..FUNCcHeader(Name)..HeaderB,Tokens);
    COL_VAR(HContent);
    local Prefix, Remainder = CODEprefixRemainder(Name);
-   COL_VAR2(Prefix, Remainder);
+   COL_VAR(Prefix, Remainder);
    local HName = DIRflowCode()..Prefix.."/"..Prefix..Remainder..".h" 
    local BName = DIRflowCode()..Prefix.."/"..Prefix..Remainder..".cpp" 
 
    local BContent = TEMPLATEfill(FUNCcHeader(Name)..Body,Tokens);
    COL_VAR(BContent);
-   COL_VAR2(HName, BName);
+   COL_VAR(HName, BName);
    FUNCwrite(HName, HContent);
    FUNCwrite(BName, BContent);
    COL_TRC("Let's edit "..Name);

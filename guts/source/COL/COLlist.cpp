@@ -9,6 +9,8 @@
 //---------------------------------------------------------------------------
 #include "COLassert.h"
 #include "COLlist.h"
+#include "COLtrace.h"
+COL_TRACE_INIT;
 
 COLvoidList::COLvoidList(): Size(0), Head(COLnull), Tail(COLnull){}
 

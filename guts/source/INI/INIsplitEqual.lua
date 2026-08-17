@@ -11,6 +11,6 @@ function INIsplitEqual(KV)
    end
    COL_TRC("Found = "..i)
    local K,V = KV:sub(1, i-1), KV:sub(i+1) 
-   COL_VAR2(K, V);
+   COL_VAR(K, V);
    return K,V
 end	

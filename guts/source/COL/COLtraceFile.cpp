@@ -20,6 +20,6 @@ bool COLtraceFile(const COLstring& TraceFile){
       return false;
    }
    COLtraceOut.setSink(new COLsinkFile(FileNo));
-   COLout << "### Tracing redirected into " << TraceFile << newline;
+   COLtraceOut << "### Tracing redirected into " << TraceFile << newline;
    return true;
 }

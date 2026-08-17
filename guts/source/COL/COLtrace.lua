@@ -1,16 +1,15 @@
 require "COL/COLshow"
 
-function COL_VAR (V) 
-   LUAltrace(COLshow(V)); 
-end	
-
-function COL_VAR2(V1, V2) 
-   LUAltrace(COLshow(V1)..", "..COLshow(V2)); 
-end	
---function COL_VAR3(V) LUAltrace(COLshow(V)..", "..COLshow(V))..", "..COLshow(V))                ; end	
+function COL_VAR(...)
+   local Output = ""
+   for i = 1, table.getn(arg) do
+      if i > 1 then Output = Output .. ", " end
+      Output = Output .. COLshow(arg[i])
+   end
+   LUAltrace(Output)
+end
 
 function COL_FUNCTION(V) LUAltrace("F:"..V); end;
-
 
 function COL_TRC(T) LUAltrace(T) end
 

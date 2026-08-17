@@ -1,6 +1,3 @@
-function FLOWfile(FName, Ext)
-   local P = PREFIXget(FName);
-   local B = DIRflowCode()..P.."/"..FName;
-   local FileName = B.."."..Ext;
-   return FileName
+function FLOWfile(FuncName, Ext)
+   return FLOWbase(FuncName).."."..Ext;
 end

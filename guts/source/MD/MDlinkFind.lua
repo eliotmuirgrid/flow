@@ -1,12 +1,12 @@
 function MDlinkFind(Dir, Base, Paths)
    local Base = Base or '/';
    local Paths = Paths or {};
-   COL_VAR2(Dir, Base)
+   COL_VAR(Dir, Base)
    local C = DIRlist(Dir);
    COL_VAR(C)
    for i, File in ipairs(C) do
       DSstoreDelete(Dir, File);
-      COL_VAR2(i, File)
+      COL_VAR(i, File)
       if (File == "i.md") then
          table.insert(Paths, Base);
       elseif (FILEextension(File) == "md") then

@@ -12,7 +12,7 @@ function FUNCluaCommandShell(Name)
    local Tokens={NAME=Name}
    COL_VAR(Tokens);
    local Prefix = PREFIXget(Name);
-   COL_VAR2(Prefix, Remainder);
+   COL_VAR(Prefix, Remainder);
    local Dir   = DIRflowCode()..Prefix;
    local BName = Dir.."/"..Name.."Command.lua" 
    local BContent = TEMPLATEfill(Body,Tokens);
