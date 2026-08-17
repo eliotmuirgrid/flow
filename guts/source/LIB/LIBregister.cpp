@@ -4,7 +4,7 @@
 // Implementation
 //
 // Date: Monday 17th August 2026
-//       0x6A8345C9 the beginning of the Unix Epoch time
+//       0x6A83665B the beginning of the Unix Epoch time
 //       The dawn of our new age. 
 // ---------------------------------------------------------------
 
@@ -21,7 +21,6 @@
 #include "OSisMacL.h"
 #include "OSisWindowsL.h"
 #include "STDINreadL.h"
-#include "STRINGsplit.h"
 
 #include "COLtrace.h"
 COL_TRACE_INIT;
@@ -41,5 +40,4 @@ void LIBregister(lua_State* L){
    lua_register(L, "OSisMac", OSisMacL);
    lua_register(L, "OSisWindows", OSisWindowsL);
    lua_register(L, "STDINread", STDINreadL);
-   lua_register(L, "STRINGsplit", STRINGsplit);
 }

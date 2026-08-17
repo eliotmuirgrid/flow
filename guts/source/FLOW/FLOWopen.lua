@@ -21,7 +21,6 @@ function FLOWopen(Name, Create)
    local Command = TEMPLATEfill(NEOVIM_TEMPLATE, Tokens);
    COL_VAR(Command)
    OSexecute(Command);
-   APPfocus("neovide");
    return true;
 end
 
