@@ -13,9 +13,16 @@
 #include "COLtrace.h"
 COL_TRACE_INIT;
 
+#include <sys/stat.h>
+
 int DIRisDir(lua_State* L){
    COL_FUNCTION(DIRisDir);
-   
-
-   return 0;
+   const char* Path = luaL_checkstring(L, 1);
+   struct stat Info;
+   if (stat(Path, &Info) != 0) {
+      lua_pushboolean(L, 0);
+      return 1;
+   }
+   lua_pushboolean(L, S_ISDIR(Info.st_mode));
+   return 1; 
 }

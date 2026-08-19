@@ -9,6 +9,7 @@ ALIASmapInfo["find"] = {"search", "locate", "lookup", "seek"}
 ALIASmapInfo["list"] = {"show", "display", "enumerate", "ls"}
 ALIASmapInfo["run"] = {"execute", "start", "launch", "exec"}
 ALIASmapInfo["stop"] = {"end", "terminate", "kill", "halt"}
+ALIASmapInfo["func"] = {"function", "module"}
 ALIASmapInfo["restart"] = {"reboot", "reload"}
 ALIASmapInfo["enable"] = {"activate", "on"}
 ALIASmapInfo["disable"] = {"deactivate", "off"}
@@ -17,6 +18,7 @@ ALIASmapInfo["convert"] = {"transform", "translate"}
 ALIASmapInfo["split"] = {"separate", "divide"}
 ALIASmapInfo["join"] = {"combine", "merge", "concat", "concatenate"}
 ALIASmapInfo["clear"] = {"empty", "reset", "clean"}
+ALIASmapInfo["edit"] = {"go", "update", "alter", "change", "modify", "revise"}
 
 function ALIASmap()
    local Map = {}

@@ -1,4 +1,5 @@
-function AGENTlocal(Prompt)
+function AGENTlocal(Prompt, Model)
+   Model = Model or "llama3.2:latest";
    local P = {}
    P.url = 'http://localhost:11434/api/generate'
    P.headers = {}

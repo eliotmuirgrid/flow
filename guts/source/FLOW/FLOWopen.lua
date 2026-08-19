@@ -2,7 +2,7 @@ local NEOVIM_TEMPLATE=[[
 LUA_PATH="@@PATH@@" \
 neovide --fork @@NAME@@ -- \
      -c "set tabstop=3 shiftwidth=3 softtabstop=3 expandtab" \
-     -c "lua require('VIM/VIMportable'); require('LUA/LUAload');" \
+     -c "lua require('VIM/VIMportable'); require('LUA/LUAload'); require('VIM/VIMsimple');" \
      -c 'lua vim.o.guifont="Menlo:h18"' 
 ]];
 
@@ -24,3 +24,10 @@ function FLOWopen(Name, Create)
    return true;
 end
 
+--local NEOVIM_TEMPLATE=[[
+--LUA_PATH="@@PATH@@" \
+--neovide --fork @@NAME@@ -- \
+--     -c "set tabstop=3 shiftwidth=3 softtabstop=3 expandtab" \
+--     -c "lua require('VIM/VIMportable'); require('LUA/LUAload'); LUAload('VIMbind');" \
+--     -c 'lua vim.o.guifont="Menlo:h18"' 
+--]];

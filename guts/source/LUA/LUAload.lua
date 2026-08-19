@@ -7,14 +7,17 @@ require 'LUA/LUAremoveSingleLineComments'
 require 'LUA/LUAcommentRemove'
 require 'LUA/LUArequire'
 require 'LUA/LUAinstallFunc'
-require 'LUA/LUAlistFunctions'
+require 'LUA/LUAfunctionList'
 require 'LUA/LUAstringRemove'
 require 'LUA/LUAdependencies'
 require 'PREFIX/PREFIXget'
 
 function LUAload(FunctionName)
    COL_VAR(FunctionName);
-   local Funcs = {}
+   local Funcs = {};
+   Funcs.COL_VAR       = true
+   Funcs.COL_TRC       = true
+   Funcs.COL_FUNCTION  = true
    LUArequire(FunctionName, Funcs)
    COL_VAR(Funcs);
    for FuncName,_ in pairs(Funcs) do
